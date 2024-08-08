@@ -18,7 +18,7 @@ function Register() {
     const registerData = {
       email: data.get('email'),
       password: data.get('password'),
-      confirmPassword: data.get('confirmPassword'),
+      confirmPassword: data.get('confirmPassword'), 
     };
 
     //console.log(registerData);

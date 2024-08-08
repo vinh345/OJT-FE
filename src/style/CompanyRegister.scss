@@ -1,0 +1,87 @@
+.containercompany {
+    width: 1000px;
+    margin: 50px auto;
+    background-color: #f4f4f4; 
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 29px 52px rgba(0, 0, 0, 0.40), 0 25px 16px rgba(0, 0, 0, 0.20);
+    text-align: left;
+  
+    img {
+      margin-bottom: 20px;
+    }
+  
+    h2 {
+      margin-bottom: 30px;
+    }
+  
+    .containerform {
+      display: flex;
+      justify-content: space-between;
+      background-color: white;
+      padding: 20px;
+  
+      .containerform1, .containerform2 {
+        width: 48%;
+        padding: 10px;
+        position: relative;
+  
+        h3 {
+          color: #333;
+          margin-bottom: 15px;
+          position: relative; /* Needed for the pseudo-element positioning */ 
+          
+          &::before {
+            content: "";
+            position: absolute;
+            left: -20px; /* Adjust as needed */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px; /* Width of the red bar */
+            height: 42px; /* Height of the red bar */
+            background-color: #aa1024;
+            margin-right: 10px;
+          }
+        }
+  
+        form {
+          display: flex;
+          flex-direction: column;
+  
+          label {
+            margin-bottom: 25px;
+          }
+  
+          input, select {
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+          }
+        }
+      }
+      
+      .containerform2 {
+        border-left: 2px solid #7a7a7a; 
+        padding-left: 70px;
+      }
+    }
+  
+    .register-button {
+      width: 30%;
+      padding: 10px 0;
+      background-color: #aa1024;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 20px;
+    }
+  
+    .btn {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+  }
+  
