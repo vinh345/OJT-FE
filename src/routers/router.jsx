@@ -1,9 +1,8 @@
-import React from 'react'
+import { createBrowserRouter } from "react-router-dom";
+import publicRoutes from "./publicRoute";
+import privateRoutes from "./privateRoute";
 
-export default function router() {
-  return (
-    <div>
-      <h2>dcdcđc</h2>
-    </div>
-  )
-}
+// Lấy tất cả các route bên trong public và private
+const routes = createBrowserRouter([...publicRoutes, ...privateRoutes]);
+
+export default routes;
