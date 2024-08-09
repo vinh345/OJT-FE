@@ -1,19 +1,47 @@
 import React, { useState } from "react";
 import LoginForm from "../../../components/login/LoginForm";
-import CompanyLoginBackground from "../../../components/login/CompanyLoginBackground";
-import CandidateLoginBackground from "../../../components/login/CandidateLoginBackground";
+import logo from "../../../assets/logo.png"; // Đảm bảo đường dẫn tới ảnh là chính xác
 
-const LoginPage = () => {
-  const [isCompany, setIsCompany] = useState(true);
- 
+import Investmentdatarafiki1 from "../../../assets/Investmentdatarafiki1.png";
+import dg from "../../../assets/dg.png";
+
+
+// import '../../../style/FormLoginAdmin.scss'; // Import file CSS
+
+const LoginPage = ({ boolean }) => {
+  const [isCompany, setIsCompany] = useState(boolean);
+
   return (
-    <div className="flex  ">
-      <div className="flex h-screen">
+    <div className="container  ">
+      <div className="container1">
         <div className="w-1/2 flex items-center justify-center bg-gray-100">
           {isCompany ? (
-            <CompanyLoginBackground />
+            <div>
+              <img
+                src={logo}
+                alt="RKEI Edu Logo"
+                height={"70px"}
+                className="lgo"
+              />
+              <h2>
+                Cùng Rikkei Education tiếp cận nguồn <br /> nhân lực chất lượng
+                cao{" "}
+              </h2>
+            </div>
           ) : (
-            <CandidateLoginBackground />
+            <div>
+              <img
+                src={logo}
+                alt="RKEI Edu Logo"
+                height={"70px"}
+                className="lgo"
+              />{" "}
+              {/* Thêm thuộc tính chiều cao ở đây */}
+              <h2>
+                Cùng Rikkei Education xây dựng hồ <br />
+                sơ nổi bật và nhận được các cơ hội <br /> sự nghiệp lý tưởng
+              </h2>
+            </div>
           )}
         </div>
         <div className="w-1/2 bg-white flex items-center justify-center">
@@ -23,13 +51,13 @@ const LoginPage = () => {
       <div>
         {isCompany ? (
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTErM0l9PaxajQCEPypESRXJUhaI_ryd-OkQA&s"
+            src={dg}
             alt="Company Background"
             className="max-w-full h-auto"
           />
         ) : (
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU5hsX-OLXWZQtZR0VJ0V4gdxqn4A_hzkNlQ&s"
+            src={Investmentdatarafiki1}
             alt="Candidate Background"
             className="max-w-full h-auto"
           />

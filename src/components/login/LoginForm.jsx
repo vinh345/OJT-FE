@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../service/authService";
 
+
+
 const LoginForm = ({ isCompany }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,26 +21,22 @@ const LoginForm = ({ isCompany }) => {
 
     try {
       const formData = { email, password, role };
-      const response = await dispatch(login(formData)).unwrap();
 
-      if (response.data.error) {
-        setEmailError(response.data.message.email);
-        setPasswordError(response.data.message.password);
-      }
-    } catch (error) {
-      console.log(error.response.data.error);
+      // Dispatch the login thunk and unwrap the result
+      const actionResult = await dispatch(login(formData)).unwrap();
 
-      if (error.response && error.response.data) {
-        const errorData = error.response.data;
-        console.log(errorData);
+      // If the login is successful, actionResult will contain the response data
+      // Handle the successful login case here (e.g., redirect, update UI)
+      console.log("Login successful:", actionResult);
+    } catch (err) {
+      console.log("Error occurred:", err);
 
-        if (errorData.message) {
-          setGeneralError(errorData.message);
-        } else {
-          setGeneralError("An unknown error occurred. Please try again.");
-        }
+      if (typeof err === "object") {
+        setEmailError(err.email);
+        setPasswordError(err.password);
       } else {
-        setGeneralError("An unknown error occurred. Please try again.");
+        // Fallback for unknown errors
+        setGeneralError(err);
       }
     }
   };
@@ -46,14 +44,14 @@ const LoginForm = ({ isCompany }) => {
   return (
     <div>
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
+        <div className="form-group">
           <label
             htmlFor="email"
             className="block text-sm font-medium text-gray-700"
           >
             Email
           </label>
-          <div className="mt-1">
+          <div className=" mt-1">
             <input
               id="email"
               name="email"
@@ -72,7 +70,7 @@ const LoginForm = ({ isCompany }) => {
           </div>
         </div>
 
-        <div>
+        <div className="form-group">
           <label
             htmlFor="password"
             className="block text-sm font-medium text-gray-700"
@@ -111,18 +109,20 @@ const LoginForm = ({ isCompany }) => {
           </button>
         </div>
       </form>
-      <div className="mt-4 text-center">
-        <a href="#" className="text-blue-500">
-          Quên mật khẩu?
-        </a>
-      </div>
-      <div className="mt-2 text-center">
-        <span>
-          Bạn không có tài khoản?{" "}
+      <div>
+        <div className="mt-4 text-center">
           <a href="#" className="text-red-500">
-            Tạo 1 tài khoản
+            Quên mật khẩu?
           </a>
-        </span>
+        </div>
+        <div className="mt-2 text-center">
+          <span>
+            Bạn không có tài khoản?{" "}
+            <a href="#" className="text-red-500">
+              Tạo 1 tài khoản
+            </a>
+          </span>
+        </div>
       </div>
     </div>
   );
