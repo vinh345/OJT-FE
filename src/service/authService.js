@@ -12,49 +12,75 @@ export const getDataFromCookie = createAsyncThunk(
   }
 );
 
+
 export const login = createAsyncThunk(
   "auth/login",
-  async (formData) => {
-    const response = await BASE_URL[POST]("auth/sign-in", formData);
-    if (response.data.error) {
-      return response;
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await BASE_URL[POST]("auth/sign-in", formData);
+      if (response.data.error) {
+        return rejectWithValue(response.data.message);
+      }
 
+      const cookie = new Cookies();
+      cookie.set("accessToken", response.data.data.accessToken, {
+        path: "/",
+        maxAge: 60 * 1000, // 1 minute
+      });
+      cookie.set("type", "Bearer", { path: "/", maxAge: 60 * 1000 });
+      cookie.set("isLogin", true, { path: "/", maxAge: 60 * 1000 });
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      const errorMessage = error.response && error.response.data && error.response.data.error
+        ? error.response.data.error.details
+        : { message: "An unknown error occurred. Please try again." };
+
+      return rejectWithValue(errorMessage);
     }
-
-    // Lưu cookie
-    const cookie = new Cookies();
-    cookie.set("accessToken", response.data.data.accessToken, {
-      path: "/",
-      maxAge: 1 * 60 * 1000,
-    });
-    cookie.set("type", "Bearer", { path: "/", maxAge: 1 * 60 * 1000 });
-    cookie.set("isLogin", true, { path: "/", maxAge: 1 * 60 * 1000 });
-    return response;
   }
 );
 
+
 export const changePassword = createAsyncThunk("auth/changePassword",
-  async (formData) => {
+  async (formData, { rejectWithValue }) => {
     try {
       const response = await BASE_URL[POST](`auth/changePassword`, formData, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
+      if (response.data.error) {
+        return rejectWithValue(response.data.message);
+      }
       return response.data;
     } catch (error) {
-      throw error;
+      console.log(error);
+      const errorMessage = error.response && error.response.data && error.response.data.error
+        ? error.response.data.error.details
+        : { message: "An unknown error occurred. Please try again." };
+
+      return rejectWithValue(errorMessage);
     }
   }
 )
 
 export const recoverPassword = createAsyncThunk("auth/recoverPassword",
-  async (formData) => {
+  async (formData, { rejectWithValue }) => {
     try {
       const response = await BASE_URL[POST](`auth/recoverPassword`, formData);
+      if (response.data.error) {
+        return rejectWithValue(response.data.message);
+      }
       return response.data;
     } catch (error) {
-      throw error;
+      console.log(error);
+      const errorMessage = error.response && error.response.data && error.response.data.error
+        ? error.response.data.error.details
+        : { message: "An unknown error occurred. Please try again." };
+
+      return rejectWithValue(errorMessage);
     }
   }
 )
