@@ -5,7 +5,11 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import UserHeader from "./layouts/UserHeader";
 import Home from "./pages/Home";
-import Register from "./pages/admin/Register";
+import FormLoginAdmin from "./components/FormLoginAdmin";
+import RegisterUserForm from "./components/RegisterUserForm";
+import LoginUserForm from "./components/LoginUserForm";
+import CompanyRegisterForm from "./components/CompanyRegisterForm";
+import CompanyLoginForm from "./components/CompanyLoginForm";
 
 function App() {
 
@@ -14,7 +18,11 @@ function App() {
       <UserHeader />
       <Routes>
         <Route path="/" element={<Home></Home>}></Route> 
-        <Route path="/admin/register" element={<Register></Register>}> </Route> 
+        <Route path="/admin" element={<FormLoginAdmin></FormLoginAdmin>}> </Route> 
+        <Route path="/user/register" element={<RegisterUserForm></RegisterUserForm>}></Route>
+        <Route path="/user/login" element={<LoginUserForm></LoginUserForm>}></Route>
+        <Route path="/company/register" element={<CompanyRegisterForm></CompanyRegisterForm>}></Route>
+        <Route path="/company/login" element={<CompanyLoginForm></CompanyLoginForm>}></Route>
       </Routes>
     </>
   );  
