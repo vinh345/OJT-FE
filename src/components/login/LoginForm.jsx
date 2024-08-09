@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../service/authService";
-import { createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
 
 const LoginForm = ({ isCompany }) => {
   const [email, setEmail] = useState("");
