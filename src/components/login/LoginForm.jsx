@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../service/authService";
-// import "../../style/CompanyLoginForm.scss"; // Import file CSS
+
+
 
 const LoginForm = ({ isCompany }) => {
   const [email, setEmail] = useState("");
