@@ -24,16 +24,19 @@ const authSlice = createSlice({
   
       builder.addCase(login.fulfilled, (state, action) => {
         state.data = action.payload.data;
+        
         state.loading =[SUCCESS];
       });
-  
+
       builder.addCase(getDataFromCookie.fulfilled, (state, action) => {
         state.data = action.payload;
       });
   
       builder.addCase(login.rejected, (state, action) => {
+        state.error = action.payload.data;
+        
         state.loading = [FAILED];
-        state.error = action.error;
+        
       });
     },
   });
