@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../service/authService";
+import { Link, Navigate, Route } from "react-router-dom";
 // import "../../style/CompanyLoginForm.scss"; // Import file CSS
 
 const LoginForm = ({ isCompany }) => {
@@ -110,9 +111,9 @@ const LoginForm = ({ isCompany }) => {
       </form>
       <div>
         <div className="mt-4 text-center">
-          <a href="#" className="text-red-500">
-            Quên mật khẩu?
-          </a>
+          <Link to={"/auth/recoverPassword"}>
+            <p className="text-red-500">Quên mật khẩu?</p>
+          </Link>
         </div>
         <div className="mt-2 text-center">
           <span>
