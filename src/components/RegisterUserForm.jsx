@@ -1,13 +1,17 @@
+
 import React, { useState } from "react";
+
 import logo from "../assets/logo.png"; // Đảm bảo đường dẫn tới ảnh là chính xác
 import Adminrafiki2 from "../assets/Admin-rafiki2.png"; // Đảm bảo đường dẫn tới ảnh là chính xác
 
 import "../style/RegisterUserForm.scss"; // Import file CSS
+
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { candidateRegist } from "../service/authService";
 import { notification } from "antd";
 import Swal from "sweetalert2";
+
 
 export default function RegisterUserForm() {
   const [registForm, setRegistForm] = useState({
@@ -86,11 +90,14 @@ export default function RegisterUserForm() {
     }
   };
   return (
+
     <>
+
       <div className="container">
         <div className="container1">
           <img src={logo} alt="RKEI Edu Logo" height={"70px"} className="lgo" />{" "}
           {/* Thêm thuộc tính chiều cao ở đây */}
+
           <h2><b>
             Cùng Rikkei Education xây dựng hồ <br />
             sơ nổi bật và nhận được các cơ hội <br />
@@ -110,23 +117,29 @@ export default function RegisterUserForm() {
               {!error.name && (
                 <p style={{ color: "red" }}>Vui lòng nhập họ và tên</p>
               )}
+
             </div>
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
+
                 onChange={handleChange}
+
                 type="email"
                 name="email"
                 id="email"
                 placeholder="abc@gmail.com"
               />
+
               {!error.email && (
                 <p style={{ color: "red" }}>Vui lòng nhập email</p>
               )}
+
             </div>
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <input
+
                 onChange={handleChange}
                 type="password"
                 name="password"
@@ -136,10 +149,12 @@ export default function RegisterUserForm() {
               {!error.password && (
                 <p style={{ color: "red" }}>Vui lòng nhập mật khẩu</p>
               )}
+
             </div>
             <div className="form-group">
               <label htmlFor="Confirmpassword">Confirm password</label>
               <input
+
                 onChange={handleChange}
                 type="password"
                 name="confirmPassword"
