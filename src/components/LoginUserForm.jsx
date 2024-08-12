@@ -11,7 +11,7 @@ export default function LoginUserForm() {
         <div className="container">
       <div className="container1">
         <img src={logo} alt="RKEI Edu Logo"  height={"70px"} className='lgo'/> {/* Thêm thuộc tính chiều cao ở đây */}
-        <h2>Cùng Rikkei Education xây dựng hồ <br />sơ nổi bật và nhận được các cơ hội <br /> sự nghiệp lý tưởng</h2>
+        <h2><b>Cùng Rikkei Education xây dựng hồ <br />sơ nổi bật và nhận được các cơ hội <br /> sự nghiệp lý tưởng</b></h2>
         <form>
           <div className="form-group">
             <label htmlFor="email">Email</label>
