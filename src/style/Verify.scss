@@ -58,7 +58,17 @@
         font-size: 16px;
         margin-top: 20px;
       }
-  
+      button[type="click"] {
+        width: 100%;
+        padding: 10px;
+        background-color: #d9534f;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 20px;
+      }
       a {
         color: #007bff;
         text-decoration: none;
@@ -75,7 +85,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border-left: 0px solid #7a7a7a ;
+      border-left: 0px solid #7a7a7a !important;
     }
   }
   
