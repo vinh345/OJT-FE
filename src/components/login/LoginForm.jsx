@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../service/authService";
-import { Link, Navigate, Route } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { RemoveRedEyeRounded, VisibilityOff } from "@mui/icons-material";
 
 const LoginForm = ({ isCompany }) => {

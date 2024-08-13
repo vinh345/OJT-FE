@@ -1,8 +1,10 @@
 import CompanyRegisterForm from "../../components/CompanyRegisterForm";
 import FormLoginAdmin from "../../components/FormLoginAdmin";
 import RegisterUserForm from "../../components/RegisterUserForm";
+import RegisterUserForm from "../../components/RegisterUserForm";
 import LayoutIndex from "../../layouts";
 import LoginPage from "../../pages/auth/login/Login";
+
 import RecoverPassword from "../../pages/auth/recoverPassword";
 import Home from "../../pages/Home";
 
@@ -25,6 +27,7 @@ const publicRoutes = [
       { path: "register", element: <RegisterUserForm /> },
 
       { path: "login", element: <LoginPage boolean={false} /> },
+
     ],
   },
   {
@@ -32,6 +35,7 @@ const publicRoutes = [
     children: [
       { path: "register", element: <CompanyRegisterForm /> },
       { path: "login", element: <LoginPage boolean={true} /> },
+
     ],
   },
 ]
