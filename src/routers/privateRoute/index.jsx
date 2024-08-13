@@ -6,7 +6,7 @@ const privateRoutes = [
     {path:"company",
       children:[
         {path:"candidateInfo/:id",
-          element: <PrivateRoute element={CandidateProfilePage} />,
+        element: <PrivateRoute element={CandidateProfilePage} />,
 
         }
       ]
