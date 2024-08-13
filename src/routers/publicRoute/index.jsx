@@ -9,7 +9,8 @@ import Footer from "../../layouts/Footer";
 import ListCompany from "../../pages/company/listCompany/ListCompany";
 import ListJob from "../../pages/job/ListJob";
 import JobDetail from "../../pages/job/JobDetail";
-import CompanyDetail from "../../pages/company/listCompany/CompanyDetail";
+import CompanyDetail from "../../pages/company/listCompany/CompanyDetailUser";
+import CompanyDetailBusiness from "../../pages/company/listCompany/CompanyDetailBusiness";
 
 const publicRoutes = [
   {
@@ -33,7 +34,8 @@ const publicRoutes = [
       { path: "listCompany", element: <ListCompany /> },
       { path: "job", element: <ListJob /> },
       { path: "jobDetail/:id", element: <JobDetail /> },
-      { path: "detail/:id", element: <CompanyDetail /> }, // Tuyến đường chi tiết công ty
+      // { path: "detail/:id", element: <CompanyDetail /> },
+      { path: "detail/:id", element: <CompanyDetailBusiness /> },
     ],
   },
 

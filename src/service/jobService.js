@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import BASE_URL from "../api";
 import { GET } from "../constants/httpMethod";
 
-// Async thunk to get a list of jobs
 export const getListJob = createAsyncThunk(
   "jobs/getListJob",
   async ({ title, nameCity }, { rejectWithValue }) => {

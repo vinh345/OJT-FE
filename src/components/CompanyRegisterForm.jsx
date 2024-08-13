@@ -97,7 +97,11 @@ export default function CompanyRegisterForm() {
                   name="name"
                   placeholder="Tên công ty"
                 />
-                <ErrorMessage name="name" component="div" className="error" />
+                <ErrorMessage
+                  name="name"
+                  component="div"
+                  className="error text-red-500"
+                />
 
                 <label htmlFor="emailCompany">Email công ty</label>
                 <Field
@@ -109,7 +113,7 @@ export default function CompanyRegisterForm() {
                 <ErrorMessage
                   name="emailCompany"
                   component="div"
-                  className="error"
+                  className="error text-red-500"
                 />
 
                 <label htmlFor="phone">Số điện thoại</label>
@@ -119,7 +123,11 @@ export default function CompanyRegisterForm() {
                   name="phone"
                   placeholder="0123456789"
                 />
-                <ErrorMessage name="phone" component="div" className="error" />
+                <ErrorMessage
+                  name="phone"
+                  component="div"
+                  className="error text-red-500"
+                />
 
                 <label htmlFor="locationId">Địa điểm làm việc</label>
                 <Field as="select" id="locationId" name="locationId">
@@ -135,7 +143,7 @@ export default function CompanyRegisterForm() {
                 <ErrorMessage
                   name="locationId"
                   component="div"
-                  className="error"
+                  className="error text-red-500"
                 />
 
                 <label htmlFor="password">Mật khẩu</label>
@@ -148,7 +156,7 @@ export default function CompanyRegisterForm() {
                 <ErrorMessage
                   name="password"
                   component="div"
-                  className="error"
+                  className="error text-red-500"
                 />
 
                 <label htmlFor="confirmPassword">Xác nhận mật khẩu</label>
@@ -161,7 +169,7 @@ export default function CompanyRegisterForm() {
                 <ErrorMessage
                   name="confirmPassword"
                   component="div"
-                  className="error"
+                  className="error text-red-500"
                 />
 
                 <button
