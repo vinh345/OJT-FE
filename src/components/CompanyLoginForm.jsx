@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../assets/logo.png"; // Đảm bảo đường dẫn tới ảnh là chính xác
 import dg from "../assets/dg.png"; // Đảm bảo đường dẫn tới ảnh là chính xác
 
-import "../style/CompanyLoginForm.scss"; // Import file CSS
+// import "../style/CompanyLoginForm.scss"; // Import file CSS
 
 export default function CompanyLoginForm() {
   return (

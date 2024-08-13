@@ -2,6 +2,7 @@ import React from "react";
 import PrivateRoute from "../../features/protectedRoutes/PrivateRoute";
 import CandidateProfilePage from "../../pages/company/CandidateProfile";
 import ChangePassword from "../../pages/auth/changePassword";
+import UserInfor from "../../pages/candidateinformation";
 
 const privateRoutes = [
   {
@@ -13,10 +14,18 @@ const privateRoutes = [
     children: [
       {
         path: "candidateInfo/:id",
-        element: <PrivateRoute element={CandidateProfilePage} />,
+        element: <PrivateRoute element={<CandidateProfilePage/>} />,
       },
     ],
   },
+  {
+    path: "/user",
+    children: [
+      {path: "infor",
+        element: <PrivateRoute element={<UserInfor/>} />
+      }
+    ]
+  }
 ];
 
 export default privateRoutes;

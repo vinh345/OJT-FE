@@ -4,7 +4,7 @@ import { notification } from "antd";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import logo from "../assets/logo.png";
-import "../style/CompanyRegister.scss";
+// import "../style/CompanyRegister.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { getListLocation } from "../service/Location/locationService";
 import { registerCompany } from "../service/authService";
