@@ -1,9 +1,8 @@
 import CompanyRegisterForm from "../../components/CompanyRegisterForm";
 import FormLoginAdmin from "../../components/FormLoginAdmin";
-
 import RegisterUserForm from "../../components/RegisterUserForm";
+import LayoutIndex from "../../layouts";
 import LoginPage from "../../pages/auth/login/Login";
-
 import Home from "../../pages/Home";
 import Footer from "../../layouts/Footer";
 import ListCompany from "../../pages/company/listCompany/ListCompany";
@@ -12,6 +11,12 @@ import JobDetail from "../../pages/job/JobDetail";
 import CompanyDetail from "../../pages/company/listCompany/CompanyDetail";
 
 const publicRoutes = [
+  {
+    path: "",
+    element: <LayoutIndex />,
+    exact: true,
+    children: [
+  { path: "/auth/recoverPassword", element: <RecoverPassword /> },
   {
     path: "/",
     element: <Home />,
@@ -36,6 +41,8 @@ const publicRoutes = [
       { path: "detail/:id", element: <CompanyDetail /> }, // Tuyến đường chi tiết công ty
     ],
   },
+]
+  }
 
   // {
   //   path: "/listCompany",

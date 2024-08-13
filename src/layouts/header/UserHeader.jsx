@@ -1,5 +1,5 @@
 import React from 'react';
-import '../style/Header.scss'; // Make sure to create this CSS file
+import '../style/Header.module.scss'; // Make sure to create this CSS file
 import logo from'../assets/logo.png'
 
 export default function UserHeader() {

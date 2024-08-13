@@ -1,67 +1,44 @@
 import React, { useState } from "react";
 import LoginForm from "../../../components/login/LoginForm";
-import logo from "../../../assets/logo.png"; // Đảm bảo đường dẫn tới ảnh là chính xác
-
+import logo from "../../../assets/logo.png";
 import Investmentdatarafiki1 from "../../../assets/Investmentdatarafiki1.png";
 import dg from "../../../assets/dg.png";
-
-
-// import '../../../style/FormLoginAdmin.scss'; // Import file CSS
 
 const LoginPage = ({ boolean }) => {
   const [isCompany, setIsCompany] = useState(boolean);
 
   return (
-    <div className="container  ">
-      <div className="container1">
-        <div className="w-1/2 flex items-center justify-center bg-gray-100">
-          {isCompany ? (
-            <div>
-              <img
-                src={logo}
-                alt="RKEI Edu Logo"
-                height={"70px"}
-                className="lgo"
-              />
-              <h2>
-                Cùng Rikkei Education tiếp cận nguồn <br /> nhân lực chất lượng
-                cao{" "}
-              </h2>
-            </div>
-          ) : (
-            <div>
-              <img
-                src={logo}
-                alt="RKEI Edu Logo"
-                height={"70px"}
-                className="lgo"
-              />{" "}
-              {/* Thêm thuộc tính chiều cao ở đây */}
-              <h2>
-                Cùng Rikkei Education xây dựng hồ <br />
-                sơ nổi bật và nhận được các cơ hội <br /> sự nghiệp lý tưởng
-              </h2>
-            </div>
-          )}
-        </div>
-        <div className="w-1/2 bg-white flex items-center justify-center">
-          <LoginForm isCompany={isCompany} />
-        </div>
+    <div className="flex flex-col gap-0">
+      <div className="flex flex-col justify-start p-8">
+        <img src={logo} alt="RKEI Edu Logo" className="mb-6 w-40" />
       </div>
-      <div>
-        {isCompany ? (
+      <div className="container grid grid-cols-2 h-screen justify-center">
+        <div className="flex flex-col justify-center align-middle h-full">
+          <div className="flex flex-col justify-start p-8">
+            {isCompany ? (
+              <h2 className="text-xl text-left font-bold">
+                Cùng Rikkei Education tiếp cận nguồn <br />
+                nhân lực chất lượng cao
+              </h2>
+            ) : (
+              <h2 className="text-xl text-left font-bold">
+                Cùng Rikkei Education xây dựng hồ <br />
+                sơ nổi bật và nhận được các cơ hội <br />
+                sự nghiệp lý tưởng
+              </h2>
+            )}
+            <div className="flex items-start justify-start mt-8">
+                <LoginForm isCompany={isCompany} />
+            </div>
+          </div>
+        </div>
+        <div className="flex items-start justify-start p-8">
           <img
-            src={dg}
-            alt="Company Background"
-            className="max-w-full h-auto"
+            src={isCompany ? dg : Investmentdatarafiki1}
+            alt="Background"
+            className="h-100 object-cover"
           />
-        ) : (
-          <img
-            src={Investmentdatarafiki1}
-            alt="Candidate Background"
-            className="max-w-full h-auto"
-          />
-        )}
+        </div>
       </div>
     </div>
   );

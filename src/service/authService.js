@@ -26,10 +26,12 @@ export const login = createAsyncThunk(
       const cookie = new Cookies();
       cookie.set("accessToken", response.data.data.accessToken, {
         path: "/",
-        maxAge: 60 * 1000, // 1 minute
+        maxAge: 60 * 1000, 
       });
       cookie.set("type", "Bearer", { path: "/", maxAge: 60 * 1000 });
       cookie.set("isLogin", true, { path: "/", maxAge: 60 * 1000 });
+      cookie.set("avatar",response.data.data.avatar, { path: "/", maxAge: 60 * 1000 })
+      cookie.set("name",response.data.data.name, { path: "/", maxAge: 60 * 1000 })
 
       return response.data;
     } catch (error) {
@@ -42,7 +44,8 @@ export const login = createAsyncThunk(
       return rejectWithValue(errorMessage);
     }
   }
-);
+)
+
 
 export const changePassword = createAsyncThunk(
   "auth/changePassword",
