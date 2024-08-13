@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import logo from '../assets/logo.png';
 import Adminrafiki2 from '../assets/Admin-rafiki2.png';
-import '../style/FormLoginAdmin.scss';
+// import '../style/FormLoginAdmin.module.scss';
 
 export default function FormLoginAdmin() {
   const [email, setEmail] = useState('');

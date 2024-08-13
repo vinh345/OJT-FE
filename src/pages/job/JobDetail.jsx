@@ -1,0 +1,144 @@
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getJobDetail } from "../../service/jobService";
+import {
+  AccessTime,
+  Event,
+  LocationOn,
+  MonetizationOn,
+  School,
+  Work,
+} from "@mui/icons-material";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+export default function JobDetail() {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { data, loading, error } = useSelector((state) => state.jobs);
+  const job = data?.data;
+  console.log(job);
+
+  useEffect(() => {
+    dispatch(getJobDetail(id));
+  }, [dispatch, id]);
+
+  if (loading) return <p>Loading job details...</p>;
+  if (error) return <p>Error: {error}</p>;
+
+  return (
+    <>
+      <div className="flex justify-between items-center mb-4 p-6">
+        <div className="flex items-center">
+          <img
+            src={job.company.logo}
+            alt={job.company.name}
+            className="w-24 h-24 object-contain mr-4"
+          />
+          <div>
+            <h1 className="text-3xl font-bold">{job.title}</h1>
+            <h2 className="text-xl font-semibold">{job.company.name}</h2>
+            <div className="flex items-center mb-4">
+              <LocationOn className="mr-2" />
+              <span>{job.addressCompany.address}</span>
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center space-x-4">
+          <BookmarkBorderIcon
+            style={{ fontSize: "40px" }}
+            className=" h-10 text-red-500 bg-red-200 "
+          />
+          <button className="bg-red-500 text-white px-4 py-2 rounded h-10 w-56">
+            Ứng Tuyển Ngay
+          </button>
+        </div>
+      </div>
+
+      <div className="flex justify-between p-6">
+        <div className="w-8/12">
+          {/* Job Description and Requirements */}
+          <div className="bg-white p-4 rounded-md shadow-md">
+            <section className="mb-6">
+              <h2 className="text-xl font-semibold mb-2">Job Description</h2>
+              <p className="whitespace-pre-wrap break-words ">
+                {job.description}
+              </p>
+            </section>
+            <section>
+              <h2 className="text-xl font-semibold mb-2">Requirements</h2>
+              <p className="whitespace-pre-wrap break-words  ">
+                {job.requirements}
+              </p>
+            </section>
+          </div>
+        </div>
+
+        <div className="w-1/4">
+          {/* Salary and Job Location Section */}
+          <div className="bg-white p-4 rounded-md shadow-md flex justify-between items-center mb-6 ">
+            <div className="flex items-center">
+              <MonetizationOn className="text-red-500 mr-2" />
+              <div>
+                <h3 className="text-xl font-semibold text-green-500">
+                  {job.salary}
+                </h3>
+                <p className="text-sm text-gray-500">Yearly salary</p>
+              </div>
+            </div>
+            <div className="flex items-center">
+              <LocationOn className="text-red-500 mr-2" />
+              <div>
+                <h3 className="text-lg font-semibold">
+                  {job.addressCompany.address}
+                </h3>
+                <p className="text-sm text-gray-500">Job Location</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Job Overview Section */}
+          <div className="bg-white p-4 rounded-md shadow-md mb-6">
+            <h2 className="text-xl font-semibold mb-4">Job Overview</h2>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex items-center">
+                <Event className="text-red-500 mr-2" />
+                <div>
+                  <h3 className="text-lg font-semibold">Job Posted</h3>
+                  <p className="text-sm text-gray-500">{job.createdAt}</p>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <AccessTime className="text-red-500 mr-2" />
+                <div>
+                  <h3 className="text-lg font-semibold">Job Expire in</h3>
+                  <p className="text-sm text-gray-500">{job.expireAt}</p>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <Work className="text-red-500 mr-2" />
+                <div>
+                  <h3 className="text-lg font-semibold">Job Level</h3>
+                  <p className="text-sm text-gray-500">Entry Level</p>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <MonetizationOn className="text-red-500 mr-2" />
+                <div>
+                  <h3 className="text-lg font-semibold">Experience</h3>
+                  <p className="text-sm text-gray-500">$50k-80k/month</p>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <School className="text-red-500 mr-2" />
+                <div>
+                  <h3 className="text-lg font-semibold">Education</h3>
+                  <p className="text-sm text-gray-500">Graduation</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

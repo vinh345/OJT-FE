@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { FAILED, IDLE, PENDING, SUCCESS } from "../../constants/status";
-import { getListCompanies } from "../../service/companyService";
+import { getListLocation } from "../../service/Location/locationService";
 
-const companySlice = createSlice({
-  name: "companies",
+const locationSlice = createSlice({
+  name: "locations",
   initialState: {
     loading: [IDLE],
     data: [],
@@ -12,18 +12,18 @@ const companySlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getListCompanies.pending, (state) => {
+      .addCase(getListLocation.pending, (state) => {
         state.loading = [PENDING];
       })
-      .addCase(getListCompanies.fulfilled, (state, action) => {
+      .addCase(getListLocation.fulfilled, (state, action) => {
         state.data = action.payload;
         state.loading = [SUCCESS];
       })
-      .addCase(getListCompanies.rejected, (state, action) => {
+      .addCase(getListLocation.rejected, (state, action) => {
         state.loading = [FAILED];
         state.error = action.error.message;
       });
   },
 });
 
-export default companySlice.reducer;
+export default locationSlice.reducer;

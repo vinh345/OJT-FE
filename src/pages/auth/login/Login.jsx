@@ -1,39 +1,44 @@
 import React, { useState } from "react";
 import LoginForm from "../../../components/login/LoginForm";
-import CompanyLoginBackground from "../../../components/login/CompanyLoginBackground";
-import CandidateLoginBackground from "../../../components/login/CandidateLoginBackground";
+import logo from "../../../assets/logo.png";
+import Investmentdatarafiki1 from "../../../assets/Investmentdatarafiki1.png";
+import dg from "../../../assets/dg.png";
 
-const LoginPage = () => {
-  const [isCompany, setIsCompany] = useState(true);
- 
+const LoginPage = ({ boolean }) => {
+  const [isCompany, setIsCompany] = useState(boolean);
+
   return (
-    <div className="flex  ">
-      <div className="flex h-screen">
-        <div className="w-1/2 flex items-center justify-center bg-gray-100">
-          {isCompany ? (
-            <CompanyLoginBackground />
-          ) : (
-            <CandidateLoginBackground />
-          )}
-        </div>
-        <div className="w-1/2 bg-white flex items-center justify-center">
-          <LoginForm isCompany={isCompany} />
-        </div>
+    <div className="flex flex-col gap-0">
+      <div className="flex flex-col justify-start p-8">
+        <img src={logo} alt="RKEI Edu Logo" className="mb-6 w-40" />
       </div>
-      <div>
-        {isCompany ? (
+      <div className="container grid grid-cols-2 h-screen justify-center">
+        <div className="flex flex-col justify-center align-middle h-full">
+          <div className="flex flex-col justify-start p-8">
+            {isCompany ? (
+              <h2 className="text-xl text-left font-bold">
+                Cùng Rikkei Education tiếp cận nguồn <br />
+                nhân lực chất lượng cao
+              </h2>
+            ) : (
+              <h2 className="text-xl text-left font-bold">
+                Cùng Rikkei Education xây dựng hồ <br />
+                sơ nổi bật và nhận được các cơ hội <br />
+                sự nghiệp lý tưởng
+              </h2>
+            )}
+            <div className="flex items-start justify-start mt-8">
+                <LoginForm isCompany={isCompany} />
+            </div>
+          </div>
+        </div>
+        <div className="flex items-start justify-start p-8">
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTErM0l9PaxajQCEPypESRXJUhaI_ryd-OkQA&s"
-            alt="Company Background"
-            className="max-w-full h-auto"
+            src={isCompany ? dg : Investmentdatarafiki1}
+            alt="Background"
+            className="h-100 object-cover"
           />
-        ) : (
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU5hsX-OLXWZQtZR0VJ0V4gdxqn4A_hzkNlQ&s"
-            alt="Candidate Background"
-            className="max-w-full h-auto"
-          />
-        )}
+        </div>
       </div>
     </div>
   );

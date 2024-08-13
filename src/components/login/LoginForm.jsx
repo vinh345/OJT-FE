@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../service/authService";
-import { createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
+import { Link} from "react-router-dom";
+import { RemoveRedEyeRounded, VisibilityOff } from "@mui/icons-material";
 
 const LoginForm = ({ isCompany }) => {
   const [email, setEmail] = useState("");
@@ -9,6 +10,12 @@ const LoginForm = ({ isCompany }) => {
   const [emailError, setEmailError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
   const [generalError, setGeneralError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   const dispatch = useDispatch();
   const role = isCompany ? "company" : "candidate";
 
@@ -20,26 +27,22 @@ const LoginForm = ({ isCompany }) => {
 
     try {
       const formData = { email, password, role };
-      const response = await dispatch(login(formData)).unwrap();
 
-      if (response.data.error) {
-        setEmailError(response.data.message.email);
-        setPasswordError(response.data.message.password);
-      }
-    } catch (error) {
-      console.log(error.response.data.error);
+      // Dispatch the login thunk and unwrap the result
+      const actionResult = await dispatch(login(formData)).unwrap();
 
-      if (error.response && error.response.data) {
-        const errorData = error.response.data;
-        console.log(errorData);
+      // If the login is successful, actionResult will contain the response data
+      // Handle the successful login case here (e.g., redirect, update UI)
+      console.log("Login successful:", actionResult);
+    } catch (err) {
+      console.log("Error occurred:", err);
 
-        if (errorData.message) {
-          setGeneralError(errorData.message);
-        } else {
-          setGeneralError("An unknown error occurred. Please try again.");
-        }
+      if (typeof err === "object") {
+        setEmailError(err.email);
+        setPasswordError(err.password);
       } else {
-        setGeneralError("An unknown error occurred. Please try again.");
+        // Fallback for unknown errors
+        setGeneralError(err);
       }
     }
   };
@@ -47,14 +50,14 @@ const LoginForm = ({ isCompany }) => {
   return (
     <div>
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
+        <div className="form-group">
           <label
             htmlFor="email"
             className="block text-sm font-medium text-gray-700"
           >
             Email
           </label>
-          <div className="mt-1">
+          <div className=" mt-1">
             <input
               id="email"
               name="email"
@@ -73,18 +76,18 @@ const LoginForm = ({ isCompany }) => {
           </div>
         </div>
 
-        <div>
+        <div className="mb-6">
           <label
             htmlFor="password"
             className="block text-sm font-medium text-gray-700"
           >
             Password
           </label>
-          <div className="mt-1">
+          <div className="relative">
             <input
               id="password"
               name="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               autoComplete="current-password"
               required
               value={password}
@@ -93,6 +96,13 @@ const LoginForm = ({ isCompany }) => {
                 passwordError ? "border-red-500" : "border-gray-300"
               } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
             />
+            <button
+              type="button"
+              className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-600"
+              onClick={togglePasswordVisibility}
+            >
+              {showPassword ? <VisibilityOff/>:<RemoveRedEyeRounded/> }
+            </button>
             {passwordError && (
               <p className="mt-2 text-sm text-red-600">{passwordError}</p>
             )}
@@ -112,18 +122,20 @@ const LoginForm = ({ isCompany }) => {
           </button>
         </div>
       </form>
-      <div className="mt-4 text-center">
-        <a href="#" className="text-blue-500">
-          Quên mật khẩu?
-        </a>
-      </div>
-      <div className="mt-2 text-center">
-        <span>
-          Bạn không có tài khoản?{" "}
-          <a href="#" className="text-red-500">
-            Tạo 1 tài khoản
-          </a>
-        </span>
+      <div>
+        <div className="mt-4 text-center">
+          <Link to={"/auth/recoverPassword"}>
+            <p className="text-red-500">Quên mật khẩu?</p>
+          </Link>
+        </div>
+        <div className="mt-2 text-center">
+          <span>
+            Bạn không có tài khoản?{" "}
+            <a href="#" className="text-red-500">
+              Tạo 1 tài khoản
+            </a>
+          </span>
+        </div>
       </div>
     </div>
   );
