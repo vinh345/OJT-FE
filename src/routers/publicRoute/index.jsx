@@ -1,15 +1,16 @@
 import CompanyRegisterForm from "../../components/CompanyRegisterForm";
 import FormLoginAdmin from "../../components/FormLoginAdmin";
 import RegisterUserForm from "../../components/RegisterUserForm";
-import RegisterUserForm from "../../components/RegisterUserForm";
 import LayoutIndex from "../../layouts";
 import LoginPage from "../../pages/auth/login/Login";
-
-import RecoverPassword from "../../pages/auth/recoverPassword";
 import Home from "../../pages/Home";
+import Footer from "../../layouts/Footer";
+import ListCompany from "../../pages/company/listCompany/ListCompany";
+import ListJob from "../../pages/job/ListJob";
+import JobDetail from "../../pages/job/JobDetail";
+import CompanyDetail from "../../pages/company/listCompany/CompanyDetail";
 
 const publicRoutes = [
-  
   {
     path: "",
     element: <LayoutIndex />,
@@ -27,7 +28,6 @@ const publicRoutes = [
       { path: "register", element: <RegisterUserForm /> },
 
       { path: "login", element: <LoginPage boolean={false} /> },
-
     ],
   },
   {
@@ -35,11 +35,19 @@ const publicRoutes = [
     children: [
       { path: "register", element: <CompanyRegisterForm /> },
       { path: "login", element: <LoginPage boolean={true} /> },
-
+      { path: "listCompany", element: <ListCompany /> },
+      { path: "job", element: <ListJob /> },
+      { path: "jobDetail/:id", element: <JobDetail /> },
+      { path: "detail/:id", element: <CompanyDetail /> }, // Tuyến đường chi tiết công ty
     ],
   },
 ]
   }
+
+  // {
+  //   path: "/listCompany",
+  //   element: <Footer />,
+  // },
 ];
 
 export default publicRoutes;
