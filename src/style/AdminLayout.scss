@@ -1,0 +1,33 @@
+/* Resetting margin and padding for the entire layout */
+
+
+  
+  body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+  }
+  
+  .admin-layout {
+    display: flex;
+    height: 100vh;
+    
+    // max-width: 1280px;
+    margin: 0 auto;
+    // padding: 2rem;
+    // text-align: center;
+    // margin-left: 140px;
+   
+  }
+
+  .content-area {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #fcfcfc;
+   padding-left: 120px;
+   color: rgb(12, 1, 1);
+   border: 2px solid #0a0101e8; 
+   margin-left: 2px;
+   border-radius: 5px;
+  }
+  
