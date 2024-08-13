@@ -4,13 +4,13 @@ import { POST } from "../constants/httpMethod";
 import { accessToken } from "../constants/accessToken";
 import { Cookies } from "react-cookie";
 
-
 export const getDataFromCookie = createAsyncThunk(
   "auth/getDataFromCookie",
   (userData) => {
     return userData;
   }
 );
+
 
 
 export const login = createAsyncThunk(
@@ -25,10 +25,12 @@ export const login = createAsyncThunk(
       const cookie = new Cookies();
       cookie.set("accessToken", response.data.data.accessToken, {
         path: "/",
-        maxAge: 60 * 1000, // 1 minute
+        maxAge: 60 * 1000, 
       });
       cookie.set("type", "Bearer", { path: "/", maxAge: 60 * 1000 });
       cookie.set("isLogin", true, { path: "/", maxAge: 60 * 1000 });
+      cookie.set("avatar",response.data.data.avatar, { path: "/", maxAge: 60 * 1000 })
+      cookie.set("name",response.data.data.name, { path: "/", maxAge: 60 * 1000 })
 
       return response.data;
     } catch (error) {
@@ -64,7 +66,7 @@ export const changePassword = createAsyncThunk("auth/changePassword",
       return rejectWithValue(errorMessage);
     }
   }
-)
+);
 
 export const recoverPassword = createAsyncThunk("auth/recoverPassword",
   async (formData, { rejectWithValue }) => {
@@ -83,4 +85,15 @@ export const recoverPassword = createAsyncThunk("auth/recoverPassword",
       return rejectWithValue(errorMessage);
     }
   }
-)
+);
+export const registerCompany = createAsyncThunk(
+  "auth/registerCompany",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await BASE_URL[POST]("auth/company/sign-up", formData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);

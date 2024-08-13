@@ -1,48 +1,184 @@
-import React from "react";
-import logo from '../assets/logo.png'; // Ensure the path to the image is correct
-import '../style/CompanyRegister.scss'; // Ensure the path to the CSS file is correct
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { notification } from "antd";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import logo from "../assets/logo.png";
+import "../style/CompanyRegister.module.scss";
+import { Link, useNavigate } from "react-router-dom";
+import { getListLocation } from "../service/Location/locationService";
+import { registerCompany } from "../service/authService";
+import { FAILED, PENDING } from "../constants/status";
 
 export default function CompanyRegisterForm() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {
+    data: locations,
+    loading,
+    error,
+  } = useSelector((state) => state.locations);
+
+  useEffect(() => {
+    dispatch(getListLocation());
+  }, [dispatch]);
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required("Tên công ty là bắt buộc"),
+    emailCompany: Yup.string()
+      .email("Email không hợp lệ")
+      .required("Email công ty là bắt buộc"),
+    phone: Yup.string()
+      .matches(/(0[3|5|7|8|9])+([0-9]{8})\b/, "Số điện thoại không hợp lệ")
+      .required("Số điện thoại là bắt buộc"),
+    locationId: Yup.string().required("Địa điểm làm việc là bắt buộc"),
+    password: Yup.string()
+      .min(4, "Mật khẩu phải có ít nhất 4 ký tự")
+      .max(12, "Mật khẩu không được quá 12 ký tự")
+      .required("Mật khẩu là bắt buộc"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Mật khẩu xác nhận không khớp")
+      .required("Xác nhận mật khẩu là bắt buộc"),
+  });
+
+  const handleSubmit = async (values) => {
+    try {
+      const result = await dispatch(registerCompany(values)).unwrap();
+      notification.success({
+        message: "Đăng ký thành công",
+        description: "Vui lòng xác minh tài khoản của bạn.",
+      });
+      navigate("");
+    } catch (err) {
+      if (err.errors) {
+        err.errors.forEach((error) => {
+          notification.error({
+            message: "Đăng ký thất bại",
+            description: error.defaultMessage,
+          });
+        });
+      } else {
+        notification.error({
+          message: "Đăng ký thất bại",
+          description: "Lỗi: " + err.message,
+        });
+      }
+    }
+  };
+
   return (
     <div className="containercompany">
-      <img src={logo} alt="RKEI Edu Logo" height="70px"/>
-      <h2>Đăng kí để có thể tiếp cận nguồn <br />nhân lực chất lượng cao</h2>
+      <img src={logo} alt="RKEI Edu Logo" height="70px" />
+      <h2>
+        Đăng kí để có thể tiếp cận nguồn <br />
+        nhân lực chất lượng cao
+      </h2>
       <div className="containerform">
         <div className="containerform1">
-          <h3>Thông tin cá nhân</h3>
-          <form>
-            <label htmlFor="name">Họ tên</label>
-            <input type="text" id="name" placeholder="Nhập họ tên" />
-            <label htmlFor="email">Email</label>
-            <input type="email" id="email" placeholder="abc@gmail.com" />
-            <label htmlFor="password">Mật khẩu</label>
-            <input type="password" id="password" placeholder="********" />
-            <label htmlFor="confirmPassword">Xác nhận mật khẩu</label>
-            <input type="password" id="confirmPassword" placeholder="********" />
-          </form>
-        </div>
-        <div className="containerform2">
           <h3>Thông tin công ty</h3>
-          <form>
-            <label htmlFor="companyName">Tên công ty</label>
-            <input type="text" id="companyName" placeholder="Tên công ty" />
-            <label htmlFor="location">Địa điểm làm việc</label>
-            <select id="location">
-              <option value="">Chọn tỉnh/thành phố</option>
-              {/* Add more options here */}
-            </select>
-            <label htmlFor="phone">Số điện thoại</label>
-            <input type="tel" id="phone" placeholder="0123456789" />
-            <label htmlFor="companyEmail">Email công ty</label>
-            <input type="email" id="companyEmail" placeholder="abc@company.com" />
-          </form>
+          <Formik
+            initialValues={{
+              name: "",
+              emailCompany: "",
+              phone: "",
+              locationId: "",
+              password: "",
+              confirmPassword: "",
+            }}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ isSubmitting }) => (
+              <Form>
+                <label htmlFor="name">Tên công ty</label>
+                <Field
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Tên công ty"
+                />
+                <ErrorMessage name="name" component="div" className="error" />
+
+                <label htmlFor="emailCompany">Email công ty</label>
+                <Field
+                  type="email"
+                  id="emailCompany"
+                  name="emailCompany"
+                  placeholder="abc@company.com"
+                />
+                <ErrorMessage
+                  name="emailCompany"
+                  component="div"
+                  className="error"
+                />
+
+                <label htmlFor="phone">Số điện thoại</label>
+                <Field
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="0123456789"
+                />
+                <ErrorMessage name="phone" component="div" className="error" />
+
+                <label htmlFor="locationId">Địa điểm làm việc</label>
+                <Field as="select" id="locationId" name="locationId">
+                  <option value="">Chọn tỉnh/thành phố</option>
+                  {loading === PENDING && <option>Loading...</option>}
+                  {loading === FAILED && <option>Error: {error}</option>}
+                  {locations?.content?.map((location) => (
+                    <option key={location.id} value={location.id}>
+                      {location.nameCity}
+                    </option>
+                  ))}
+                </Field>
+                <ErrorMessage
+                  name="locationId"
+                  component="div"
+                  className="error"
+                />
+
+                <label htmlFor="password">Mật khẩu</label>
+                <Field
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="********"
+                />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className="error"
+                />
+
+                <label htmlFor="confirmPassword">Xác nhận mật khẩu</label>
+                <Field
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="********"
+                />
+                <ErrorMessage
+                  name="confirmPassword"
+                  component="div"
+                  className="error"
+                />
+
+                <button
+                  type="submit"
+                  className="register-button"
+                  disabled={isSubmitting}
+                >
+                  Đăng kí
+                </button>
+              </Form>
+            )}
+          </Formik>
         </div>
-      </div> 
-      <div className="btn">
-      <button className="register-button">Đăng kí</button> <br /> <br />
-      Đã có tài khoản ? <a href=""> Đăng nhập ngay </a>
       </div>
-     
+      <div className="btn">
+        Đã có tài khoản? <Link to="/company/login">Đăng nhập ngay</Link>
+      </div>
     </div>
   );
 }

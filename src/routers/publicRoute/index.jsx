@@ -1,23 +1,19 @@
-import CompanyLoginForm from "../../components/CompanyLoginForm";
 import CompanyRegisterForm from "../../components/CompanyRegisterForm";
 import FormLoginAdmin from "../../components/FormLoginAdmin";
-import LoginUserForm from "../../components/LoginUserForm";
 import RegisterUserForm from "../../components/RegisterUserForm";
+import LayoutIndex from "../../layouts";
 import LoginPage from "../../pages/auth/login/Login";
 import RecoverPassword from "../../pages/auth/recoverPassword";
 import Home from "../../pages/Home";
 
 const publicRoutes = [
+  
   {
-    path: "/auth",
+    path: "",
+    element: <LayoutIndex />,
+    exact: true,
     children: [
-      
-      {
-        path: "recoverPassword",
-        element: <RecoverPassword />,
-      },
-    ],
-  },
+  { path: "/auth/recoverPassword", element: <RecoverPassword /> },
   {
     path: "/",
     element: <Home />,
@@ -27,6 +23,7 @@ const publicRoutes = [
     path: "/user",
     children: [
       { path: "register", element: <RegisterUserForm /> },
+
       { path: "login", element: <LoginPage boolean={false} /> },
     ],
   },
@@ -37,6 +34,8 @@ const publicRoutes = [
       { path: "login", element: <LoginPage boolean={true} /> },
     ],
   },
+]
+  }
 ];
 
 export default publicRoutes;

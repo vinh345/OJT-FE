@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../service/authService";
 import { Link, Navigate, Route } from "react-router-dom";
-// import "../../style/CompanyLoginForm.scss"; // Import file CSS
+import { RemoveRedEyeRounded, VisibilityOff } from "@mui/icons-material";
 
 const LoginForm = ({ isCompany }) => {
   const [email, setEmail] = useState("");
@@ -10,6 +10,12 @@ const LoginForm = ({ isCompany }) => {
   const [emailError, setEmailError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
   const [generalError, setGeneralError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   const dispatch = useDispatch();
   const role = isCompany ? "company" : "candidate";
 
@@ -70,18 +76,18 @@ const LoginForm = ({ isCompany }) => {
           </div>
         </div>
 
-        <div className="form-group">
+        <div className="mb-6">
           <label
             htmlFor="password"
             className="block text-sm font-medium text-gray-700"
           >
             Password
           </label>
-          <div className="mt-1">
+          <div className="relative">
             <input
               id="password"
               name="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               autoComplete="current-password"
               required
               value={password}
@@ -90,6 +96,13 @@ const LoginForm = ({ isCompany }) => {
                 passwordError ? "border-red-500" : "border-gray-300"
               } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
             />
+            <button
+              type="button"
+              className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-600"
+              onClick={togglePasswordVisibility}
+            >
+              {showPassword ? <VisibilityOff/>:<RemoveRedEyeRounded/> }
+            </button>
             {passwordError && (
               <p className="mt-2 text-sm text-red-600">{passwordError}</p>
             )}
