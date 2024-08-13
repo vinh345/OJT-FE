@@ -1,5 +1,10 @@
 
 import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import FormLoginAdmin from "./components/FormLoginAdmin";
+import RegisterUserForm from "./components/RegisterUserForm";
+import CompanyRegisterForm from "./components/CompanyRegisterForm";
 
 
 function App() {

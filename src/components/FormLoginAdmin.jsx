@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '../assets/logo.png'; // Đảm bảo đường dẫn tới ảnh là chính xác
 import Adminrafiki2 from '../assets/Admin-rafiki2.png'; // Đảm bảo đường dẫn tới ảnh là chính xác
 
-// import '../style/FormLoginAdmin.scss'; // Import file CSS
+import '../style/FormLoginAdmin.module.scss'; // Import file CSS
 
 export default function FormLoginAdmin() {
   return (
