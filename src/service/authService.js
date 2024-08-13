@@ -1,4 +1,4 @@
-import { createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import BASE_URL from "../api";
 import { POST } from "../constants/httpMethod";
 import { accessToken } from "../constants/accessToken";
@@ -10,8 +10,6 @@ export const getDataFromCookie = createAsyncThunk(
     return userData;
   }
 );
-
-
 
 export const login = createAsyncThunk(
   "auth/login",
@@ -33,19 +31,19 @@ export const login = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.log(error);
-      const errorMessage = error.response && error.response.data && error.response.data.error
-        ? error.response.data.error.details
-        : { message: "An unknown error occurred. Please try again." };
+      const errorMessage =
+        error.response && error.response.data && error.response.data.error
+          ? error.response.data.error.details
+          : { message: "An unknown error occurred. Please try again." };
 
       return rejectWithValue(errorMessage);
     }
-
   }
+);
 
-
-export const changePassword = createAsyncThunk("auth/changePassword",
+export const changePassword = createAsyncThunk(
+  "auth/changePassword",
   async (formData, { rejectWithValue }) => {
-
     try {
       const response = await BASE_URL[POST](`auth/changePassword`, formData, {
         headers: {
@@ -58,17 +56,18 @@ export const changePassword = createAsyncThunk("auth/changePassword",
       return response.data;
     } catch (error) {
       console.log(error);
-      const errorMessage = error.response && error.response.data && error.response.data.error
-        ? error.response.data.error.details
-        : { message: "An unknown error occurred. Please try again." };
+      const errorMessage =
+        error.response && error.response.data && error.response.data.error
+          ? error.response.data.error.details
+          : { message: "An unknown error occurred. Please try again." };
 
       return rejectWithValue(errorMessage);
     }
   }
 );
 
-
-export const recoverPassword = createAsyncThunk("auth/recoverPassword",
+export const recoverPassword = createAsyncThunk(
+  "auth/recoverPassword",
   async (formData, { rejectWithValue }) => {
     try {
       const response = await BASE_URL[POST](`auth/recoverPassword`, formData);
@@ -79,9 +78,10 @@ export const recoverPassword = createAsyncThunk("auth/recoverPassword",
       return response.data;
     } catch (error) {
       console.log(error);
-      const errorMessage = error.response && error.response.data && error.response.data.error
-        ? error.response.data.error.details
-        : { message: "An unknown error occurred. Please try again." };
+      const errorMessage =
+        error.response && error.response.data && error.response.data.error
+          ? error.response.data.error.details
+          : { message: "An unknown error occurred. Please try again." };
 
       return rejectWithValue(errorMessage);
     }
