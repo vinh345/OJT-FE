@@ -3,6 +3,7 @@ import PrivateRoute from "../../features/protectedRoutes/PrivateRoute";
 import CandidateProfilePage from "../../pages/company/CandidateProfile";
 import ChangePassword from "../../pages/auth/changePassword";
 import LayoutIndex from "../../layouts";
+import UserInfor from "../../pages/candidateinformation";
 
 const privateRoutes = [
   {
@@ -25,6 +26,14 @@ const privateRoutes = [
       },
     ],
   },
+  {
+    path: "/user",
+    children: [
+      {path: "infor",
+        element: <PrivateRoute element={<UserInfor/>} />
+      }
+    ]
+  }
 ];
 
 export default privateRoutes;

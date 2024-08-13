@@ -3,9 +3,7 @@ import BASE_URL from "../api";
 import { POST, PUT } from "../constants/httpMethod";
 import { accessToken } from "../constants/accessToken";
 import { Cookies } from "react-cookie";
-
 import axios from "axios";
-
 
 export const getDataFromCookie = createAsyncThunk(
   "auth/getDataFromCookie",
@@ -44,8 +42,7 @@ export const login = createAsyncThunk(
       return rejectWithValue(errorMessage);
     }
   }
-)
-
+);
 
 export const changePassword = createAsyncThunk(
   "auth/changePassword",
@@ -142,4 +139,3 @@ export const resendOtp = createAsyncThunk("auth/resendOtp", async (email, thunkA
     return thunkAPI.rejectWithValue(error.response?.data || error.message);
   }
 });
-

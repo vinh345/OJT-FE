@@ -1,14 +1,22 @@
 import CompanyRegisterForm from "../../components/CompanyRegisterForm";
 import FormLoginAdmin from "../../components/FormLoginAdmin";
+
+import LoginForm from "../../components/login/LoginForm";
+import LoginUserForm from "../../components/LoginUserForm";
 import RegisterUserForm from "../../components/RegisterUserForm";
-import LayoutIndex from "../../layouts";
+import PrivateRoute from "../../features/protectedRoutes/PrivateRoute";
+import ChangePassword from "../../pages/auth/changePassword";
+
+import LoginUserForm from "../../components/LoginUserForm";
+import RegisterUserForm from "../../components/RegisterUserForm";
 import LoginPage from "../../pages/auth/login/Login";
 import Home from "../../pages/Home";
-import Footer from "../../layouts/Footer";
+// import Footer from "../../layouts/Footer";
 import ListCompany from "../../pages/company/listCompany/ListCompany";
 import ListJob from "../../pages/job/ListJob";
 import JobDetail from "../../pages/job/JobDetail";
 import CompanyDetail from "../../pages/company/listCompany/CompanyDetail";
+import VerifyAccount from "../../pages/auth/verify";
 
 const publicRoutes = [
   {
@@ -41,13 +49,19 @@ const publicRoutes = [
       { path: "detail/:id", element: <CompanyDetail /> }, // Tuyến đường chi tiết công ty
     ],
   },
-]
-  }
 
   // {
   //   path: "/listCompany",
   //   element: <Footer />,
   // },
-];
+  {
+    path: "/verify",
+    element: <VerifyAccount/>
+  }
+ ]
+}
+]
+
+
 
 export default publicRoutes;

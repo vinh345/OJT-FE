@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.4.0",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
@@ -28,8 +29,8 @@
     "react-router-dom": "^6.26.0",
     "redux": "^5.0.1",
     "sass": "^1.77.8",
-    "yup": "^1.4.0",
-    "sweetalert2": "^11.12.4"
+    "sweetalert2": "^11.12.4",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
