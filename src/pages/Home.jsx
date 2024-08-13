@@ -1,4 +1,5 @@
 import React from 'react'; 
+import UserHeader from '../layouts/UserHeader';
 
 export default function Home() {
   return (
