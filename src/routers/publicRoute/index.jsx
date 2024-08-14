@@ -19,6 +19,7 @@ import JobDetail from "../../pages/job/JobDetail";
 import VerifyAccount from "../../pages/auth/verify";
 import CompanyDetail from "../../pages/company/listCompany/CompanyDetailUser";
 
+
 const publicRoutes = [
   {
     path: "",
