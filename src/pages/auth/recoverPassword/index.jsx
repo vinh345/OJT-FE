@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { recoverPassword } from '../../../service/authService';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { recoverPassword } from "../../../service/authService";
 
 export default function RecoverPassword() {
-  const [email, setEmail] = useState('');
-  const [role, setRole] = useState('candidate'); // Default to 'candidate', adjust as needed
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("candidate"); // Default to 'candidate', adjust as needed
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const dispatch = useDispatch();
@@ -23,12 +23,11 @@ export default function RecoverPassword() {
       const response = await dispatch(recoverPassword(formData)).unwrap();
       setSuccessMessage(response.message);
     } catch (err) {
-      if (typeof err==='string'){
+      if (typeof err === "string") {
         setError(err);
       } else {
-
-        setError('Failed to send recovery email. Please try again.');
-      } 
+        setError("Failed to send recovery email. Please try again.");
+      }
     }
   };
 
@@ -37,7 +36,10 @@ export default function RecoverPassword() {
       <h2 className="text-2xl font-bold text-center mb-5">Recover Password</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="form-group">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700"
+          >
             Email
           </label>
           <div className="mt-1">
@@ -53,7 +55,10 @@ export default function RecoverPassword() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="role"
+            className="block text-sm font-medium text-gray-700"
+          >
             Role
           </label>
           <div className="mt-1">
@@ -72,7 +77,9 @@ export default function RecoverPassword() {
         </div>
 
         {error && <p className="text-sm text-red-600">{error}</p>}
-        {successMessage && <p className="text-sm text-green-600">{successMessage}</p>}
+        {successMessage && (
+          <p className="text-sm text-green-600">{successMessage}</p>
+        )}
 
         <div>
           <button

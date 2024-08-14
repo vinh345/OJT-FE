@@ -1,40 +1,43 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import logo from '../assets/logo.png';
-import Adminrafiki2 from '../assets/Admin-rafiki2.png';
+import React, { useState } from "react";
+import axios from "axios";
+import logo from "../assets/logo.png";
+import Adminrafiki2 from "../assets/Admin-rafiki2.png";
 // import '../style/FormLoginAdmin.module.scss';
 
 export default function FormLoginAdmin() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8080/api.myservice.com/v1/auth/admin/sign-in', {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api.myservice.com/v1/auth/admin/sign-in",
+        {
+          email,
+          password,
+        }
+      );
 
       // Xử lý kết quả đăng nhập thành công
-      console.log('Đăng nhập thành công:', response.data);
+      console.log("Đăng nhập thành công:", response.data);
       // Lưu token vào localStorage hoặc state để sử dụng sau
-      localStorage.setItem('accessToken', response.data.accessToken);
+      localStorage.setItem("accessToken", response.data.accessToken);
 
       // Chuyển hướng đến trang quản lý ứng viên hoặc trang chính của admin
-      window.location.href = '/admin/dashboard';
+      window.location.href = "/admin/dashboard";
     } catch (error) {
-      console.error('Lỗi đăng nhập:', error);
-      setError('Email hoặc mật khẩu không đúng!');
+      console.error("Lỗi đăng nhập:", error);
+      setError("Email hoặc mật khẩu không đúng!");
     }
   };
 
   return (
     <div className="container">
       <div className="container1">
-        <img src={logo} alt="RKEI Edu Logo" height={"70px"} className='lgo' />
+        <img src={logo} alt="RKEI Edu Logo" height={"70px"} className="lgo" />
         <h2>Admin CV Management</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">

@@ -1,11 +1,10 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import publicRoutes from './routers/publicRoute';
-import './App.css'
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import publicRoutes from "./routers/publicRoute";
+import "./App.css";
 
 function App() {
   return (
-    
     <Router>
       <Routes>
         {publicRoutes.map((route, index) => {
@@ -22,7 +21,7 @@ function App() {
             <Route key={index} path={route.path} element={route.element} />
           );
         })}
-      </Routes> 
+      </Routes>
     </Router>
   );
 }

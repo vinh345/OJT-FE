@@ -1,4 +1,3 @@
-
 import CompanyRegisterForm from "../../components/CompanyRegisterForm";
 import FormLoginAdmin from "../../components/FormLoginAdmin";
 
@@ -17,8 +16,8 @@ import LayoutIndex from "../../layouts";
 import ListCompany from "../../pages/company/listCompany/ListCompany";
 import ListJob from "../../pages/job/ListJob";
 import JobDetail from "../../pages/job/JobDetail";
-import CompanyDetail from "../../pages/company/listCompany/CompanyDetail";
 import VerifyAccount from "../../pages/auth/verify";
+import CompanyDetail from "../../pages/company/listCompany/CompanyDetailUser";
 
 const publicRoutes = [
   {
