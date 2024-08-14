@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import logo from "../../../assets/logo.png"; // Đảm bảo đường dẫn tới ảnh là chính xác
 import Adminrafiki2 from "../../../assets/Admin-rafiki2.png"; // Đảm bảo đường dẫn tới ảnh là chính xác
 
-import { Email } from "@mui/icons-material";
+
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { resendOtp, verifyAccount } from "../../../service/authService";
@@ -37,7 +37,7 @@ export default function VerifyAccount() {
               text: "Verify successfully",
               icon: "success",
             }).then(() => {
-              navigate("/login");
+              navigate("/");
             });
           }
         }
@@ -64,7 +64,7 @@ export default function VerifyAccount() {
     }
   };
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center mb-40">
     <div className="flex justify-center w-[900px] mt-[120px] bg-white shadow-[0px_29px_52px_rgba(0,0,0,0.40),_0px_25px_16px_rgba(0,0,0,0.20)]">
       <div className="flex flex-col justify-center items-start w-[500px] h-[600px] pl-[80px]">
         <img src={logo} alt="RKEI Edu Logo" className="mb-[50px] h-[70px]" />
