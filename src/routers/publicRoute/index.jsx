@@ -19,6 +19,7 @@ import ListJob from "../../pages/job/ListJob";
 import JobDetail from "../../pages/job/JobDetail";
 import CompanyDetail from "../../pages/company/listCompany/CompanyDetail";
 import VerifyAccount from "../../pages/auth/verify";
+import Jobs from "../../pages/admin/Jobs";
 
 const publicRoutes = [
   {
@@ -43,6 +44,7 @@ const publicRoutes = [
           { path: "candidate", element: <Users /> },
           { path: "company", element: <Company /> },
           { path: "login", element: <FormLoginAdmin /> },
+          { path: "jobs", element: <Jobs /> }
         ],
       },
       { path: "/auth/recoverPassword", element: <RecoverPassword /> },
