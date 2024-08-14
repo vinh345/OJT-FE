@@ -1,19 +1,23 @@
 import CompanyRegisterForm from "../../components/CompanyRegisterForm";
 import FormLoginAdmin from "../../components/FormLoginAdmin";
 
+import PrivateRoute from "../../features/protectedRoutes/PrivateRoute";
+import ChangePassword from "../../pages/auth/changePassword";
+
 import RegisterUserForm from "../../components/RegisterUserForm";
 import LoginPage from "../../pages/auth/login/Login";
+import RecoverPassword from "../../pages/auth/recoverPassword";
 import Home from "../../pages/Home";
-// import Footer from "../../layouts/Footer";
+import AdminLayout from "../../pages/admin/AdminLayout";
+import Dashboard from "../../pages/admin/Dashboard";
+import Users from "../../pages/admin/Users";
+import Company from "../../pages/admin/Company";
+import LayoutIndex from "../../layouts";
 import ListCompany from "../../pages/company/listCompany/ListCompany";
 import ListJob from "../../pages/job/ListJob";
 import JobDetail from "../../pages/job/JobDetail";
-import CompanyDetail from "../../pages/company/listCompany/CompanyDetailUser";
-import CompanyDetailBusiness from "../../pages/company/listCompany/CompanyDetailBusiness";
 import VerifyAccount from "../../pages/auth/verify";
-import LayoutIndex from "../../layouts";
-import RecoverPassword from "../../pages/auth/recoverPassword";
-import AddJobBusiness from "../../pages/company/listCompany/AddJobBusiness";
+import CompanyDetail from "../../pages/company/listCompany/CompanyDetailUser";
 
 const publicRoutes = [
   {
@@ -21,12 +25,26 @@ const publicRoutes = [
     element: <LayoutIndex />,
     exact: true,
     children: [
-      { path: "/auth/recoverPassword", element: <RecoverPassword /> },
+      {
+        path: "changePassword",
+        element: <PrivateRoute element={ChangePassword} />,
+      },
       {
         path: "/",
         element: <Home />,
       },
-      { path: "/", element: <FormLoginAdmin /> },
+      { path: "/admin", element: <FormLoginAdmin /> },
+      {
+        path: "/admin",
+        element: <AdminLayout />,
+        children: [
+          { path: "dashboard", element: <Dashboard /> },
+          { path: "candidate", element: <Users /> },
+          { path: "company", element: <Company /> },
+          { path: "login", element: <FormLoginAdmin /> },
+        ],
+      },
+      { path: "/auth/recoverPassword", element: <RecoverPassword /> },
       {
         path: "/user",
         children: [
@@ -43,9 +61,7 @@ const publicRoutes = [
           { path: "listCompany", element: <ListCompany /> },
           { path: "job", element: <ListJob /> },
           { path: "jobDetail/:id", element: <JobDetail /> },
-          // { path: "detail/:id", element: <CompanyDetail /> },
-          { path: "detail/:id", element: <CompanyDetail /> },
-          { path: "addJob", element: <AddJobBusiness /> },
+          { path: "detail/:id", element: <CompanyDetail /> }, // Tuyến đường chi tiết công ty
         ],
       },
 

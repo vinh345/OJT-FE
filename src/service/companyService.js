@@ -24,8 +24,15 @@ export const getListCompanies = createAsyncThunk(
     }).toString();
 
     try {
-      const response = await BASE_URL[GET](`/company?${query}`);
-      return response.data;
+        const response = await BASE_URL[GET](`company/viewCandidateInfo/${id}`,
+            {
+                headers: {
+                  Authorization: `Bearer ${accessToken}`,
+                },
+              }
+        );
+        
+        return response.data;
     } catch (error) {
       console.error("Error fetching companies", error);
       return null;
