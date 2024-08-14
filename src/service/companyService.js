@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import BASE_URL from "../api";
+import { accessToken } from "../constants/accessToken";
 import { GET } from "../constants/httpMethod";
 
 export const fetchProfile = async (id) => {
@@ -40,6 +41,25 @@ export const getCompanyDetail = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// Hàm gọi API để lấy danh sách công ty có cùng typeCompany
+export const getRelatedCompanies = createAsyncThunk(
+  "companies/getRelatedCompanies",
+  async (companyId, { rejectWithValue }) => {
+    try {
+      // Gọi API với companyId
+      const response = await BASE_URL[GET](
+        `/company/${companyId}/related-companies`
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching related companies", error);
+      return rejectWithValue(
+        error.response ? error.response.data : error.message
+      );
     }
   }
 );

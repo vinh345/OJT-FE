@@ -1,38 +1,46 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import {
-  LocationOn,
-  MonetizationOn,
-  Group,
-  Language,
-} from "@mui/icons-material";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import { LocationOn, Group } from "@mui/icons-material";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { getCompanyDetail } from "../../../service/companyService";
 import { FAILED, PENDING, IDLE } from "../../../constants/status";
 import { getListJob } from "../../../service/jobService";
+import { getRelatedCompanies } from "../../../service/companyService";
 import JobCardItem from "../../job/JobCardItem";
+import CompanyCardItem from "./CompanyCardItem";
 
 export default function CompanyDetail() {
   const { id } = useParams();
   const dispatch = useDispatch();
+
+  // Lấy thông tin chi tiết công ty
   const {
     data: company,
     loading: companyLoading,
     error: companyError,
   } = useSelector((state) => state.companyDetail);
 
+  // Lấy danh sách việc làm liên quan
   const {
     data: jobs,
     loading: jobLoading,
     error: jobError,
   } = useSelector((state) => state.jobs);
 
+  // Lấy danh sách công ty cùng lĩnh vực
+  const {
+    data: relatedCompanies,
+    loading: relatedCompaniesLoading,
+    error: relatedCompaniesError,
+  } = useSelector((state) => state.relatedCompanies);
+
   const [searchTitle, setSearchTitle] = useState("");
   const [searchLocation, setSearchLocation] = useState("");
 
   useEffect(() => {
     dispatch(getCompanyDetail(id));
+    dispatch(getRelatedCompanies(id));
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -74,7 +82,7 @@ export default function CompanyDetail() {
               </div>
             </div>
             <div className="flex items-center space-x-4">
-              <BookmarkBorderIcon
+              <FavoriteBorderIcon
                 style={{ fontSize: "40px" }}
                 className="text-red-500 bg-red-200"
               />
@@ -205,9 +213,32 @@ export default function CompanyDetail() {
               </div>
             </div>
           </div>
+
+          {/* Related Companies Section */}
+          <div className="mt-10">
+            <h2 className="text-3xl font-bold">Công ty cùng lĩnh vực</h2>
+            {relatedCompaniesLoading === PENDING && (
+              <p>Loading related companies...</p>
+            )}
+            {relatedCompaniesLoading === FAILED && (
+              <p>Error: {relatedCompaniesError}</p>
+            )}
+            {relatedCompanies.length > 0 ? (
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                {relatedCompanies.map((relatedCompany) => (
+                  <CompanyCardItem
+                    key={relatedCompany.id}
+                    company={relatedCompany}
+                  />
+                ))}
+              </div>
+            ) : (
+              <p>No related companies found.</p>
+            )}
+          </div>
         </>
       ) : (
-        <p>No company details found.</p>
+        <p>No company found with the specified ID.</p>
       )}
     </div>
   );

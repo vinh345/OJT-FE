@@ -30,3 +30,15 @@ export const getJobDetail = createAsyncThunk(
     }
   }
 );
+
+export const getJobsBySameType = createAsyncThunk(
+  "jobs/getJobsBySameType",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await BASE_URL[GET](`/company/job/${id}/same-type-jobs`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
