@@ -18,8 +18,8 @@ export default function Skill({ title, data }) {
         bodyStyle={{ padding: "0" }}
       >
         <div className="p-6">
-          <div className="flex justify-between">
-            <h4 className="text-2xl text-text font-bold ">{title}</h4>
+          <div className="flex justify-between border-b ">
+            <h4 className="text-2xl text-text font-bold text-red-500">{title}</h4>
             <PlusCircleOutlined onclick={initAdd} className="text-red-500 text-lg" />
           </div>
 
@@ -27,7 +27,7 @@ export default function Skill({ title, data }) {
             {data?.map((skill) => (
               <>
                 <div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between h-9 mt-5">
                     <p className="text-lg text-center">
                       + {skill.name}{" "}
                     </p>

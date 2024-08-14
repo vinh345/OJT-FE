@@ -5,6 +5,7 @@ import { recoverPassword } from "../../../service/authService";
 import Investmentdatarafiki1 from "../../../assets/Investmentdatarafiki1.png";
 import { Link } from "react-router-dom";
 
+
 export default function RecoverPassword() {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("candidate"); // Default to 'candidate', adjust as needed
@@ -110,6 +111,7 @@ export default function RecoverPassword() {
               </div>
             </form>
             <span className="flex justify-center pt-2">Chưa có tài khoản?{" "} <Link to={"/user/register" }><a className="text-red-600">Đăng ký</a></Link></span>
+
           </div>
           <div className="h-full w-px bg-gradient-to-b from-gray-300 via-gray-400 to-gray-300"></div>
         </div>

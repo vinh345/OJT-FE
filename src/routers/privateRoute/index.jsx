@@ -29,16 +29,16 @@ const privateRoutes = [
           },
         ],
       },
+      {
+        path: "/user",
+        children: [
+          {path: "infor",
+            element: <PrivateRoute element={<UserInfor/>} />
+          }
+        ]
+      }
     ],
   },
-  {
-    path: "/user",
-    children: [
-      {path: "infor",
-        element: <PrivateRoute element={<UserInfor/>} />
-      }
-    ]
-  }
 ];
 
 export default privateRoutes;

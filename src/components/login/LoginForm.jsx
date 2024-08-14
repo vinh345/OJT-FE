@@ -17,6 +17,7 @@ const LoginForm = ({ isCompany }) => {
     setShowPassword(!showPassword);
   };
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const role = isCompany ? "company" : "candidate";
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
