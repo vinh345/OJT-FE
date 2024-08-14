@@ -66,7 +66,7 @@ export default function FormAddExp({ isModalAddExpOpen, showModalAddExpOpen }) {
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: Object.values(res.payload.message).join(""),
+            text: Object.values(res.payload.error.details).join(""),
           });
         } else {
           if (res.payload.data.error) {
@@ -82,7 +82,6 @@ export default function FormAddExp({ isModalAddExpOpen, showModalAddExpOpen }) {
               icon: "success",
             });
             resetForm();
-            showModalAddExpOpen();
           }
         }
       });
@@ -114,7 +113,7 @@ export default function FormAddExp({ isModalAddExpOpen, showModalAddExpOpen }) {
   return (
     <>
       <Modal
-        title={<h2 className="text-center text-xl font-semibold">Học vấn</h2>}
+        title={<h2 className="text-center text-xl font-semibold">Kinh nghiệm</h2>}
         open={isModalAddExpOpen}
         onOk={handleOk}
         onCancel={handleCancel}

@@ -148,3 +148,183 @@ export const editExperience = createAsyncThunk(
     }
   }
 );
+
+export const addProject = createAsyncThunk("candidate/addProject", async ({name,link,startAt,endAt,info}, thunkAPI)=>{
+  try{
+    const response = await BASE_URL[POST](
+      "/candidate/project",
+      {name, link, startAt, endAt, info},
+      {
+        headers: {
+          Authorization: "Bearer " + cookie.get("accessToken"),
+        },
+      }
+    );
+    return response;
+  } catch (e) {
+    return thunkAPI.rejectWithValue(e.response?.data || e.message);
+  }
+})
+
+export const deleteProject = createAsyncThunk(
+  "candidate/deleteproject",
+  async (id, thunkAPI) => {
+    try {
+      const response = await BASE_URL[DELETE](`/candidate/project/${id}`, {
+        headers: {
+          Authorization: "Bearer " + cookie.get("accessToken"),
+        },
+      });
+      return response;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.response?.data || e.message);
+    }
+  }
+);
+
+export const editProject = createAsyncThunk(
+  "candidate/editProject",
+  async ({id, name, link, startAt, endAt, info }, thunkAPI) => {
+    try {
+      const response = await BASE_URL[PUT](
+        "/candidate/project",
+        {id, name, link, startAt, endAt, info },
+        {
+          headers: {
+            Authorization: "Bearer " + cookie.get("accessToken"),
+          },
+        }
+      );
+      return response;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.response?.data || e.message);
+    }
+  }
+);
+
+export const addCertificate = createAsyncThunk(
+  "candidate/addcertificate",
+  async ({ name, organization, startAt, endAt, info }, thunkAPI) => {
+    try {
+      const response = await BASE_URL[POST](
+        "/candidate/certificate",
+        { name, organization, startAt, endAt, info },
+        {
+          headers: {
+            Authorization: "Bearer " + cookie.get("accessToken"),
+          },
+        }
+      );
+      return response;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.response?.data || e.message);
+    }
+  }
+);
+
+export const deleteCertificate = createAsyncThunk(
+  "candidate/deletecertificate",
+  async (id, thunkAPI) => {
+    try {
+      const response = await BASE_URL[DELETE](`/candidate/certificate/${id}`, {
+        headers: {
+          Authorization: "Bearer " + cookie.get("accessToken"),
+        },
+      });
+      return response;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.response?.data || e.message);
+    }
+  }
+);
+
+export const editCertificate = createAsyncThunk(
+  "candidate/editCertificate",
+  async ({id, name, organization, startAt, endAt, info }, thunkAPI) => {
+    try {
+      const response = await BASE_URL[PUT](
+        "/candidate/certificate",
+        {id, name, organization, startAt, endAt, info },
+        {
+          headers: {
+            Authorization: "Bearer " + cookie.get("accessToken"),
+          },
+        }
+      );
+      return response;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.response?.data || e.message);
+    }
+  }
+);
+
+export const getLvJob = createAsyncThunk("candidate/getLvJob",async (thunkAPI)=>{
+  try{
+    const response = await BASE_URL[GET](
+      "/candidate/getlvjob",
+      {
+        headers: {
+          Authorization: "Bearer " + cookie.get("accessToken"),
+        },
+      }
+    );
+    return response;
+  } catch (e) {
+    return thunkAPI.rejectWithValue(e.response?.data || e.message);
+  }
+})
+export const addSkill = createAsyncThunk(
+  "candidate/addskill",
+  async ({ name,levelJobId }, thunkAPI) => {
+    try {
+      const response = await BASE_URL[POST](
+        "/candidate/skill",
+        { name,levelJobId },
+        {
+          headers: {
+            Authorization: "Bearer " + cookie.get("accessToken"),
+          },
+        }
+      );
+      return response;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.response?.data || e.message);
+    }
+  }
+);
+
+export const deleteSkill = createAsyncThunk(
+  "candidate/deleteskill",
+  async (id, thunkAPI) => {
+    try {
+      const response = await BASE_URL[DELETE](`/candidate/skill/${id}`, {
+        headers: {
+          Authorization: "Bearer " + cookie.get("accessToken"),
+        },
+      });
+      return response;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.response?.data || e.message);
+    }
+  }
+);
+
+export const updateSkill = createAsyncThunk(
+  "candidate/editSkill",
+  async ({id, name,levelJobId }, thunkAPI) => {
+    try {
+      const response = await BASE_URL[PUT](
+        "/candidate/skill",
+        {id, name,levelJobId },
+        {
+          headers: {
+            Authorization: "Bearer " + cookie.get("accessToken"),
+          },
+        }
+      );
+      return response;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.response?.data || e.message);
+    }
+  }
+);

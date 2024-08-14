@@ -3,40 +3,40 @@ import { Modal, Button, Form, Input, DatePicker } from "antd";
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import {
-  editExperience,
+  editCertificate,
 } from "../../../../service/candidateService";
 import Swal from "sweetalert2";
 
-export default function FormEditExp({
-  isModalEditExpOpen,
-  showModalEditExpOpen,
-  editExp,
+export default function FormEditCerti({
+  isModalEditCertiOpen,
+  showModalEditCertiOpen,
+  editCerti,
 }) {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const [formEditExp, setFormEditExp] = useState({
-    company: null,
-    position: null,
+  const [formEditCerti, setFormEditCerti] = useState({
+    name: null,
+    organization: null,
     startAt: null,
     endAt: null,
     info: null,
   });
   useEffect(() => {
-    if (editExp) {
+    if (editCerti) {
       form.setFieldsValue({
-        company: editExp.company,
-        position: editExp.position,
-        startAt: editExp.startAt ? dayjs(editExp.startAt) : null,
-        endAt: editExp.endAt ? dayjs(editExp.endAt) : null,
-        info: editExp.info,
+        name: editCerti.name,
+        organization: editCerti.organization,
+        startAt: editCerti.startAt ? dayjs(editCerti.startAt) : null,
+        endAt: editCerti.endAt ? dayjs(editCerti.endAt) : null,
+        info: editCerti.info,
       });
     }
-  }, [editExp, form]);
+  }, [editCerti, form]);
 
   const resetForm = () => {
-    setFormEditExp({
-      company: null,
-      position: null,
+    setFormEditCerti({
+      name: null,
+      organization: null,
       startAt: null,
       endAt: null,
       info: null,
@@ -60,16 +60,16 @@ export default function FormEditExp({
   };
   const handleOk = () => {
     form.submit();
-    console.log(formEditExp);
+    console.log(formEditCerti);
 
     dispatch(
-      editExperience({
-        id: editExp?.id,
-        company: formEditExp.company,
-        position: formEditExp.position,
-        startAt: formEditExp.startAt,
-        endAt: formEditExp.endAt,
-        info: formEditExp.info,
+      editCertificate({
+        id: editCerti?.id,
+        name: formEditCerti.name,
+        organization: formEditCerti.organization,
+        startAt: formEditCerti.startAt,
+        endAt: formEditCerti.endAt,
+        info: formEditCerti.info,
       })
     ).then((res) => {
       console.log(res);
@@ -89,7 +89,7 @@ export default function FormEditExp({
         } else {
           Swal.fire({
             title: "Success!",
-            text: "Sửa thông tin kinh nghiệm thành công",
+            text: "Sửa thông tin học vấn thành công",
             icon: "success",
           });
           resetForm();
@@ -100,34 +100,35 @@ export default function FormEditExp({
 
   const handleCancel = () => {
     resetForm();
-    showModalEditExpOpen();
+    showModalEditCertiOpen();
   };
 
   const handleFinish = (values) => {
     console.log("Form Values:", values);
     resetForm();
-    showModalEditExpOpen();
+    showModalEditCertiOpen();
   };
   const handleChange = (e) => {
-    setFormEditExp({ ...formEditExp, [e.target.name]: e.target.value });
+    setFormEditCerti({ ...formEditCerti, [e.target.name]: e.target.value });
   };
   const handleChangStartDate = (date) => {
-    setFormEditExp({
-      ...formEditExp,
+    // debugger
+    setFormEditCerti({
+      ...formEditCerti,
       startAt: dayjs(date).format("YYYY-MM-DD"),
     });
     setStartDate(date);
   };
   const handleChangEndDate = (date) => {
-    setFormEditExp({ ...formEditExp, endAt: dayjs(date).format("YYYY-MM-DD") });
+    setFormEditCerti({ ...formEditCerti, endAt: dayjs(date).format("YYYY-MM-DD") });
     setEndDate(date);
   };
 
   return (
     <>
       <Modal
-        title={<h2 className="text-center text-xl font-semibold">Kinh nghiệm</h2>}
-        open={isModalEditExpOpen}
+        title={<h2 className="text-center text-xl font-semibold">Chứng chỉ</h2>}
+        open={isModalEditCertiOpen}
         onOk={handleOk}
         onCancel={handleCancel}
         footer={[
@@ -149,26 +150,26 @@ export default function FormEditExp({
           layout="vertical"
           onFinish={handleFinish}
           initialValues={{
-            company: editExp?.company,
-            position: editExp?.position,
-            startAt: dayjs(editExp?.startAt),
-            endAt: dayjs(editExp?.endAt),
-            info: editExp?.info,
+            name: editCerti?.name,
+            organization: editCerti?.organization,
+            startAt: dayjs(editCerti?.startAt),
+            endAt: dayjs(editCerti?.endAt),
+            info: editCerti?.info,
           }}
         >
-          <Form.Item label="Công ty" name="company">
+          <Form.Item label="Chứng chỉ" name="name">
             <Input
               onChange={handleChange}
-              name="company"
-              placeholder="Company"
+              name="name"
+              placeholder="Certificate"
             />
           </Form.Item>
 
-          <Form.Item label="Ngành Học" name="position">
-            <Input onChange={handleChange} name="position" placeholder="position" />
+          <Form.Item label="Tổ chức" name="organization">
+            <Input onChange={handleChange} name="organization" placeholder="Organization" />
           </Form.Item>
 
-          <Form.Item label="Thời gian học tập">
+          <Form.Item label="Thời gian">
             <div className="flex justify-between items-center">
               <Form.Item name="startAt" className="mr-2">
                 <DatePicker

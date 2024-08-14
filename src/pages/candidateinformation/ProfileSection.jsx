@@ -15,7 +15,7 @@ export default function ProfileSection({ showModalEditInfo,info }) {
             <div>
               <h3 className="font-bold text-2xl text-text">{info?.name}</h3>
               <p className="text-text text-lg">{info?.position}</p>
-              <div className="flex flex-col xl:flex-row justify-between gap-6 xl:gap-28">
+              <div className="flex ml-4 flex-col xl:flex-row justify-between gap-6 xl:gap-28">
                 <div>
                   <p className="text-text text-lg">
                     Email: {info?.account?.email}

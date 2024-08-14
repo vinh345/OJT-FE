@@ -78,7 +78,7 @@ export default function FormEditEducation({
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: Object.values(res.payload.message).join(""),
+          text: Object.values(res.payload.error.details).join(""),
         });
       } else {
         if (res.payload.data.error) {
@@ -94,7 +94,6 @@ export default function FormEditEducation({
             icon: "success",
           });
           resetForm();
-          showModalEditEduOpen();
         }
       }
     });
