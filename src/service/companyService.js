@@ -3,15 +3,7 @@ import BASE_URL from "../api";
 import { accessToken } from "../constants/accessToken";
 import { GET } from "../constants/httpMethod";
 
-export const fetchProfile = async (id) => {
-  try {
-    const response = await BASE_URL[GET](`/viewCandidateInfo/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching profile data", error);
-    return null;
-  }
-};
+
 
 // Cập nhật hàm fetchCompanyList để nhận tham số tìm kiếm
 export const getListCompanies = createAsyncThunk(
