@@ -7,6 +7,7 @@ import companyDetailSlice from "./companyDetailSlice";
 import userInfoSlice from "./userInfoSlice";
 import sameTypeJobsSlice from "./sameTypeJobsSlice";
 import relatedCompaniesSlice from "./relatedCompaniesSlice";
+import getAllJobsByCompanySlice from "./getAllJobsByCompanySlice";
 const reducers = combineReducers({
   auth: authSlice,
   locations: locationSlice,
@@ -16,6 +17,7 @@ const reducers = combineReducers({
   userInfor: userInfoSlice,
   sameTypeJobs: sameTypeJobsSlice,
   relatedCompanies: relatedCompaniesSlice,
+  getAllJobsByCompanys: getAllJobsByCompanySlice,
 });
 
 export default reducers;

@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCompanyDetail } from "../../../service/companyService";
 import { FAILED, IDLE, PENDING } from "../../../constants/status";
-import { getListJob } from "../../../service/jobService";
+import { getAllJobsByCompany, getListJob } from "../../../service/jobService";
 import JobCardItemBusiness from "../../job/JobCardItemBusiness";
 import {
   Email,
@@ -31,15 +31,24 @@ export default function CompanyDetailBusiness() {
     dispatch(getCompanyDetail(id));
   }, [dispatch, id]);
 
+  // Lấy danh sách việc làm của công ty
   const {
     data: jobs,
     loading: jobLoading,
     error: jobError,
-  } = useSelector((state) => state.jobs);
+  } = useSelector((state) => state.getAllJobsByCompanys);
+  console.log(jobs);
 
   useEffect(() => {
-    if (jobLoading[0] === IDLE) {
-      dispatch(getListJob({ title: "", nameCity: "" }));
+    if (jobLoading === IDLE) {
+      dispatch(
+        getAllJobsByCompany({
+          title: "",
+          location: "",
+          page: 0,
+          size: 10,
+        })
+      );
     }
   }, [dispatch, jobLoading]);
 

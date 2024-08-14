@@ -14,8 +14,12 @@ import JobDetail from "../../pages/job/JobDetail";
 import VerifyAccount from "../../pages/auth/verify";
 import LayoutIndex from "../../layouts";
 import CompanyDetail from "../../pages/company/listCompany/CompanyDetailUser";
+
+import CompanyDetailBusiness from "../../pages/company/listCompany/CompanyDetailBusiness";
+
 import PrivateRoute from "../../features/protectedRoutes/PrivateRoute";
 import ChangePassword from "../../pages/auth/changePassword";
+
 
 
 const publicRoutes = [
@@ -48,8 +52,10 @@ const publicRoutes = [
         path: "/user",
         children: [
           { path: "register", element: <RegisterUserForm /> },
+          { path: "listCompany", element: <ListCompany userType="user" /> },
 
           { path: "login", element: <LoginPage boolean={false} /> },
+          { path: "company/detail/:id", element: <CompanyDetail /> },
         ],
       },
       {
@@ -57,10 +63,14 @@ const publicRoutes = [
         children: [
           { path: "register", element: <CompanyRegisterForm /> },
           { path: "login", element: <LoginPage boolean={true} /> },
-          { path: "listCompany", element: <ListCompany /> },
+          {
+            path: "listCompany",
+            element: <ListCompany userType="business" />,
+          },
           { path: "job", element: <ListJob /> },
           { path: "jobDetail/:id", element: <JobDetail /> },
-          { path: "detail/:id", element: <CompanyDetail /> }, // Tuyến đường chi tiết công ty
+
+          { path: "detail/:id", element: <CompanyDetailBusiness /> },
         ],
       },
 

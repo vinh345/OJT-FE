@@ -4,7 +4,7 @@ import { EnvironmentOutlined, GlobalOutlined } from "@ant-design/icons";
 import { Card } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const CompanyCardItem = ({ company }) => {
+const CompanyCardItem = ({ company, userType }) => {
   const navigate = useNavigate(); // Sử dụng useNavigate để điều hướng
   // Kiểm tra nếu company là undefined hoặc null
   if (!company) {
@@ -12,9 +12,12 @@ const CompanyCardItem = ({ company }) => {
   }
   // Hàm điều hướng đến trang chi tiết công ty
   const handleOpenPosition = () => {
-    navigate(`/company/detail/${company.id}`); // Đường dẫn mới cho trang chi tiết công ty
+    const path =
+      userType === "user"
+        ? `/user/company/detail/${company.id}`
+        : `/company/detail/${company.id}`;
+    navigate(path);
   };
-
   return (
     <Card className="border rounded-lg shadow-sm p-4">
       <div className="flex items-center">
