@@ -89,7 +89,7 @@ export default function RegisterUserForm() {
   return (
     <>
       <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">
-        <div className="w-full md:w-1/2 lg:w-1/3 bg-white p-8 -lg shadow-lg">
+ <div className="w-full md:w-1/2 lg:w-1/3 bg-white p-8  h-[700px]">
           <img src={logo} alt="RKEI Edu Logo" className="h-16 mx-auto mb-6" />
           <h2 className="text-center text-xl md:text-2xl font-bold mb-6">
             Cùng Rikkei Education xây dựng hồ
@@ -195,14 +195,14 @@ export default function RegisterUserForm() {
             </a>
           </p>
         </div>
-        <div className="hidden  md:block  p-8 w-full  md:w-1/2 lg:w-1/3 bg-white shadow-lg ">
+        <div className="hidden md:block p-8 w-full md:w-1/2 lg:w-1/3 bg-white  h-[700px] border-l-0 ">
           <img
             src={Adminrafiki2}
             alt="Admin Illustration"
-            className="w-full h-[620px] "
+            className="w-full h-full object-cover"
           />
         </div>
-      </div>
+        </div>
     </>
   );
 }
