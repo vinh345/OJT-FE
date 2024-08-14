@@ -1,22 +1,15 @@
 import CompanyRegisterForm from "../../components/CompanyRegisterForm";
 import FormLoginAdmin from "../../components/FormLoginAdmin";
-
-import LoginForm from "../../components/login/LoginForm";
-import LoginUserForm from "../../components/LoginUserForm";
-import RegisterUserForm from "../../components/RegisterUserForm";
-import PrivateRoute from "../../features/protectedRoutes/PrivateRoute";
-import ChangePassword from "../../pages/auth/changePassword";
-
-import LoginUserForm from "../../components/LoginUserForm";
 import RegisterUserForm from "../../components/RegisterUserForm";
 import LoginPage from "../../pages/auth/login/Login";
 import Home from "../../pages/Home";
-// import Footer from "../../layouts/Footer";
 import ListCompany from "../../pages/company/listCompany/ListCompany";
 import ListJob from "../../pages/job/ListJob";
 import JobDetail from "../../pages/job/JobDetail";
 import CompanyDetail from "../../pages/company/listCompany/CompanyDetail";
 import VerifyAccount from "../../pages/auth/verify";
+import LayoutIndex from "../../layouts";
+import RecoverPassword from "../../pages/auth/recoverPassword";
 
 const publicRoutes = [
   {

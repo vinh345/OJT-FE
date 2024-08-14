@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Menu from "./menu";
 import Header from "./header";
-import Footer from "./footer";
+import Footer from "./footers";
 
 export default function LayoutIndex() {
   return (
@@ -11,7 +11,7 @@ export default function LayoutIndex() {
         <div className="right">
           <Header />
           <Outlet />
-          <Footer/>
+          <Footer />
         </div>
       </div>
     </>
