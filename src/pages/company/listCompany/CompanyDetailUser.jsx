@@ -5,7 +5,7 @@ import { LocationOn, Group } from "@mui/icons-material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { getCompanyDetail } from "../../../service/companyService";
 import { FAILED, PENDING, IDLE } from "../../../constants/status";
-import { getListJob } from "../../../service/jobService";
+import { getAllJobsByCompany, getListJob } from "../../../service/jobService";
 import { getRelatedCompanies } from "../../../service/companyService";
 import JobCardItem from "../../job/JobCardItem";
 import CompanyCardItem from "./CompanyCardItem";
@@ -21,12 +21,13 @@ export default function CompanyDetail() {
     error: companyError,
   } = useSelector((state) => state.companyDetail);
 
-  // Lấy danh sách việc làm liên quan
+  // Lấy danh sách việc làm của công ty
   const {
     data: jobs,
     loading: jobLoading,
     error: jobError,
-  } = useSelector((state) => state.jobs);
+  } = useSelector((state) => state.getAllJobsByCompanys);
+  console.log(jobs);
 
   // Lấy danh sách công ty cùng lĩnh vực
   const {
@@ -44,18 +45,27 @@ export default function CompanyDetail() {
   }, [dispatch, id]);
 
   useEffect(() => {
-    if (jobLoading[0] === IDLE) {
+    if (jobLoading === IDLE) {
       dispatch(
-        getListJob({
+        getAllJobsByCompany({
           title: searchTitle,
-          nameCity: searchLocation,
+          location: searchLocation,
+          page: 0,
+          size: 10,
         })
       );
     }
   }, [dispatch, jobLoading, searchTitle, searchLocation]);
 
   const handleSearch = () => {
-    dispatch(getListJob({ title: searchTitle, nameCity: searchLocation }));
+    dispatch(
+      getAllJobsByCompany({
+        title: searchTitle,
+        location: searchLocation,
+        page: 0,
+        size: 10,
+      })
+    );
   };
 
   if (companyLoading === PENDING) return <p>Loading company details...</p>;

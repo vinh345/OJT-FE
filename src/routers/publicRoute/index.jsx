@@ -18,6 +18,8 @@ import ListJob from "../../pages/job/ListJob";
 import JobDetail from "../../pages/job/JobDetail";
 import VerifyAccount from "../../pages/auth/verify";
 import CompanyDetail from "../../pages/company/listCompany/CompanyDetailUser";
+import CompanyDetailBusiness from "../../pages/company/listCompany/CompanyDetailBusiness";
+import ListCompanyUser from "../../pages/company/listCompany/ListCompanyUser";
 
 const publicRoutes = [
   {
@@ -49,8 +51,10 @@ const publicRoutes = [
         path: "/user",
         children: [
           { path: "register", element: <RegisterUserForm /> },
+          { path: "listCompany", element: <ListCompanyUser /> },
 
           { path: "login", element: <LoginPage boolean={false} /> },
+          { path: "company/detail/:id", element: <CompanyDetail /> },
         ],
       },
       {
@@ -61,7 +65,8 @@ const publicRoutes = [
           { path: "listCompany", element: <ListCompany /> },
           { path: "job", element: <ListJob /> },
           { path: "jobDetail/:id", element: <JobDetail /> },
-          { path: "detail/:id", element: <CompanyDetail /> }, // Tuyến đường chi tiết công ty
+
+          { path: "detail/:id", element: <CompanyDetailBusiness /> },
         ],
       },
 
