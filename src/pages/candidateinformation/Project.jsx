@@ -18,8 +18,8 @@ export default function Education({ title, data }) {
         bodyStyle={{ padding: "0" }}
       >
         <div className="p-6">
-          <div className="flex justify-between border-b">
-            <h4 className="text-2xl text-text font-bold ">{title}</h4>
+          <div className="flex justify-between border-b ">
+            <h4 className="text-2xl text-text font-bold text-red-500">{title}</h4>
             <PlusCircleOutlined onclick={initAdd} className="text-red-500 text-lg" />
           </div>
 
@@ -49,7 +49,7 @@ export default function Education({ title, data }) {
                   </div>
                 </div>
                 <div>
-                  <span className="break-words text-base">{prj.info}</span>
+                  <span className="break-words text-lg">{prj.info}</span>
                 </div>
               </>
             ))}

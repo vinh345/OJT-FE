@@ -66,7 +66,7 @@ export default function Experience({
       >
         <div className="p-6">
           <div className="flex flex-col md:flex-row justify-between border-b">
-            <h4 className="text-2xl text-text font-bold mb-4 md:mb-0">
+            <h4 className="text-red-500 text-2xl text-text font-bold mb-4 md:mb-0">
               {title}
             </h4>
             <PlusCircleOutlined
@@ -80,7 +80,7 @@ export default function Experience({
               <div key={exp.id} className="mt-5">
                 <div className="flex flex-col md:flex-row justify-between h-9">
                   <p className="text-lg flex items-center">
-                    <WorkIcon /> {exp.company}
+                    <WorkIcon /> <b className="ml-2 mr-2">{exp.company}</b> (Vị trí: {exp.position})
                   </p>
                   <div className="flex flex-col md:flex-row justify-end p-2 border-border gap-4 mt-4 md:mt-0">
                     <p className="text-lg">
@@ -99,7 +99,7 @@ export default function Experience({
                   </div>
                 </div>
                 <div className="mt-2">
-                  <span className="break-words text-base">{exp.info}</span>
+                  <span className="break-words text-lg">Chi tiết: {exp.info}</span>
                 </div>
               </div>
             ))}

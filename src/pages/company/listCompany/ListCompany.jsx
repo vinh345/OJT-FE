@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CompanyCardItem from "./CompanyCardItem";
-import Footer from "../../../layouts/Footer";
+// import Footer from "../../../layouts/Footer";
 import { getListCompanies } from "../../../service/companyService";
 
 export default function ListCompany() {
@@ -69,7 +69,6 @@ export default function ListCompany() {
           ))}
         </div>
       </div>
-      <Footer />
     </>
   );
 }

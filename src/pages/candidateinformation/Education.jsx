@@ -68,7 +68,7 @@ export default function Education({
 >
   <div className="p-6">
     <div className="flex justify-between border-b flex-col xl:flex-row">
-      <h4 className="text-2xl text-text font-bold mb-4 xl:mb-0">{title}</h4>
+      <h4 className="text-2xl text-text font-bold mb-4 xl:mb-0 text-red-500">{title}</h4>
       <PlusCircleOutlined
         onClick={showModalAddEduOpen}
         className="text-red-500 text-lg self-end xl:self-auto"
@@ -80,7 +80,7 @@ export default function Education({
         <div key={edu.id} className="mt-5">
           <div className="flex justify-between h-auto xl:h-9 flex-col xl:flex-row">
             <p className="text-lg text-left w-full xl:w-80 mb-4 xl:mb-0 flex items-center">
-              <SchoolIcon /> <b>{edu.nameEducation}</b> (Chuyên ngành: {edu.major})
+              <SchoolIcon /><b className="ml-2 mr-2">{edu.nameEducation}</b>(Chuyên ngành: {edu.major})
             </p>
             <div className="flex flex-col xl:flex-row justify-end p-2 border-border gap-4 xl:gap-8">
               <p className="text-lg text-center xl:text-right">

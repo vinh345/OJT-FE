@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../service/authService";
-import { Link} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RemoveRedEyeRounded, VisibilityOff } from "@mui/icons-material";
 
 const LoginForm = ({ isCompany }) => {
@@ -17,6 +17,7 @@ const LoginForm = ({ isCompany }) => {
     setShowPassword(!showPassword);
   };
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const role = isCompany ? "company" : "candidate";
 
   const handleSubmit = async (e) => {
@@ -34,6 +35,7 @@ const LoginForm = ({ isCompany }) => {
       // If the login is successful, actionResult will contain the response data
       // Handle the successful login case here (e.g., redirect, update UI)
       console.log("Login successful:", actionResult);
+      navigate("/company/listCompany");
     } catch (err) {
       console.log("Error occurred:", err);
 
@@ -101,7 +103,7 @@ const LoginForm = ({ isCompany }) => {
               className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-600"
               onClick={togglePasswordVisibility}
             >
-              {showPassword ? <VisibilityOff/>:<RemoveRedEyeRounded/> }
+              {showPassword ? <VisibilityOff /> : <RemoveRedEyeRounded />}
             </button>
             {passwordError && (
               <p className="mt-2 text-sm text-red-600">{passwordError}</p>

@@ -19,7 +19,7 @@ export default function Skill({ title, data }) {
       >
         <div className="p-6">
           <div className="flex justify-between border-b ">
-            <h4 className="text-2xl text-text font-bold ">{title}</h4>
+            <h4 className="text-2xl text-text font-bold text-red-500">{title}</h4>
             <PlusCircleOutlined onclick={initAdd} className="text-red-500 text-lg" />
           </div>
 

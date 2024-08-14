@@ -20,7 +20,7 @@ export default function AboutMe({ title, data, showModalEditAboutMe }) {
       >
         <div className="p-6">
           <div className="flex justify-between border-b">
-            <h4 className="text-2xl text-text font-bold ">{title}</h4>
+            <h4 className="text-2xl text-text font-bold text-red-500">{title}</h4>
           </div>
           <div className="flex justify-between">
             <p className="text-lg break-words"> {data}</p>
