@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../service/authService";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { RemoveRedEyeRounded, VisibilityOff } from "@mui/icons-material";
 
 const LoginForm = ({ isCompany }) => {
@@ -19,7 +19,7 @@ const LoginForm = ({ isCompany }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const role = isCompany ? "company" : "candidate";
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setEmailError(null);
@@ -35,7 +35,7 @@ const LoginForm = ({ isCompany }) => {
       // If the login is successful, actionResult will contain the response data
       // Handle the successful login case here (e.g., redirect, update UI)
       console.log("Login successful:", actionResult);
-      navigate("/company/listCompany");
+      navigate("/");
     } catch (err) {
       console.log("Error occurred:", err);
 
@@ -132,10 +132,13 @@ const LoginForm = ({ isCompany }) => {
         </div>
         <div className="mt-2 text-center">
           <span>
-            Bạn không có tài khoản?{" "}
-            <a href="#" className="text-red-500">
+            Bạn không có tài khoản?{" "} 
+            <Link
+              to={isCompany ? "/company/register" : "/user/register"}
+              className="text-red-500"
+            >
               Tạo 1 tài khoản
-            </a>
+            </Link>
           </span>
         </div>
       </div>
