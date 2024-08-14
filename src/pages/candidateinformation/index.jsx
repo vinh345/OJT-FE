@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProfileSection from "./ProfileSection";
-import InfoSection from "./AboutMe";
+import AboutMe from "./AboutMe";
 import SideBar from "./SideBar";
 import "./index.module.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,120 +10,135 @@ import Education from "./Education";
 import Experience from "./Experience";
 import Project from "./Project";
 import Skill from "./Skill";
-import AboutMe from "./AboutMe";
 import FormEditInfo from "./form/FormEditInfo";
 import FormEditAboutMe from "./form/FormEditAboutMe";
 import FormAddEducation from "./form/education/FormAddEducation";
-export default function index() {
-  const [toggleDelete, setToggleDelete] = useState()
-  const changeDelete = () =>{
-    setToggleDelete(!toggleDelete)
-  }
-  /////////////////////////////////Edit Info
-  const [isModalEditInfoOpen, setIsModalEditInfoOpen] = useState(false);
-  const showModalEditInfo = () => {
-    setIsModalEditInfoOpen(!isModalEditInfoOpen);
-  };
-  ////////////////////////////////Edit About Me
-  const [isModalEditAboutMeOpen, setIsModalEditAboutMeOpen] = useState(false);
-  const showModalEditAboutMe = () => {
-    setIsModalEditAboutMeOpen(!isModalEditAboutMeOpen);
-  };
-  ////////////////////////////////Education
-  const [isModalAddEduOpen, setIsModalAddEduOpen] = useState(false);
 
-  const showModalAddEduOpen = () => {
-    setIsModalAddEduOpen(!isModalAddEduOpen);
-  };
-  const [isModalEditEduOpen, setIsModalEditEduOpen] = useState(false);
+const Index = () => {
+  // State quản lý các modal và toggleDelete
+  const [state, setState] = useState({
+    isModalEditInfoOpen: false,
+    isModalEditAboutMeOpen: false,
+    isModalAddEduOpen: false,
+    isModalEditEduOpen: false,
+    isModalAddExpOpen: false,
+    isModalEditExpOpen: false,
+    isModalAddPrjOpen: false,
+    isModalEditPrjOpen:false,
+    isModalAddCertiOpen: false,
+    isModalEditCertiOpen:false,
+    isModalAddSkillOpen: false,
+    isModalEditSkillOpen:false,
+    toggleDelete: false
+  });
 
-  const showModalEditEduOpen = () => {
-    setIsModalEditEduOpen(!isModalEditEduOpen);
+  // Hàm để mở/đóng modal
+  const toggleModal = (modalName) => {
+    setState(prev => ({
+      ...prev,
+      [modalName]: !prev[modalName]
+    }));
   };
-  ////////////////////////////////Experience
-  const [isModalAddExpOpen, setIsModalAddExpOpen] = useState(false);
 
-  const showModalAddExpOpen = () => {
-    setIsModalAddExpOpen(!isModalAddExpOpen);
+  // Hàm để thay đổi trạng thái toggleDelete
+  const changeDelete = () => {
+    setState(prev => ({
+      ...prev,
+      toggleDelete: !prev.toggleDelete
+    }));
   };
-  const [isModalEditExpOpen, setIsModalEditExpOpen] = useState(false);
 
-  const showModalEditExpOpen = () => {
-    setIsModalEditExpOpen(!isModalEditExpOpen);
-  }
-  ////////////////////////////////
   const dispatch = useDispatch();
-  const { data, error } = useSelector((state) => state.userInfor);
+  const { data } = useSelector((state) => state.userInfor);
+
   useEffect(() => {
     dispatch(getCandidateInfo()).then((res) => {
       console.log(res.payload.data.data);
     });
-  }, [isModalEditExpOpen,isModalAddExpOpen,isModalEditInfoOpen,isModalEditAboutMeOpen,isModalAddEduOpen,isModalEditEduOpen,toggleDelete]);
+  }, [dispatch, state]);
+
   return (
     <>
       <FormEditInfo
-        isModalEditInfoOpen={isModalEditInfoOpen}
-        showModalEditInfo={showModalEditInfo}
+        isModalEditInfoOpen={state.isModalEditInfoOpen}
+        showModalEditInfo={() => toggleModal('isModalEditInfoOpen')}
         info={data?.candidate}
       />
       <FormEditAboutMe  
-        isModalEditAboutMeOpen={isModalEditAboutMeOpen}
-        showModalEditAboutMe={showModalEditAboutMe}
+        isModalEditAboutMeOpen={state.isModalEditAboutMeOpen}
+        showModalEditAboutMe={() => toggleModal('isModalEditAboutMeOpen')}
         data={data?.candidate?.aboutme}
       />
   
-      <div className="container mx-auto p-4 grid grid-cols-10 gap-4 ">
+      <div className="container mx-auto p-4 grid grid-cols-10 gap-4">
         <div className="col-span-4">
           <SideBar />
         </div>
         <div className="col-span-6 flex flex-col gap-10">
           <ProfileSection
-            showModalEditInfo={showModalEditInfo}
+            showModalEditInfo={() => toggleModal('isModalEditInfoOpen')}
             info={data?.candidate}
           />
           <AboutMe
             title="Giới Thiệu Bản Thân"
             content="Nội dung giới thiệu bản thân"
             data={data?.candidate?.aboutme}
-            showModalEditAboutMe={showModalEditAboutMe}
+            showModalEditAboutMe={() => toggleModal('isModalEditAboutMeOpen')}
           />
           <Education
             title="Học Vấn"
             content="Nội dung học vấn"
             data={data?.education}
-            isModalAddEduOpen={isModalAddEduOpen}
-            showModalAddEduOpen={showModalAddEduOpen}
-            isModalEditEduOpen={isModalEditEduOpen}
-            showModalEditEduOpen={showModalEditEduOpen}
+            isModalAddEduOpen={state.isModalAddEduOpen}
+            showModalAddEduOpen={() => toggleModal('isModalAddEduOpen')}
+            isModalEditEduOpen={state.isModalEditEduOpen}
+            showModalEditEduOpen={() => toggleModal('isModalEditEduOpen')}
             changeDelete={changeDelete}
           />
           <Experience
             title="Kinh Nghiệm Làm Việc"
             content="Nội dung kinh nghiệm làm việc"
             data={data?.experience}
-            isModalAddExpOpen={isModalAddExpOpen}
-            showModalAddExpOpen={showModalAddExpOpen}
-            isModalEditExpOpen={isModalEditExpOpen}
-            showModalEditExpOpen={showModalEditExpOpen}
+            isModalAddExpOpen={state.isModalAddExpOpen}
+            showModalAddExpOpen={() => toggleModal('isModalAddExpOpen')}
+            isModalEditExpOpen={state.isModalEditExpOpen}
+            showModalEditExpOpen={() => toggleModal('isModalEditExpOpen')}
             changeDelete={changeDelete}
           />
           <Project
             title="Dự Án Cá Nhân"
             content="Nội dung dự án cá nhân"
             data={data?.project}
+            isModalAddPrjOpen={state.isModalAddPrjOpen}
+            showModalAddPrjOpen={() => toggleModal('isModalAddPrjOpen')}
+            isModalEditPrjOpen={state.isModalEditPrjOpen}
+            showModalEditPrjOpen={() => toggleModal('isModalEditPrjOpen')}
+            changeDelete={changeDelete}
           />
           <Certificate
             title="Chứng Chỉ"
             content="Nội dung chứng chỉ"
             data={data?.certificate}
+            isModalAddCertiOpen={state.isModalAddCertiOpen}
+            showModalAddCertiOpen={() => toggleModal('isModalAddCertiOpen')}
+            isModalEditCertiOpen={state.isModalEditCertiOpen}
+            showModalEditCertiOpen={() => toggleModal('isModalEditCertiOpen')}
+            changeDelete={changeDelete}
           />
           <Skill
             title="Kỹ Năng"
-            content="Nội dung chứng chỉ"
+            content="Nội dung kỹ năng"
             data={data?.skillsCandidates}
+            isModalAddSkillOpen={state.isModalAddSkillOpen}
+            showModalAddSkillOpen={() => toggleModal('isModalAddSkillOpen')}
+            isModalEditSkillOpen={state.isModalEditSkillOpen}
+            showModalEditSkillOpen={() => toggleModal('isModalEditSkillOpen')}
+            changeDelete={changeDelete}
           />
         </div>
       </div>
     </>
   );
-}
+};
+
+export default Index;

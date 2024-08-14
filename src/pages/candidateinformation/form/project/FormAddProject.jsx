@@ -1,42 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Modal, Button, Form, Input, DatePicker } from "antd";
 import dayjs from "dayjs";
-import { useDispatch } from "react-redux";
-import {
-  editExperience,
-} from "../../../../service/candidateService";
-import Swal from "sweetalert2";
 
-export default function FormEditExp({
-  isModalEditExpOpen,
-  showModalEditExpOpen,
-  editExp,
-}) {
+import { addProject } from "../../../../service/candidateService";
+import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+
+export default function FormAddProject({ isModalAddPrjOpen, showModalAddPrjOpen }) {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const [formEditExp, setFormEditExp] = useState({
-    company: null,
-    position: null,
+  const [formAddPrj, setFormAddPrj] = useState({
+    name: null,
+    link: null,
     startAt: null,
     endAt: null,
     info: null,
   });
-  useEffect(() => {
-    if (editExp) {
-      form.setFieldsValue({
-        company: editExp.company,
-        position: editExp.position,
-        startAt: editExp.startAt ? dayjs(editExp.startAt) : null,
-        endAt: editExp.endAt ? dayjs(editExp.endAt) : null,
-        info: editExp.info,
-      });
-    }
-  }, [editExp, form]);
-
   const resetForm = () => {
-    setFormEditExp({
-      company: null,
-      position: null,
+    setFormAddPrj({
+      name: null,
+      link: null,
       startAt: null,
       endAt: null,
       info: null,
@@ -56,78 +39,82 @@ export default function FormEditExp({
   };
   // Disable dates for End Date Picker
   const disableEndDate = (current) => {
-    return current && (current <= startDate || current > dayjs().endOf("day"));
+    return (
+      current &&
+      ((startDate && current <= startDate) || current > dayjs().endOf("day"))
+    );
   };
   const handleOk = () => {
     form.submit();
-    console.log(formEditExp);
-
-    dispatch(
-      editExperience({
-        id: editExp?.id,
-        company: formEditExp.company,
-        position: formEditExp.position,
-        startAt: formEditExp.startAt,
-        endAt: formEditExp.endAt,
-        info: formEditExp.info,
-      })
-    ).then((res) => {
-      console.log(res);
-      if (res.payload.error) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: Object.values(res.payload.error.details).join(""),
-        });
-      } else {
-        if (res.payload.data.error) {
+    console.log(formAddPrj);
+    if (
+        formAddPrj.name &&
+        formAddPrj.link &&
+        formAddPrj.info 
+    ) {
+      dispatch(
+        addProject({
+          name: formAddPrj.name,
+          link: formAddPrj.link,
+          startAt: formAddPrj.startAt,
+          endAt: formAddPrj.endAt,
+          info: formAddPrj.info,
+        })
+      ).then((res) => {
+        console.log(res);
+        if (res.payload.error) {
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: Object.values(res.payload.data.message).join(", "),
+            text: Object.values(res.payload.error.details).join(""),
           });
         } else {
-          Swal.fire({
-            title: "Success!",
-            text: "Sửa thông tin kinh nghiệm thành công",
-            icon: "success",
-          });
-          resetForm();
+          if (res.payload.data.error) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: Object.values(res.payload.data.message).join(", "),
+            });
+          } else {
+            Swal.fire({
+              title: "Success!",
+              text: "Thêm dự án thành công",
+              icon: "success",
+            });
+            resetForm();
+          }
         }
-      }
-    });
+      });
+    }
   };
 
   const handleCancel = () => {
     resetForm();
-    showModalEditExpOpen();
+    showModalAddPrjOpen();
   };
 
   const handleFinish = (values) => {
     console.log("Form Values:", values);
     resetForm();
-    showModalEditExpOpen();
+    showModalAddPrjOpen();
   };
   const handleChange = (e) => {
-    setFormEditExp({ ...formEditExp, [e.target.name]: e.target.value });
+    setFormAddPrj({ ...formAddPrj, [e.target.name]: e.target.value });
   };
   const handleChangStartDate = (date) => {
-    setFormEditExp({
-      ...formEditExp,
-      startAt: dayjs(date).format("YYYY-MM-DD"),
-    });
+    setFormAddPrj({ ...formAddPrj, startAt: dayjs(date).format("YYYY-MM-DD") });
     setStartDate(date);
   };
   const handleChangEndDate = (date) => {
-    setFormEditExp({ ...formEditExp, endAt: dayjs(date).format("YYYY-MM-DD") });
+    setFormAddPrj({ ...formAddPrj, endAt: dayjs(date).format("YYYY-MM-DD") });
     setEndDate(date);
   };
 
   return (
     <>
       <Modal
-        title={<h2 className="text-center text-xl font-semibold">Kinh nghiệm</h2>}
-        open={isModalEditExpOpen}
+        title={<h2 className="text-center text-xl font-semibold">Dự án</h2>}
+        open={isModalAddPrjOpen}
         onOk={handleOk}
         onCancel={handleCancel}
         footer={[
@@ -140,35 +127,28 @@ export default function FormEditExp({
             onClick={handleOk}
             className="bg-red-600"
           >
-            Chỉnh sửa
+            Thêm mới
           </Button>,
         ]}
       >
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={handleFinish}
-          initialValues={{
-            company: editExp?.company,
-            position: editExp?.position,
-            startAt: dayjs(editExp?.startAt),
-            endAt: dayjs(editExp?.endAt),
-            info: editExp?.info,
-          }}
-        >
-          <Form.Item label="Công ty" name="company">
+        <Form form={form} layout="vertical" onFinish={handleFinish}>
+          <Form.Item label="Tên dự án" name="name">
             <Input
               onChange={handleChange}
-              name="company"
-              placeholder="Company"
+              name="name"
+              placeholder="Project Name"
             />
           </Form.Item>
 
-          <Form.Item label="Ngành Học" name="position">
-            <Input onChange={handleChange} name="position" placeholder="position" />
+          <Form.Item label="Link dự án" name="link">
+            <Input
+              onChange={handleChange}
+              name="link"
+              placeholder="Link project"
+            />
           </Form.Item>
 
-          <Form.Item label="Thời gian học tập">
+          <Form.Item label="Thời gian thực hiện">
             <div className="flex justify-between items-center">
               <Form.Item name="startAt" className="mr-2">
                 <DatePicker
