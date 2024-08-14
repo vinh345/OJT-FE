@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Dashbord() {
+export default function Settings() {
   return (
     <div>
-      <h1>dkdndncd</h1>
+    <h1>Setting</h1>
     </div>
   )
 }

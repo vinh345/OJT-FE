@@ -1,27 +1,30 @@
-
-import "./App.css";
-import { Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import FormLoginAdmin from "./components/FormLoginAdmin";
-import RegisterUserForm from "./components/RegisterUserForm";
-import CompanyRegisterForm from "./components/CompanyRegisterForm";
-
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import publicRoutes from './routers/publicRoute';
+import './App.css'
 
 function App() {
-
   return (
-    <>
-      {/* <UserHeader />
+    
+    <Router>
       <Routes>
-        <Route path="/" element={<Home></Home>}></Route> 
-        <Route path="/admin" element={<FormLoginAdmin></FormLoginAdmin>}> </Route> 
-        <Route path="/user/register" element={<RegisterUserForm></RegisterUserForm>}></Route>
-        <Route path="/user/login" element={<LoginUserForm></LoginUserForm>}></Route>
-        <Route path="/company/register" element={<CompanyRegisterForm></CompanyRegisterForm>}></Route>
-        <Route path="/company/login" element={<CompanyLoginForm></CompanyLoginForm>}></Route>
-      </Routes> */}
-    </>
-  );  
+        {publicRoutes.map((route, index) => {
+          if (route.children) {
+            return route.children.map((child, idx) => (
+              <Route
+                key={`${index}-${idx}`}
+                path={`${route.path}/${child.path}`}
+                element={child.element}
+              />
+            ));
+          }
+          return (
+            <Route key={index} path={route.path} element={route.element} />
+          );
+        })}
+      </Routes> 
+    </Router>
+  );
 }
 
 export default App;
