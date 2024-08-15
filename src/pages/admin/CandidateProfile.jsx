@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { fetchProfile } from "../../service/companyService";
-import { useParams } from "react-router-dom";
+import { fetchProfile } from "../../service/adminService";
+import { Link, useParams } from "react-router-dom";
+import { formatDate } from "../../utils/formatData";
+
 import {
-  HeartBroken,
   CopyAll,
   LinkedIn,
   GitHub,
-  MonitorHeart,
   Favorite,
+  NearMe,
+  AutoStories,
+  AccountBox,
 } from "@mui/icons-material";
+
 
 const CandidateProfilePage = () => {
   const { id } = useParams();
@@ -29,23 +33,36 @@ const CandidateProfilePage = () => {
 
   useEffect(() => {
     const loadProfile = async () => {
-      // Mock profile data for testing
-      const testProfile = {
-        name: "Hung",
-        position: "Software Engineer",
-        level: "Senior",
-        about: "Hello my name is Lorem.",
-        address: "HN",
-        experience: ["3 years at Company A", "2 years at Company B"],
-        careerOrientation: ["Become a team lead", "Specialize in AI"],
-        skills: ["JavaScript", "React", "Node.js"],
-        linkLinkedin: "linkedin.com",
-        linkGit: "github.com",
-      };
+      // const testProfile = {
+      //   name: "Hung",
+      //   position: "Software Engineer",
+      //   level: "Senior",
+      //   about: "Hello my name is Lorem.",
+      //   address: "HN",
+      // experience: [
+      //   {
+      //     position: "Senior Software Engineer",
+      //     company: "Tech Solutions Inc.",
+      //     startAt: "2019-03-01",
+      //     endAt: "Present",
+      //     info: "Lead a team of 5 engineers in developing scalable web applications.",
+      //   },
+      //   {
+      //     position: "Software Engineer",
+      //     company: "Web Innovations LLC",
+      //     startAt: "2016-08-01",
+      //     endAt: "2019-02-28",
+      //     info: "Worked on front-end and back-end development for various client projects.",
+      //   },
+      // ],
+      //   careerOrientation: ["Become a team lead", "Specialize in AI"],
+      //   skills: ["JavaScript", "React", "Node.js"],
+      //   linkLinkedin: "linkedin.com",
+      //   linkGit: "github.com",
+      // };
+      // const data = testProfile;
 
-      // Simulating data fetching by using the test profile instead
-      // const data = await fetchProfile(id);
-      const data = testProfile;
+      const data = await fetchProfile(id);
       console.log(data);
       setProfile(data);
     };
@@ -88,8 +105,8 @@ const CandidateProfilePage = () => {
           )}
         </div>
         <div className="flex gap-3">
-          <button className="text-pink-400">
-            <Favorite />
+          <button className="bg-pink-200 p-2 rounded">
+            <Favorite className="text-white" />
           </button>
           <button className="bg-red-500 text-white px-4 py-2 rounded-full">
             Đặt Lịch Phỏng Vấn
@@ -98,25 +115,35 @@ const CandidateProfilePage = () => {
       </div>
       <div className=" p-8 rounded-lg shadow-md flex">
         {/* Left Section */}
-        <div className="w-3/4 pr-8">
+        <div className="w-2/3 pr-8">
           {profile.about && (
             <div className="mt-6">
-              <h2 className="text-xl font-semibold">Mô tả về bản thân</h2>
-              <p className="mt-2 text-justify">{profile.about}</p>
+              <h2 className="text-lg font-semibold">Mô tả về bản thân</h2>
+              <p className="mt-2 text-justify text-gray-500">{profile.about}</p>
             </div>
           )}
 
           {/* Uncomment if needed */}
           {profile.experience && (
             <div className="mt-6">
-              <h2 className="text-xl font-semibold">Kinh nghiệm làm việc</h2>
-              <ul className="list-disc ml-5 mt-2">
+              <h2 className="text-lg font-semibold">Kinh nghiệm làm việc</h2>
+              <div className="list-disc ml-5 mt-2">
                 {profile.experience.map((exp, index) => (
-                  <li key={index} className="mt-2">
-                    {exp}
-                  </li>
+                  <div
+                    key={index}
+                    className="mt-2 p-4 bg-white bg-opacity-10 rounded-lg"
+                  >
+                    <div className="flex justify-between text-lg font-bold">
+                      <div className="text-yellow-500">{exp.company}</div>
+                      <div className="text-red-500">{exp.position}</div>
+                    </div>
+                    <div className="text-sm italic">
+                      {formatDate(exp.startAt)} - {formatDate(exp.endAt)}
+                    </div>
+                    <div className="mt-2 text-gray-500">{exp.info}</div>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           )}
 
@@ -135,21 +162,30 @@ const CandidateProfilePage = () => {
         </div>
 
         {/* Right Section */}
-        <div className="w-1/4 pl-8">
+        <div className="w-1/3 pl-8">
           {profile.address && (
-            <div className="bg-gray-100 p-4 rounded-lg mb-6">
-              <h3 className="font-semibold">Địa chỉ cá nhân</h3>
+            <div className="border-2 border-gray-200 p-4 rounded-lg mb-6">
+              <div className="flex gap-2">
+                <NearMe className="text-red-600 p-1 border-2 border-red-400 rounded-full" />
+                <h3 className="font-semibold">Địa chỉ cá nhân</h3>
+              </div>
               <p className="mt-2">{profile.address}</p>
             </div>
           )}
 
           {/* Uncomment if needed */}
           {profile.skills && (
-            <div className="bg-gray-100 p-4 rounded-lg mb-6">
-              <h3 className="font-semibold">Kĩ năng</h3>
-              <ul className="mt-2">
+            <div className="border-2 border-gray-200 p-4 rounded-lg mb-6">
+              <div className="flex gap-2">
+                <AutoStories className="text-red-600 p-1 " />
+                <h3 className="font-semibold">Kĩ năng</h3>
+              </div>
+              <ul className="mt-2 flex">
                 {profile.skills.map((skill, index) => (
-                  <li key={index} className="mt-1">
+                  <li
+                    key={index}
+                    className="mt-1 pl-2 pr-2 font-medium bg-green-200 text-green-800"
+                  >
                     {skill}
                   </li>
                 ))}
@@ -157,7 +193,7 @@ const CandidateProfilePage = () => {
             </div>
           )}
 
-          <div className="bg-gray-100 p-4 rounded-lg mb-6">
+          <div className="border-2 border-gray-200 p-4 rounded-lg mb-6">
             <h3 className="font-semibold">Thông tin cá nhân</h3>
             <ul className="mt-2 flex gap-2">
               <li
@@ -167,7 +203,7 @@ const CandidateProfilePage = () => {
                 <CopyAll /> Copy links
               </li>
               {profile.linkLinkedin && (
-                <li className="flex items-center mt-2  bg-red-300 p-2 rounded-xl">
+                <li className="flex items-center justify-center mt-2  bg-red-300 p-2 rounded-xl">
                   <a
                     href={`https://${profile.linkLinkedin}`}
                     target="_blank"
@@ -178,7 +214,7 @@ const CandidateProfilePage = () => {
                 </li>
               )}
               {profile.linkGit && (
-                <li className="flex items-center mt-2  bg-red-300 p-2 rounded-xl">
+                <li className="flex items-center mt-2 justify-center bg-red-300 p-2 rounded-xl">
                   <a
                     href={`https://${profile.linkGit}`}
                     target="_blank"
@@ -191,15 +227,25 @@ const CandidateProfilePage = () => {
             </ul>
             {copied && (
               <div className="text-green-500 mt-2 text-sm">
-                Copied successfully!
+                Sao chép thành công!
               </div>
             )}
           </div>
 
-          <div className="bg-gray-100 p-4 rounded-lg mb-6">
-            <button className="bg-red-500 text-white px-4 py-2 rounded-full w-full">
-              Truy Cập CV
-            </button>
+          <div className="border-2 border-gray-200 p-4 rounded-lg mb-6 flex flex-col gap-3">
+            <div className="text-left flex gap-2">
+              <AccountBox className="mr-2" fontSize="large" />
+              <p className="font-medium">
+                Truy cập CV của {profile.name} để xem thêm
+              </p>
+            </div>
+            <div className="flex align-middle justify-center">
+              <Link to={`/admin/candidateCV/${id}`}>
+                <button className="bg-red-600 p-2 rounded-sm">
+                  Truy cập CV
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

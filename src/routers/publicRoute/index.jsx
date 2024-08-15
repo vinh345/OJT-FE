@@ -1,9 +1,5 @@
 import CompanyRegisterForm from "../../components/CompanyRegisterForm";
 import FormLoginAdmin from "../../components/FormLoginAdmin";
-
-import PrivateRoute from "../../features/protectedRoutes/PrivateRoute";
-import ChangePassword from "../../pages/auth/changePassword";
-
 import RegisterUserForm from "../../components/RegisterUserForm";
 import LoginPage from "../../pages/auth/login/Login";
 import RecoverPassword from "../../pages/auth/recoverPassword";
@@ -11,15 +7,21 @@ import Home from "../../pages/Home";
 import AdminLayout from "../../pages/admin/AdminLayout";
 import Dashboard from "../../pages/admin/Dashboard";
 import Users from "../../pages/admin/Users";
-import Company from "../../pages/admin/Company";
-import LayoutIndex from "../../layouts";
+import Company from "../../pages/admin/Company"; 
 import ListCompany from "../../pages/company/listCompany/ListCompany";
 import ListJob from "../../pages/job/ListJob";
 import JobDetail from "../../pages/job/JobDetail";
 import VerifyAccount from "../../pages/auth/verify";
+import LayoutIndex from "../../layouts";
 import CompanyDetail from "../../pages/company/listCompany/CompanyDetailUser";
+
 import CompanyDetailBusiness from "../../pages/company/listCompany/CompanyDetailBusiness";
 import AddJobBusiness from "../../pages/company/listCompany/AddJobBusiness";
+
+import PrivateRoute from "../../features/protectedRoutes/PrivateRoute";
+import ChangePassword from "../../pages/auth/changePassword";
+
+
 
 const publicRoutes = [
   {
@@ -29,7 +31,7 @@ const publicRoutes = [
     children: [
       {
         path: "changePassword",
-        element: <PrivateRoute element={ChangePassword} />,
+        element: <PrivateRoute element={<ChangePassword/>} />,
       },
       {
         path: "/",
