@@ -19,6 +19,7 @@ import JobDetail from "../../pages/job/JobDetail";
 import VerifyAccount from "../../pages/auth/verify";
 import CompanyDetail from "../../pages/company/listCompany/CompanyDetailUser";
 import CompanyDetailBusiness from "../../pages/company/listCompany/CompanyDetailBusiness";
+import AddJobBusiness from "../../pages/company/listCompany/AddJobBusiness";
 
 const publicRoutes = [
   {
@@ -66,6 +67,7 @@ const publicRoutes = [
             element: <ListCompany userType="business" />,
           },
           { path: "job", element: <ListJob /> },
+          { path: "addJob", element: <AddJobBusiness /> },
           { path: "jobDetail/:id", element: <JobDetail /> },
 
           { path: "detail/:id", element: <CompanyDetailBusiness /> },

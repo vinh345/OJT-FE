@@ -1,7 +1,7 @@
 import PersonIcon from "@mui/icons-material/Person";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCompanyDetail } from "../../../service/companyService";
 import { FAILED, IDLE, PENDING } from "../../../constants/status";
@@ -18,6 +18,7 @@ import MapIcon from "@mui/icons-material/Map";
 import LinkIcon from "@mui/icons-material/Link";
 import UpdateCompanyForm from "../../../components/company/UpdateCompanyForm";
 export default function CompanyDetailBusiness() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [isFormVisible, setFormVisible] = useState(false);
   const dispatch = useDispatch();
@@ -64,6 +65,10 @@ export default function CompanyDetailBusiness() {
     setFormVisible(true);
   };
 
+  const handleAddJob = () => {
+    navigate("/company/addJob");
+  };
+
   if (companyLoading === PENDING) return <p>Loading company details...</p>;
   if (companyLoading === FAILED) return <p>Error: {companyError}</p>;
   // Kiểm tra nếu `company` là null hoặc undefined
@@ -91,7 +96,7 @@ export default function CompanyDetailBusiness() {
           </a>{" "}
         </nav>
       </div>
-      <div className="p-6">
+      <div className="p-10">
         {isFormVisible && <UpdateCompanyForm onClose={handleFormClose} />}
         <>
           <div className="flex justify-between items-center mb-6">
@@ -148,7 +153,10 @@ export default function CompanyDetailBusiness() {
                   <h2 className="text-xl font-semibold mb-4">
                     Việc làm đang mở
                   </h2>
-                  <button className="font-semibold text-red-400 border-2 border-red-500 rounded-md px-4 py-1 hover:bg-red-500 hover:text-white">
+                  <button
+                    onClick={handleAddJob}
+                    className="font-semibold text-red-400 border-2 border-red-500 rounded-md px-4 py-1 hover:bg-red-500 hover:text-white"
+                  >
                     Thêm việc làm mới
                   </button>
                 </div>
