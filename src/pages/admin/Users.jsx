@@ -30,6 +30,7 @@ export default function Users() {
         setCandidates(response.data.content);
         setFilteredCandidates(response.data.content);
         setTotalCandidates(response.data.totalElements);
+        console.log(response.data.content)
       } catch (error) {
         console.error("Có lỗi xảy ra khi lấy danh sách ứng viên:", error);
       } finally {
@@ -85,7 +86,6 @@ export default function Users() {
         }
       );
   
-      // Update the state to reflect the change
       setCandidates((prevCandidates) =>
         prevCandidates.map((candidate) =>
           candidate.id === candidateId
@@ -183,8 +183,8 @@ export default function Users() {
                 <th>Số điện thoại</th>
                 <th>Giới tính</th>
                 <th>Trạng thái</th>
-                <th>LinkedIn</th>
-                <th>GitHub</th>
+                {/* <th>LinkedIn</th>
+                <th>GitHub</th> */}
                 <th>Vị trí</th>
                 <th>Nổi bật</th>
                 <th>Hành động</th>
@@ -207,7 +207,7 @@ export default function Users() {
                   >
                     {candidate.status ? "Hoạt động" : "Bị khóa"}
                   </td>
-                  <td>
+                  {/* <td>
                     <a
                       href={candidate.linkLinkedin}
                       target="_blank"
@@ -224,11 +224,11 @@ export default function Users() {
                     >
                       GitHub
                     </a>
-                  </td>
+                  </td> */}
                   <td>{candidate.position}</td>
                   <td>
                     <Checkbox
-                      checked={candidate.outstanding}
+                      checked={candidate.outstanding==1}
                       onChange={(e) =>
                         handleOutstandingStatusChange(candidate.id,e.target.checked)
                         }

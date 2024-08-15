@@ -4,7 +4,6 @@ import { notification } from "antd";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import logo from "../assets/logo.png";
-// import "../style/CompanyRegister.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { getListLocation } from "../service/Location/locationService";
 import { registerCompany } from "../service/authService";
@@ -48,7 +47,7 @@ export default function CompanyRegisterForm() {
         message: "Đăng ký thành công",
         description: "Vui lòng xác minh tài khoản của bạn.",
       });
-      navigate("");
+      navigate("/verify");
     } catch (err) {
       if (err.errors) {
         err.errors.forEach((error) => {
@@ -67,15 +66,17 @@ export default function CompanyRegisterForm() {
   };
 
   return (
-    <div className="containercompany">
-      <img src={logo} alt="RKEI Edu Logo" height="70px" />
-      <h2>
+    <div className="w-full max-w-4xl mx-auto my-12 bg-gray-100 p-8 shadow-lg text-left">
+      <img src={logo} alt="RKEI Edu Logo" className="mb-8 h-16" />
+      <h2 className="text-2xl font-bold mb-8">
         Đăng kí để có thể tiếp cận nguồn <br />
         nhân lực chất lượng cao
       </h2>
-      <div className="containerform">
-        <div className="containerform1">
-          <h3>Thông tin công ty</h3>
+      <div className="flex justify-between bg-white p-8">
+        <div className="w-1/2 p-4 relative">
+          <h3 className="text-xl font-semibold text-gray-800 mb-4 relative before:absolute before:left-[-20px] before:top-1/2 before:transform before:-translate-y-1/2 before:w-2 before:h-10 before:bg-red-700">
+            Thông tin công ty
+          </h3>
           <Formik
             initialValues={{
               name: "",
@@ -89,40 +90,64 @@ export default function CompanyRegisterForm() {
             onSubmit={handleSubmit}
           >
             {({ isSubmitting }) => (
-              <Form>
-                <label htmlFor="name">Tên công ty</label>
+              <Form className="flex flex-col">
+                <label htmlFor="name" className="mb-6">
+                  Tên công ty
+                </label>
                 <Field
                   type="text"
                   id="name"
                   name="name"
                   placeholder="Tên công ty"
+                  className="p-2 mb-3 w-4/5 border border-gray-300 rounded"
                 />
-                <ErrorMessage name="name" component="div" className="error" />
+                <ErrorMessage
+                  name="name"
+                  component="div"
+                  className="text-red-500 mb-3"
+                />
 
-                <label htmlFor="emailCompany">Email công ty</label>
+                <label htmlFor="emailCompany" className="mb-6">
+                  Email công ty
+                </label>
                 <Field
                   type="email"
                   id="emailCompany"
                   name="emailCompany"
                   placeholder="abc@company.com"
+                  className="p-2 mb-3 w-4/5 border border-gray-300 rounded"
                 />
                 <ErrorMessage
                   name="emailCompany"
                   component="div"
-                  className="error"
+                  className="text-red-500 mb-3"
                 />
 
-                <label htmlFor="phone">Số điện thoại</label>
+                <label htmlFor="phone" className="mb-6">
+                  Số điện thoại
+                </label>
                 <Field
                   type="tel"
                   id="phone"
                   name="phone"
                   placeholder="0123456789"
+                  className="p-2 mb-3 w-4/5 border border-gray-300 rounded"
                 />
-                <ErrorMessage name="phone" component="div" className="error" />
+                <ErrorMessage
+                  name="phone"
+                  component="div"
+                  className="text-red-500 mb-3"
+                />
 
-                <label htmlFor="locationId">Địa điểm làm việc</label>
-                <Field as="select" id="locationId" name="locationId">
+                <label htmlFor="locationId" className="mb-6">
+                  Địa điểm làm việc
+                </label>
+                <Field
+                  as="select"
+                  id="locationId"
+                  name="locationId"
+                  className="p-2 mb-3 w-4/5 border border-gray-300 rounded"
+                >
                   <option value="">Chọn tỉnh/thành phố</option>
                   {loading === PENDING && <option>Loading...</option>}
                   {loading === FAILED && <option>Error: {error}</option>}
@@ -135,38 +160,44 @@ export default function CompanyRegisterForm() {
                 <ErrorMessage
                   name="locationId"
                   component="div"
-                  className="error"
+                  className="text-red-500 mb-3"
                 />
 
-                <label htmlFor="password">Mật khẩu</label>
+                <label htmlFor="password" className="mb-6">
+                  Mật khẩu
+                </label>
                 <Field
                   type="password"
                   id="password"
                   name="password"
                   placeholder="********"
+                  className="p-2 mb-3 w-4/5 border border-gray-300 rounded"
                 />
                 <ErrorMessage
                   name="password"
                   component="div"
-                  className="error"
+                  className="text-red-500 mb-3"
                 />
 
-                <label htmlFor="confirmPassword">Xác nhận mật khẩu</label>
+                <label htmlFor="confirmPassword" className="mb-6">
+                  Xác nhận mật khẩu
+                </label>
                 <Field
                   type="password"
                   id="confirmPassword"
                   name="confirmPassword"
                   placeholder="********"
+                  className="p-2 mb-3 w-4/5 border border-gray-300 rounded"
                 />
                 <ErrorMessage
                   name="confirmPassword"
                   component="div"
-                  className="error"
+                  className="text-red-500 mb-3"
                 />
 
                 <button
                   type="submit"
-                  className="register-button"
+                  className="w-1/3 py-2 bg-red-700 text-white rounded font-semibold text-sm mt-4"
                   disabled={isSubmitting}
                 >
                   Đăng kí
@@ -176,8 +207,11 @@ export default function CompanyRegisterForm() {
           </Formik>
         </div>
       </div>
-      <div className="btn">
-        Đã có tài khoản? <Link to="/company/login">Đăng nhập ngay</Link>
+      <div className="text-center mb-8">
+        Đã có tài khoản?{" "}
+        <Link to="/company/login" className="text-blue-500">
+          Đăng nhập ngay
+        </Link>
       </div>
     </div>
   );

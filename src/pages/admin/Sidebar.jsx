@@ -16,8 +16,8 @@ const Sidebar = () => {
         <li><NavLink to="/admin/company" activeClassName="active">Quản lý công ty</NavLink></li>
         <li><NavLink to="/admin/jobs" activeClassName="active">Quản lý công việc</NavLink></li> 
         <li><NavLink to="/admin/products" activeClassName="active">Quản lý sản phẩm</NavLink></li>
-        <li><NavLink to="/admin/orders" activeClassName="active">Quản lý đơn hàng</NavLink></li>
-        <li><NavLink to="/admin/inventory" activeClassName="active">Quản lý nội bộ</NavLink></li>
+        <li><NavLink to="/admin/orders" activeClassName="active">Quản lý đơn hàng</NavLink></li> 
+        <li><NavLink to="/admin/inventory" activeClassName="active">Quản lý nội bộ</NavLink></li> 
         <li><NavLink to="/admin/salary" activeClassName="active">Bảng lương</NavLink></li>
         <li><NavLink to="/admin/reports" activeClassName="active">Báo cáo doanh thu</NavLink></li>
         <li><NavLink to="/admin/calendar" activeClassName="active">Lịch công tác</NavLink></li>

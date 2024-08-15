@@ -164,49 +164,41 @@ export default function CompanyManagement() {
           </tr>
         </thead>
         <tbody>
-          {filteredCompanies.map((company) => (
-            <tr key={company.id}>
-              <td>{company.id}</td>
-              <td>{company.name}</td>
-              {/* <td>{company.logo}</td> */}
-              <td>
-                <a
-                  href={company.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Website
-                </a>
-              </td>
-              <td>{new Date(company.establishedDate).toLocaleDateString()}</td>
-              <td>{company.linkFacebook}</td>
-              {/* <td>{company.linkLinkedin}</td> */}
-              <td>{company.emailCompany}</td>
-              <td> adresss</td>
-              <td>{company.phone}</td>
-              <td>{company.typeCompany.name}</td>
-              <td>
-                <Checkbox
-                  checked={company.outstanding} // Bind checkbox to the company's outstanding status
-                  onChange={(e) =>
-                    handleOutstandingChange(company.id, e.target.checked)
-                  } // Handle change event
-                />
-              </td>
+  {filteredCompanies.map((company) => (
+    <tr key={company.id}>
+      <td>{company.id}</td>
+      <td>{company.name}</td>
+      <td>
+        <a href={company.website} target="_blank" rel="noopener noreferrer">
+          Website
+        </a>
+      </td>
+      <td>{new Date(company.establishedDate).toLocaleDateString()}</td>
+      <td>{company.linkFacebook}</td>
+      <td>{company.emailCompany}</td>
+      <td>address</td>
+      <td>{company.phone}</td>
+      <td>{company.typeCompany ?   company.typeCompany.name : "N/A"}</td>
+      <td>
+        <Checkbox
+          checked={company.outstanding}
+          onChange={(e) => handleOutstandingChange(company.id, e.target.checked)}
+        />
+      </td>
+      <td className="btn-delete">
+        <Popconfirm
+          title="Bạn có chắc chắn muốn xóa công ty này?"
+          onConfirm={() => handleDelete(company.id)}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button className="ant-btn-details-delete">xóa</Button>
+        </Popconfirm>
+      </td>
+    </tr>
+  ))}
+</tbody>
 
-              <td className="btn-delete">
-                <Popconfirm
-                  title="Bạn có chắc chắn muốn xóa công ty này?"
-                  onConfirm={() => handleDelete(company.id)}
-                  okText="Yes"
-                  cancelText="No"
-                >
-                  <Button className="ant-btn-details-delete">xóa</Button>
-                </Popconfirm>
-              </td>
-            </tr>
-          ))}
-        </tbody>
       </table>
       <Pagination
         current={currentPage}
