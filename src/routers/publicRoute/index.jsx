@@ -16,6 +16,7 @@ import LayoutIndex from "../../layouts";
 import CompanyDetail from "../../pages/company/listCompany/CompanyDetailUser";
 
 import CompanyDetailBusiness from "../../pages/company/listCompany/CompanyDetailBusiness";
+import AddJobBusiness from "../../pages/company/listCompany/AddJobBusiness";
 
 import PrivateRoute from "../../features/protectedRoutes/PrivateRoute";
 import ChangePassword from "../../pages/auth/changePassword";
@@ -70,6 +71,7 @@ const publicRoutes = [
             element: <ListCompany userType="business" />,
           },
           { path: "job", element: <ListJob /> },
+          { path: "addJob", element: <AddJobBusiness /> },
           { path: "jobDetail/:id", element: <JobDetail /> },
 
           { path: "detail/:id", element: <CompanyDetailBusiness /> },

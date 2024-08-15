@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import BASE_URL from "../api";
-import { GET } from "../constants/httpMethod";
+import { GET, POST } from "../constants/httpMethod";
 import { accessToken } from "../constants/accessToken";
 
 export const getListJob = createAsyncThunk(
@@ -61,6 +61,32 @@ export const getAllJobsByCompany = createAsyncThunk(
       console.log(error);
 
       return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// Thunk để thêm công việc mới
+export const addJob = createAsyncThunk(
+  "jobs/addJob",
+  async (jobData, { rejectWithValue }) => {
+    try {
+      const response = await BASE_URL({
+        method: POST,
+        url: "/company/job",
+        data: jobData,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      // Log the error for debugging
+      console.error("Error in addJob thunk:", error);
+
+      // Ensure error.response.data exists
+      return rejectWithValue(
+        error.response?.data || { message: "Unknown error occurred" }
+      );
     }
   }
 );

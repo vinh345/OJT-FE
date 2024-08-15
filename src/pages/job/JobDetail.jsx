@@ -104,7 +104,7 @@ export default function JobDetail() {
             {/* Job Overview Section */}
             <div className="bg-white p-4 rounded-md shadow-md mb-6">
               <h2 className="text-xl font-semibold mb-4">Job Overview</h2>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-3 gap-4">
                 <div className="flex items-center">
                   <Event className="text-red-500 mr-2" />
                   <div>
