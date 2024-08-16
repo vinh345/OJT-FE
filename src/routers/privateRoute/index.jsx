@@ -7,8 +7,9 @@ import UserInfor from "../../pages/candidateinformation";
 import CandidateCV from "../../pages/admin/CandidateCV";
 
 import ListCompany from "../../pages/company/listCompany/ListCompany";
-import ListJob from "../../pages/job/ListJob";
+
 import JobDetail from "../../pages/job/JobDetail";
+import JobDetailBusiness from "../../pages/job/JobDetailBusiness";
 import CompanyDetailBusiness from "../../pages/company/listCompany/CompanyDetailBusiness";
 import AddJobBusiness from "../../pages/company/listCompany/AddJobBusiness";
 import CompanyDetail from "../../pages/company/listCompany/CompanyDetailUser";
@@ -51,10 +52,7 @@ const privateRoutes = [
             path: "company/detail/:id",
             element: <PrivateRoute element={<CompanyDetail />} />,
           },
-          {
-            path: "job",
-            element: <PrivateRoute element={<ListJob />} />,
-          },
+
           {
             path: "jobDetail/:id",
             element: <PrivateRoute element={<JobDetail />} />,
@@ -65,16 +63,12 @@ const privateRoutes = [
         path: "/company",
         children: [
           {
-            path: "job",
-            element: <PrivateRoute element={<ListJob />} />,
-          },
-          {
             path: "addJob",
             element: <PrivateRoute element={<AddJobBusiness />} />,
           },
           {
             path: "jobDetail/:id",
-            element: <PrivateRoute element={<JobDetail />} />,
+            element: <PrivateRoute element={<JobDetailBusiness />} />,
           },
           {
             path: "detail",

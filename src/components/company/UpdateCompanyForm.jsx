@@ -1,6 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateCompany } from "../../service/companyService";
+import { Select } from "antd";
+import { fetchTypeCompanys } from "../../service/typeCompany/typeCompanyService";
+import { getListLocation } from "../../service/Location/locationService";
 
-export default function UpdateCompanyForm({ onClose, onSubmit }) {
+export default function UpdateCompanyForm({ onClose, companyData }) {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     name: "",
     logo: null,
@@ -17,21 +23,80 @@ export default function UpdateCompanyForm({ onClose, onSubmit }) {
     locationId: "",
   });
 
+  useEffect(() => {
+    dispatch(fetchTypeCompanys({}));
+    dispatch(getListLocation());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (companyData) {
+      setFormData({
+        name: companyData.name || "",
+        logo: null,
+        website: companyData.website || "",
+        linkFacebook: companyData.linkFacebook || "",
+        linkLinkedin: companyData.linkLinkedin || "",
+        size: companyData.size || "",
+        description: companyData.description || "",
+        phone: companyData.phone || "",
+        policy: companyData.policy || "",
+        typeCompany: companyData.typeCompanyName || "",
+        address: companyData.address || "",
+        mapUrl: companyData.mapUrl || "",
+        locationId: companyData.nameCity || "",
+      });
+    }
+  }, [companyData]);
+
+  const handleSelectChange = (value) => {
+    setFormData((prev) => ({ ...prev, typeCompany: value }));
+  };
+
+  const handleLocationChange = (value) => {
+    setFormData((prev) => ({ ...prev, locationId: value }));
+  };
+
+  const { data: typeCompanys } = useSelector((state) => state.typeCompanys);
+  const { data: locations } = useSelector((state) => state.locations);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
-    setFormData({ ...formData, [name]: files[0] });
+    setFormData((prev) => ({ ...prev, [name]: files[0] }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
-  };
 
+    const requiredFields = ["name", "website", "phone", "address"];
+    for (let field of requiredFields) {
+      if (!formData[field]) {
+        alert(`${field} không được để trống`);
+        return;
+      }
+    }
+
+    const updatedData = {
+      ...formData,
+      locationId: parseInt(formData.locationId, 10),
+      typeCompany: parseInt(formData.typeCompany, 10),
+    };
+
+    console.log("Dữ liệu biểu mẫu trước khi cập nhật:", updatedData);
+
+    dispatch(updateCompany(updatedData))
+      .then((response) => {
+        console.log("Update successful:", response);
+        onClose();
+      })
+      .catch((error) => {
+        console.error("Error during update:", error);
+      });
+  };
   return (
     <div className="fixed inset-0 flex items-center  justify-center z-50">
       <div className="fixed inset-0 bg-black opacity-50"></div>
@@ -40,7 +105,7 @@ export default function UpdateCompanyForm({ onClose, onSubmit }) {
           Cập nhật thông tin doanh nghiệp
         </h2>
         <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
-          <div className="mb-4 ">
+          <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
               Tên công ty
             </label>
@@ -165,14 +230,18 @@ export default function UpdateCompanyForm({ onClose, onSubmit }) {
             <label className="block text-sm font-medium text-gray-700">
               Loại công ty
             </label>
-            <input
-              type="text"
-              name="typeCompany"
+            <Select
               value={formData.typeCompany}
-              onChange={handleChange}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-              placeholder="Enter company type"
-            />
+              onChange={handleSelectChange}
+              className="mt-1 block w-full"
+              placeholder="Chọn loại công ty"
+            >
+              {typeCompanys?.content?.map((typeCompany) => (
+                <Select.Option key={typeCompany.id} value={typeCompany.id}>
+                  {typeCompany.name}
+                </Select.Option>
+              ))}
+            </Select>
           </div>
 
           <div className="mb-4">
@@ -205,16 +274,20 @@ export default function UpdateCompanyForm({ onClose, onSubmit }) {
 
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
-              Location ID
+              ID vị trí
             </label>
-            <input
-              type="text"
-              name="locationId"
+            <Select
               value={formData.locationId}
-              onChange={handleChange}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-              placeholder="Enter Location ID"
-            />
+              onChange={handleLocationChange}
+              className="mt-1 block w-full"
+              placeholder="Chọn vị trí"
+            >
+              {locations?.content?.map((location) => (
+                <Select.Option key={location.id} value={location.id}>
+                  {location.nameCity}
+                </Select.Option>
+              ))}
+            </Select>
           </div>
 
           <div className="flex justify-end space-x-4 col-span-2">

@@ -1,16 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import BASE_URL, { formAxios } from "../api";
-import { GET } from "../constants/httpMethod";
+import { GET, PUT } from "../constants/httpMethod";
 import { Cookies } from "react-cookie";
 
 const cookie = new Cookies();
 // Cập nhật hàm fetchCompanyList để nhận tham số tìm kiếm và gửi kèm accessToken
 export const getListCompanies = createAsyncThunk(
   "companies/getListCompanies",
-  async ({ name, location }, thunkAPI) => {
+  async ({ name, location, page }, thunkAPI) => {
     const query = new URLSearchParams({
       name: name || "",
       location: location || "",
+      size: 9,
+      page: page,
     }).toString();
 
     try {
@@ -135,7 +137,6 @@ export const updateCompany = createAsyncThunk(
     try {
       const formData = new FormData();
 
-      // Append fields to formData
       if (companyRequest.name) formData.append("name", companyRequest.name);
       if (companyRequest.logo) formData.append("logo", companyRequest.logo);
       if (companyRequest.website)

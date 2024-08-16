@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getJobDetail, getJobsBySameType } from "../../service/jobService";
+import {
+  getJobDetail,
+  getJobDetailBusiness,
+  getJobsBySameType,
+} from "../../service/jobService";
 import {
   AccessTime,
   Event,
@@ -12,7 +16,7 @@ import {
 } from "@mui/icons-material";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import JobCardItem from "./JobCardItem";
-export default function JobDetail() {
+export default function JobDetailBusiness() {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -23,7 +27,7 @@ export default function JobDetail() {
   console.log(sameTypeJobsData);
 
   useEffect(() => {
-    dispatch(getJobDetail(id));
+    dispatch(getJobDetailBusiness(id));
     dispatch(getJobsBySameType(id));
   }, [dispatch, id]);
   // Hàm điều hướng sang trang chi tiết công việc
@@ -58,7 +62,7 @@ export default function JobDetail() {
               className=" h-10 text-red-500 bg-red-200 "
             />
             <button className="bg-red-500 text-white px-4 py-2 rounded h-10 w-56">
-              Ứng Tuyển Ngay
+              Cập Nhật Thông Tin
             </button>
           </div>
         </div>

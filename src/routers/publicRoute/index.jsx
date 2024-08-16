@@ -8,18 +8,13 @@ import AdminLayout from "../../pages/admin/AdminLayout";
 import Dashboard from "../../pages/admin/Dashboard";
 import Users from "../../pages/admin/Users";
 import Company from "../../pages/admin/Company";
-import ListCompany from "../../pages/company/listCompany/ListCompany";
-import ListJob from "../../pages/job/ListJob";
-import JobDetail from "../../pages/job/JobDetail";
 import VerifyAccount from "../../pages/auth/verify";
 import LayoutIndex from "../../layouts";
-import CompanyDetail from "../../pages/company/listCompany/CompanyDetailUser";
 
-import CompanyDetailBusiness from "../../pages/company/listCompany/CompanyDetailBusiness";
-import AddJobBusiness from "../../pages/company/listCompany/AddJobBusiness";
-
+import ListJob from "../../pages/job/ListJob";
 import PrivateRoute from "../../features/protectedRoutes/PrivateRoute";
 import ChangePassword from "../../pages/auth/changePassword";
+import JobDetail from "../../pages/job/JobDetail";
 
 const publicRoutes = [
   {
@@ -35,7 +30,10 @@ const publicRoutes = [
         path: "/",
         element: <Home />,
       },
+      { path: "job", element: <ListJob /> },
+      { path: "jobDetail/:id", element: <JobDetail /> },
       { path: "/admin", element: <FormLoginAdmin /> },
+
       {
         path: "/admin",
         element: <AdminLayout />,
@@ -60,6 +58,7 @@ const publicRoutes = [
         path: "/company",
         children: [
           { path: "register", element: <CompanyRegisterForm /> },
+
           { path: "login", element: <LoginPage boolean={true} /> },
         ],
       },
