@@ -3,12 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { LocationOn, Group } from "@mui/icons-material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { getCompanyDetail } from "../../../service/companyService";
-import { FAILED, PENDING, IDLE } from "../../../constants/status";
-import { getAllJobsByCompany, getListJob } from "../../../service/jobService";
-import { getRelatedCompanies } from "../../../service/companyService";
+import {
+  getAllJobsByCompanyUser,
+  getCompanyDetail,
+  getRelatedCompanies,
+} from "../../../service/companyService";
+import { FAILED, PENDING } from "../../../constants/status";
 import JobCardItem from "../../job/JobCardItem";
 import CompanyCardItem from "./CompanyCardItem";
+import { resetJobs } from "../../../redux/slices/getAllJobsByCompanyUserSlice";
 
 export default function CompanyDetail() {
   const { id } = useParams();
@@ -26,8 +29,7 @@ export default function CompanyDetail() {
     data: jobs,
     loading: jobLoading,
     error: jobError,
-  } = useSelector((state) => state.getAllJobsByCompanys);
-  console.log(jobs);
+  } = useSelector((state) => state.getAllJobsByCompanyUser);
 
   // Lấy danh sách công ty cùng lĩnh vực
   const {
@@ -39,31 +41,35 @@ export default function CompanyDetail() {
   const [searchTitle, setSearchTitle] = useState("");
   const [searchLocation, setSearchLocation] = useState("");
 
+  // Lấy thông tin chi tiết công ty, công ty liên quan và danh sách job khi vào trang
   useEffect(() => {
     dispatch(getCompanyDetail(id));
     dispatch(getRelatedCompanies(id));
-  }, [dispatch, id]);
 
-  useEffect(() => {
-    if (jobLoading === IDLE) {
-      dispatch(
-        getAllJobsByCompany({
-          title: searchTitle,
-          location: searchLocation,
-          page: 0,
-          size: 10,
-        })
-      );
-    }
-  }, [dispatch, jobLoading, searchTitle, searchLocation]);
+    // Lấy tất cả job của công ty khi vào trang
+    dispatch(
+      getAllJobsByCompanyUser({
+        companyId: id,
+        title: "",
+        location: "",
+        page: 0,
+        size: 10,
+        sort: "id",
+        direction: "ASC",
+      })
+    );
+  }, [dispatch, id]);
 
   const handleSearch = () => {
     dispatch(
-      getAllJobsByCompany({
+      getAllJobsByCompanyUser({
+        companyId: id,
         title: searchTitle,
         location: searchLocation,
         page: 0,
         size: 10,
+        sort: "id",
+        direction: "ASC",
       })
     );
   };
@@ -147,8 +153,8 @@ export default function CompanyDetail() {
                   </button>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  {jobLoading[0] === "pending" && <p>Loading jobs...</p>}
-                  {jobLoading[0] === "failed" && <p>Error: {jobError}</p>}
+                  {jobLoading === PENDING && <p>Loading jobs...</p>}
+                  {jobLoading === FAILED && <p>Error: {jobError}</p>}
                   {jobs?.content?.length ? (
                     jobs.content.map((job) => (
                       <div key={job.id}>
@@ -233,8 +239,8 @@ export default function CompanyDetail() {
             {relatedCompaniesLoading === FAILED && (
               <p>Error: {relatedCompaniesError}</p>
             )}
-            {relatedCompanies.length > 0 ? (
-              <div className="grid grid-cols-2 gap-4 mt-4">
+            {relatedCompanies && relatedCompanies.length > 0 ? (
+              <div className="grid grid-cols-3 gap-4 mt-6">
                 {relatedCompanies.map((relatedCompany) => (
                   <CompanyCardItem
                     key={relatedCompany.id}
@@ -248,7 +254,7 @@ export default function CompanyDetail() {
           </div>
         </>
       ) : (
-        <p>No company found with the specified ID.</p>
+        <p>No company details available.</p>
       )}
     </div>
   );

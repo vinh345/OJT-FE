@@ -31,16 +31,16 @@ export default function AddJobBusiness() {
       requirements: values.requirements || "", // Mặc định chuỗi trống nếu không được cung cấp
       salary: values.salary,
       expireAt: values.expireAt.format("YYYY-MM-DD"), //Đảm bảo định dạng ngày phù hợp với yêu cầu phụ trợ
-      locationId: values.location, 
+      locationId: values.location,
       levelJobIds: values.levelJobIds || [], // Mặc định là mảng rỗng nếu ko đc cung cấp
-      typeJobIds: values.typeJobIds || [], 
+      typeJobIds: values.typeJobIds || [],
     };
 
     dispatch(addJob(jobData))
       .unwrap()
       .then(() => {
         message.success("Job added successfully!");
-        navigate("/company"); 
+        navigate("/company/detail");
       })
       .catch((error) => {
         message.error("Failed to add job: " + error.message);
