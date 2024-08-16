@@ -9,7 +9,7 @@ export const fetchLevelJobs = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await BASE_URL[GET]("/company/level-job", {
+      const response = await BASE_URL[GET]("/level-job", {
         params: {
           page,
           size,

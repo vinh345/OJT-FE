@@ -9,7 +9,7 @@ export const fetchTypeJobs = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await BASE_URL[GET]("/company/type-job", {
+      const response = await BASE_URL[GET]("/type-job", {
         params: {
           page,
           size,
