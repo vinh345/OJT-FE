@@ -1,0 +1,109 @@
+.job-management-container {
+    width: 107%;
+    margin: 0 auto;
+    padding: 20px;
+    margin-left: -80px;
+}
+
+.job-management-title {
+    text-align: center;
+    color: #000000;
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: 600;
+    
+}
+
+.job-management-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.job-management-table th, 
+.job-management-table td {
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 15px;
+    text-align: center;
+}
+
+.job-management-table th {
+    background-color: #c2f0f057;
+    color: #e63f0c;
+    font-weight: bold;
+    font-size: 16px; 
+    padding-bottom: 50px;
+    padding-top: 50px;
+}
+
+.job-management-table tr:nth-child(even) {
+    background-color: #c2f0f057;
+}
+
+.job-management-table tr:hover {
+    background-color: #c1cc5f49;
+}
+
+.job-management-table a {
+    color: #1a73e8;
+    text-decoration: none;
+}
+
+.job-management-table a:hover {
+    text-decoration: underline;
+}
+
+.job-management-table td.status-active {
+    color: green;
+    font-weight: bold;
+}
+
+.job-management-table td.status-locked {
+    color: red;
+    font-weight: bold;
+}
+
+.job-management-table .ant-btn {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.job-management-table .ant-btn-lock {
+    background-color: rgb(51, 114, 26);
+    color: white;
+    border: none;
+}
+
+.job-management-table .ant-btn-unlock {
+    background-color: rgb(221, 16, 9);
+    color: white;
+    border: none;
+}
+
+.search-input {
+    width: 300px;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: #40a9ff;
+    box-shadow: 0 0 0 2px rgba(64, 169, 255, 0.2);
+}
+
+.sort-select {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+    background-color: white;
+}

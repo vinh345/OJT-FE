@@ -12,6 +12,8 @@
     color: #000000;
     margin-bottom: 70px;
     margin-top: 30px;
+    font-size: 28px;
+    font-weight :600;
   }
   
   .company-management-table {
@@ -29,7 +31,7 @@
   }
   
   .company-management-table th {
-    background-color: #e7f0f8a6;
+    background-color: #f8e9e7a6;
     color: #e63f0c;
     font-weight: bold;
     font-size: 16px;
@@ -38,7 +40,7 @@
   }
   
   .company-management-table tr:nth-child(even) {
-    background-color: #e7f0f8a6;
+    background-color: #f8e9e7a6;
   }
   
   .company-management-table tr:hover {

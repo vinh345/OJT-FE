@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../style/CompanyManagement.css"; // Import CSS file for styling
-import { Button, message, Popconfirm } from "antd"; // Import Ant Design components for notifications and confirmation
-import { Pagination } from 'antd'; // Import Ant Design Pagination component
+import { Button, message, Popconfirm, Checkbox } from "antd"; // Import Ant Design components for notifications and confirmation
+import { Pagination } from "antd"; // Import Ant Design Pagination component
 
 export default function CompanyManagement() {
   const [companies, setCompanies] = useState([]);
@@ -18,7 +18,9 @@ export default function CompanyManagement() {
       try {
         const token = localStorage.getItem("accessToken"); // Get token from localStorage
         const response = await axios.get(
-          `http://localhost:8080/api.myservice.com/v1/admin/companies?page=${currentPage - 1}&size=${pageSize}`,
+          `http://localhost:8080/api.myservice.com/v1/admin/companies?page=${
+            currentPage - 1
+          }&size=${pageSize}`,
           {
             headers: {
               Authorization: `Bearer ${token}`, // Attach token to header
@@ -54,16 +56,12 @@ export default function CompanyManagement() {
 
     let sortedCompanies = [...filteredCompanies];
     if (option === "name-asc") {
-      sortedCompanies.sort((a, b) =>
-        a.name.localeCompare(b.name)
-      );
+      sortedCompanies.sort((a, b) => a.name.localeCompare(b.name));
     } else if (option === "name-desc") {
-      sortedCompanies.sort((a, b) =>
-        b.name.localeCompare(a.name)
-      );
+      sortedCompanies.sort((a, b) => b.name.localeCompare(a.name));
     } else if (option === "established-date") {
-      sortedCompanies.sort((a, b) =>
-        new Date(a.establishedDate) - new Date(b.establishedDate)
+      sortedCompanies.sort(
+        (a, b) => new Date(a.establishedDate) - new Date(b.establishedDate)
       );
     }
     setFilteredCompanies(sortedCompanies);
@@ -77,20 +75,55 @@ export default function CompanyManagement() {
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem("accessToken"); // Get token from localStorage
-      await axios.delete(`http://localhost:8080/api.myservice.com/v1/admin/companies/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`, // Attach token to header
-        },
-      });
+      await axios.delete(
+        `http://localhost:8080/api.myservice.com/v1/admin/companies/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Attach token to header
+          },
+        }
+      );
       // Update the UI after successful deletion
-      setFilteredCompanies(filteredCompanies.filter(company => company.id !== id));
-      setCompanies(companies.filter(company => company.id !== id));
+      setFilteredCompanies(
+        filteredCompanies.filter((company) => company.id !== id)
+      );
+      setCompanies(companies.filter((company) => company.id !== id));
       message.success("Xóa công ty thành công!"); // Show success message
     } catch (error) {
       console.error("Có lỗi xảy ra khi xóa công ty:", error);
       message.error("Xóa công ty thất bại!"); // Show error message
     }
   };
+
+
+  const handleOutstandingChange = async (companyId, isOutstanding) => {
+    try {
+      const token = localStorage.getItem("accessToken"); // Get token from localStorage
+      await axios.patch(
+        `http://localhost:8080/api.myservice.com/v1/admin/companies/${companyId}`, // Assuming this is the endpoint for updating outstanding status
+        { outstanding: isOutstanding },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Attach token to header
+          },
+        }
+      );
+  
+      // Update the state to reflect the change
+      setCompanies(companies.map(company => 
+        company.id === companyId ? { ...company, outstanding: isOutstanding } : company
+      ));
+      setFilteredCompanies(filteredCompanies.map(company => 
+        company.id === companyId ? { ...company, outstanding: isOutstanding } : company
+      ));
+  
+      message.success("Cập nhật trạng thái nổi bật thành công!"); // Show success message
+    } catch (error) {
+      console.error("Có lỗi xảy ra khi cập nhật trạng thái nổi bật:", error);
+      message.error("Cập nhật trạng thái nổi bật thất bại!"); // Show error message
+    }
+  };
+  
 
   return (
     <div className="company-management-container">
@@ -102,7 +135,11 @@ export default function CompanyManagement() {
         onChange={handleChangeText}
         className="search-input"
       />
-      <select value={sortOption} onChange={handleSortChange} className="sort-select">
+      <select
+        value={sortOption}
+        onChange={handleSortChange}
+        className="sort-select"
+      >
         <option value="">Sắp xếp theo</option>
         <option value="name-asc">Tên: A-Z</option>
         <option value="name-desc">Tên: Z-A</option>
@@ -122,54 +159,46 @@ export default function CompanyManagement() {
             <th>Địa chỉ</th>
             <th>Số điện thoại</th>
             <th>typeCompany</th>
+            <th>Nổi bật</th>
             <th colSpan={2}>Hành động</th>
           </tr>
         </thead>
         <tbody>
-          {filteredCompanies.map((company) => (
-            <tr key={company.id}>
-              <td>{company.id}</td>
-              <td>{company.name}</td>
-              {/* <td>{company.logo}</td> */}
-              <td>
-                <a
-                  href={company.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Website
-                </a>
-              </td>
-              <td>{new Date(company.establishedDate).toLocaleDateString()}</td>
-              <td>{company.linkFacebook}</td>
-              {/* <td>{company.linkLinkedin}</td> */}
-              <td>{company.emailCompany}</td>
-              <td> adresss</td>
-              <td>{company.phone}</td>
-              <td>{company.typeCompany.name}</td>
-              {/* <td>
-                <Button
-                  className="ant-btn-details"
-                  // Add any action handlers if necessary
-                >
-                  Chi tiết
-                </Button>
-              </td> */}
-              <td className="btn-delete">
-                <Popconfirm
-                  title="Bạn có chắc chắn muốn xóa công ty này?"
-                  onConfirm={() => handleDelete(company.id)}
-                  okText="Yes"
-                  cancelText="No"
-                >
-                  <Button className="ant-btn-details-delete"> 
-                    xóa
-                  </Button>
-                </Popconfirm>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+  {filteredCompanies.map((company) => (
+    <tr key={company.id}>
+      <td>{company.id}</td>
+      <td>{company.name}</td>
+      <td>
+        <a href={company.website} target="_blank" rel="noopener noreferrer">
+          Website
+        </a>
+      </td>
+      <td>{new Date(company.establishedDate).toLocaleDateString()}</td>
+      <td>{company.linkFacebook}</td>
+      <td>{company.emailCompany}</td>
+      <td>address</td>
+      <td>{company.phone}</td>
+      <td>{company.typeCompany ?   company.typeCompany.name : "N/A"}</td>
+      <td>
+        <Checkbox
+          checked={company.outstanding}
+          onChange={(e) => handleOutstandingChange(company.id, e.target.checked)}
+        />
+      </td>
+      <td className="btn-delete">
+        <Popconfirm
+          title="Bạn có chắc chắn muốn xóa công ty này?"
+          onConfirm={() => handleDelete(company.id)}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button className="ant-btn-details-delete">xóa</Button>
+        </Popconfirm>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
       </table>
       <Pagination
         current={currentPage}
