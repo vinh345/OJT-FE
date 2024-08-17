@@ -16,7 +16,9 @@ const LoginPage = ({ boolean }) => {
   };
 
   return (
-    <div className="container mx-auto w-4/5 relative">
+  <div className="flex align-middle mx-20">
+
+    <div className="shadow-2xl container mx-40 my-4 relative">
       <div className="flex flex-col gap-0">
         <div className="flex flex-col justify-start p-8 pb-0">
           <img src={logo} alt="RKEI Edu Logo" className="mb-6 w-40" />
@@ -57,12 +59,13 @@ const LoginPage = ({ boolean }) => {
       </div>
 
       <div
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 cursor-pointer border bg-gray-500 rounded-full"
+        className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer border bg-gray-500 rounded-full"
         onClick={handleArrowClick}
       >
         <ArrowForward style={{ fontSize: 60, color: "white" }} />
       </div>
     </div>
+  </div>
   );
 };
 

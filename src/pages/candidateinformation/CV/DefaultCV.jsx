@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchCandidateCV } from "../../service/adminService";
-import CVBody from "../../components/cv/CVBody";
+import "@react-pdf-viewer/core/lib/styles/index.css";
+import "@cyntler/react-doc-viewer/dist/index.css";
+import { fetchCVById, fetchDefaultCV } from "../../../service/candidateService";
+import CVBody from "../../../components/cv/CVBody";
 
-const CandidateCV = () => {
-  const { id } = useParams();
+const DefaultCV = () => {
   const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     const loadProfile = async () => {
-      const data = await fetchCandidateCV(id);
+      const data = await fetchDefaultCV();
 
       setProfile(data);
     };
     loadProfile();
-  }, [id]);
+  }, []);
 
   if (!profile) {
     return <div>Loading...</div>;
@@ -23,4 +24,4 @@ const CandidateCV = () => {
   return <CVBody profile={profile} />;
 };
 
-export default CandidateCV;
+export default DefaultCV;

@@ -5,6 +5,9 @@ import ChangePassword from "../../pages/auth/changePassword";
 import LayoutIndex from "../../layouts";
 import UserInfor from "../../pages/candidateinformation";
 import CandidateCV from "../../pages/admin/CandidateCV";
+import CVManagement from "../../pages/candidateinformation/CV/CVManagement";
+import CVPage from "../../pages/candidateinformation/CV/CVPage";
+import DefaultCV from "../../pages/candidateinformation/CV/DefaultCV";
 
 import ListCompany from "../../pages/company/listCompany/ListCompany";
 import ListJob from "../../pages/job/ListJob";
@@ -39,6 +42,31 @@ const privateRoutes = [
       {
         path: "/user",
         children: [
+          {path: "infor",
+            element: <PrivateRoute element={<UserInfor/>} />
+          },
+          {path: "cv",
+            children:[
+              {
+                path:"",
+                element: <PrivateRoute element={<CVManagement/>} />
+              },
+              {
+                path:"default",
+                exact:true,
+                element: <PrivateRoute element={<DefaultCV/>} />
+
+              },
+              {
+                path:":id",
+                element: <PrivateRoute element={<CVPage/>} />
+
+              },
+              
+            ]
+          }
+        ]
+      }
           {
             path: "infor",
             element: <PrivateRoute element={<UserInfor />} />,
