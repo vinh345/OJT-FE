@@ -2,8 +2,9 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import BASE_URL from "../api";
 import { POST, PUT } from "../constants/httpMethod";
 import { accessToken } from "../constants/accessToken";
-import { Cookies } from "react-cookie";
+import { Cookies, useCookies } from "react-cookie";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const getDataFromCookie = createAsyncThunk(
   "auth/getDataFromCookie",
@@ -24,12 +25,12 @@ export const login = createAsyncThunk(
       const cookie = new Cookies();
       cookie.set("accessToken", response.data.data.accessToken, {
         path: "/",
-        maxAge: 60 * 1000, 
+        maxAge: 60 * 1000,
       });
       cookie.set("type", "Bearer", { path: "/", maxAge: 60 * 1000 });
       cookie.set("isLogin", true, { path: "/", maxAge: 60 * 1000 });
-      cookie.set("avatar",response.data.data.avatar, { path: "/", maxAge: 60 * 1000 })
-      cookie.set("name",response.data.data.name, { path: "/", maxAge: 60 * 1000 })
+      cookie.set("avatar", response.data.data.avatar, { path: "/", maxAge: 60 * 1000 })
+      cookie.set("name", response.data.data.name, { path: "/", maxAge: 60 * 1000 })
 
       return response.data;
     } catch (error) {
@@ -131,7 +132,7 @@ export const verifyAccount = createAsyncThunk(
   }
 );
 
-export const resendOtp = createAsyncThunk("auth/resendOtp", async (email, thunkAPI)=>{
+export const resendOtp = createAsyncThunk("auth/resendOtp", async (email, thunkAPI) => {
   try {
     const response = await axios.put(`http://localhost:8080/api.myservice.com/v1/auth/resendotp?email=${email}`);
     return response.data;
@@ -139,3 +140,9 @@ export const resendOtp = createAsyncThunk("auth/resendOtp", async (email, thunkA
     return thunkAPI.rejectWithValue(error.response?.data || error.message);
   }
 });
+
+
+
+
+
+

@@ -8,6 +8,8 @@ import userInfoSlice from "./userInfoSlice";
 import sameTypeJobsSlice from "./sameTypeJobsSlice";
 import relatedCompaniesSlice from "./relatedCompaniesSlice";
 import getAllJobsByCompanySlice from "./getAllJobsByCompanySlice";
+import cvSlice from "./cvSlice";
+import letterSlice from "./letterSlice";
 import levelJobSlice from "./levelJobSlice";
 import typeJobSlice from "./typeJobSlice";
 import getAllJobsByCompanyUserSlice from "./getAllJobsByCompanyUserSlice";
@@ -26,6 +28,8 @@ const reducers = combineReducers({
   sameTypeJobs: sameTypeJobsSlice,
   relatedCompanies: relatedCompaniesSlice,
   getAllJobsByCompanys: getAllJobsByCompanySlice,
+  cv: cvSlice,
+  letter:letterSlice,
   levelJobs: levelJobSlice,
   typeJobs: typeJobSlice,
   getAllJobsByCompanyUser: getAllJobsByCompanyUserSlice,

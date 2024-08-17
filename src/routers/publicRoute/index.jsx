@@ -16,6 +16,10 @@ import PrivateRoute from "../../features/protectedRoutes/PrivateRoute";
 import ChangePassword from "../../pages/auth/changePassword";
 import JobDetail from "../../pages/job/JobDetail";
 
+
+import Jobs from "../../pages/admin/Jobs";
+
+
 const publicRoutes = [
   {
     path: "",
@@ -42,6 +46,7 @@ const publicRoutes = [
           { path: "candidate", element: <Users /> },
           { path: "company", element: <Company /> },
           { path: "login", element: <FormLoginAdmin /> },
+          { path: "jobs", element: <Jobs /> }
         ],
       },
       { path: "/auth/recoverPassword", element: <RecoverPassword /> },

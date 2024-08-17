@@ -101,17 +101,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const CVDocument = ({ id }) => {
-  const [profile, setProfile] = useState(null);
+const CVDocument = ({ profile }) => {
   const [imageData, setImageData] = useState(null);
 
-  useEffect(() => {
-    const loadProfile = async () => {
-      const data = await fetchCandidateCV(id);
-      setProfile(data);
-    };
-    loadProfile();
-  }, [id]);
+ 
 
   useEffect(() => {
     const loadImage = async () => {
