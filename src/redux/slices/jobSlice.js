@@ -1,43 +1,40 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { FAILED, IDLE, PENDING, SUCCESS } from "../../constants/status";
-import { addJob, getJobDetail, getListJob } from "../../service/jobService";
+import { IDLE, PENDING, SUCCESS, FAILED } from "../../constants/status";
+import {
+  getJobDetailBusiness,
+  updateJobDetailBusiness,
+} from "../../service/jobService";
 
 const jobSlice = createSlice({
   name: "jobs",
   initialState: {
-    loading: [IDLE],
+    loading: IDLE,
     data: [],
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getListJob.pending, (state) => {
-        state.loading = [PENDING];
-      })
-      .addCase(getListJob.fulfilled, (state, action) => {
-        state.data = action.payload;
-        state.loading = [SUCCESS];
-      })
-      .addCase(getListJob.rejected, (state, action) => {
-        state.loading = [FAILED];
-        state.error = action.error.message;
-      })
-      .addCase(getJobDetail.pending, (state) => {
-        state.loading = true;
+      // Trạng thái pending khi lấy chi tiết công việc
+      .addCase(getJobDetailBusiness.pending, (state) => {
+        state.loading = PENDING;
         state.error = null;
       })
-      .addCase(getJobDetail.fulfilled, (state, action) => {
-        state.loading = false;
+      // Trạng thái fulfilled khi lấy thành công chi tiết công việc
+      .addCase(getJobDetailBusiness.fulfilled, (state, action) => {
+        state.loading = SUCCESS;
         state.data = action.payload;
       })
-      .addCase(getJobDetail.rejected, (state, action) => {
-        state.loading = false;
+      // Trạng thái rejected khi có lỗi trong quá trình lấy chi tiết công việc
+      .addCase(getJobDetailBusiness.rejected, (state, action) => {
+        state.loading = FAILED;
         state.error = action.payload;
       })
-      // Thêm một công việc mới
-      .addCase(addJob.fulfilled, (state, action) => {
-        state.data.push(action.payload); // Tùy chọn thêm công việc mới vào danh sách
+      // Trạng thái fulfilled khi cập nhật công việc thành công
+      .addCase(updateJobDetailBusiness.fulfilled, (state, action) => {
+        state.loading = SUCCESS;
+        state.data = action.payload; // Cập nhật dữ liệu công việc với dữ liệu mới
+        state.error = null;
       });
   },
 });

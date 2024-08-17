@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import JobCardItem from "./JobCardItem";
 import { getListJob } from "../../service/jobService";
 import { IDLE } from "../../constants/status";
+import { Pagination } from "antd";
 
 export default function ListJob() {
   const dispatch = useDispatch();
@@ -14,15 +15,20 @@ export default function ListJob() {
   // State để lưu giá trị tìm kiếm
   const [searchTitle, setSearchTitle] = useState("");
   const [searchLocation, setSearchLocation] = useState("");
-
+  const [total, setTotal] = useState();
+  const [page, setPage] = useState();
   useEffect(() => {
     dispatch(
       getListJob({
         title: searchTitle,
         nameCity: searchLocation,
+        page: page - 1,
       })
-    );
-  }, [searchTitle, searchLocation]);
+    ).then((res) => {
+      console.log(res.payload.totalElements);
+      setTotal(res.payload.totalElements);
+    });
+  }, [searchTitle, searchLocation, page]);
 
   // Hàm xử lý tìm kiếm
   const handleSearch = () => {
@@ -31,12 +37,15 @@ export default function ListJob() {
 
   // Hàm điều hướng sang trang chi tiết công việc
   const handleSeeJobDetail = (jobId) => {
-    navigate(`/company/jobDetail/${jobId}`);
+    navigate(`/jobDetail/${jobId}`);
   };
-
+  const handleChangePage = (e) => {
+    console.log(e);
+    setPage(e);
+  };
   return (
     <>
-      <div className="mx-auto my-8 ">
+      <div className="mx-auto my-8  h-[600px] px-36 ">
         <div className="flex items-center mb-4 space-x-2">
           <input
             type="text"
@@ -59,22 +68,34 @@ export default function ListJob() {
             Find Job
           </button>
         </div>
-
-        <div className="grid grid-cols-3 gap-4 ">
-          {jobs?.content?.length ? (
-            jobs.content.map((job) => (
-              <div
-                className="cursor-pointer"
-                key={job.id}
-                onClick={() => handleSeeJobDetail(job.id)}
-              >
-                <JobCardItem job={job} />
-              </div>
-            ))
-          ) : (
-            <p>No jobs found.</p>
-          )}
+        <div>
+          <div className="grid grid-cols-3 gap-4 ">
+            {jobs?.content?.length ? (
+              jobs.content.map((job) => (
+                <div
+                  className="cursor-pointer"
+                  key={job.id}
+                  onClick={() => handleSeeJobDetail(job.id)}
+                >
+                  <JobCardItem job={job} />
+                </div>
+              ))
+            ) : (
+              <p>No jobs found.</p>
+            )}
+          </div>
         </div>
+      </div>
+      <div className="flex justify-center mt-4 mb-14">
+        {" "}
+        {/* Thêm div bọc để căn giữa */}
+        <Pagination
+          className="self-center"
+          onChange={handleChangePage}
+          simple
+          total={total}
+          pageSize={9}
+        />
       </div>
     </>
   );

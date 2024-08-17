@@ -28,7 +28,7 @@ export default function JobDetail() {
   }, [dispatch, id]);
   // Hàm điều hướng sang trang chi tiết công việc
   const handleSeeJobDetail = (jobId) => {
-    navigate(`/company/jobDetail/${jobId}`);
+    navigate(`/jobDetail/${jobId}`);
   };
   if (loading) return <p>Loading job details...</p>;
   if (error) return <p>Error: {error}</p>;

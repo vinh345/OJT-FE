@@ -103,7 +103,7 @@ export default function CompanyDetail() {
                 className="text-red-500 bg-red-200"
               />
               <button className="bg-red-500 text-white px-4 py-2 rounded h-10 w-56">
-                Follow
+                Theo dõi công ty
               </button>
             </div>
           </div>
