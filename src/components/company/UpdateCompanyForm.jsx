@@ -19,7 +19,7 @@ export default function UpdateCompanyForm({ onClose, companyData }) {
     policy: "",
     typeCompany: "",
     address: "",
-    mapUrl: "",
+    // mapUrl: "",
     locationId: "",
   });
 
@@ -42,7 +42,7 @@ export default function UpdateCompanyForm({ onClose, companyData }) {
         policy: companyData.policy || "",
         typeCompany: companyData.typeCompanyName || "",
         address: companyData.address || "",
-        mapUrl: companyData.mapUrl || "",
+        // mapUrl: companyData.mapUrl || "",
         locationId: companyData.nameCity || "",
       });
     }
@@ -136,6 +136,13 @@ export default function UpdateCompanyForm({ onClose, companyData }) {
             <label className="block text-sm font-medium text-gray-700">
               Logo
             </label>
+            {formData.logo && formData.logo instanceof File && (
+              <img
+                src={URL.createObjectURL(formData.logo)}
+                alt="Map Preview"
+                className="w-7 h-7 mb-2"
+              />
+            )}
             <input
               type="file"
               name="logo"
@@ -258,19 +265,24 @@ export default function UpdateCompanyForm({ onClose, companyData }) {
             />
           </div>
 
-          <div className="mb-4">
+          {/* <div className="mb-4 col-span-2">
             <label className="block text-sm font-medium text-gray-700">
               Map URL
             </label>
+            {formData.mapUrl && formData.mapUrl instanceof File && (
+              <img
+                src={URL.createObjectURL(formData.mapUrl)}
+                alt="Map Preview"
+                className="w-7 h-7 mb-2"
+              />
+            )}
             <input
-              type="text"
+              type="file"
               name="mapUrl"
-              value={formData.mapUrl}
-              onChange={handleChange}
+              onChange={handleFileChange}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-              placeholder="Enter Map URL"
             />
-          </div>
+          </div> */}
 
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
