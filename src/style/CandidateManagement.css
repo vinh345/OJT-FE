@@ -12,7 +12,8 @@
     color: #000000;
     margin-bottom: 70px;
     margin-top: 30px;
-    
+    font-size: 28px;
+    font-weight :600;
   }
   
   .candidate-management-table {
@@ -37,6 +38,7 @@
     font-size: 16px; 
     padding-bottom: 50px;
     padding-top: 50px;
+
   }
   
   .candidate-management-table tr:nth-child(even) {
@@ -120,3 +122,4 @@
   background-color: #fff;
   outline: none;
 }
+

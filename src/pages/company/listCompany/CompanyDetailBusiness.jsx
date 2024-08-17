@@ -1,11 +1,11 @@
 import PersonIcon from "@mui/icons-material/Person";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCompanyDetail } from "../../../service/companyService";
+import { getCompanyDetailBusiness } from "../../../service/companyService";
 import { FAILED, IDLE, PENDING } from "../../../constants/status";
-import { getAllJobsByCompany, getListJob } from "../../../service/jobService";
+import { getAllJobsByCompany } from "../../../service/jobService";
 import JobCardItemBusiness from "../../job/JobCardItemBusiness";
 import {
   Email,
@@ -17,21 +17,17 @@ import {
 import MapIcon from "@mui/icons-material/Map";
 import LinkIcon from "@mui/icons-material/Link";
 import UpdateCompanyForm from "../../../components/company/UpdateCompanyForm";
+
 export default function CompanyDetailBusiness() {
-  const { id } = useParams();
+  const navigate = useNavigate();
   const [isFormVisible, setFormVisible] = useState(false);
   const dispatch = useDispatch();
+
   const {
     data: company,
     loading: companyLoading,
     error: companyError,
-  } = useSelector((state) => state.companyDetail);
-
-  useEffect(() => {
-    dispatch(getCompanyDetail(id));
-  }, [dispatch, id]);
-
-  // Lấy danh sách việc làm của công ty
+  } = useSelector((state) => state.getCompanyDetailBusiness);
   const {
     data: jobs,
     loading: jobLoading,
@@ -40,17 +36,19 @@ export default function CompanyDetailBusiness() {
   console.log(jobs);
 
   useEffect(() => {
-    if (jobLoading === IDLE) {
-      dispatch(
-        getAllJobsByCompany({
-          title: "",
-          location: "",
-          page: 0,
-          size: 10,
-        })
-      );
-    }
-  }, [dispatch, jobLoading]);
+    dispatch(getCompanyDetailBusiness());
+  }, []);
+
+  useEffect(() => {
+    dispatch(
+      getAllJobsByCompany({
+        title: "",
+        location: "",
+        page: 0,
+        size: 10,
+      })
+    );
+  }, [company]);
 
   const handleRedirect = (url) => {
     window.location.href = url;
@@ -64,10 +62,14 @@ export default function CompanyDetailBusiness() {
     setFormVisible(true);
   };
 
+  const handleAddJob = () => {
+    navigate("/company/addJob");
+  };
+
   if (companyLoading === PENDING) return <p>Loading company details...</p>;
   if (companyLoading === FAILED) return <p>Error: {companyError}</p>;
-  // Kiểm tra nếu `company` là null hoặc undefined
   if (!company) return <p>Company not found</p>;
+
   return (
     <>
       <div className="bg-gray-100 p-4">
@@ -91,7 +93,7 @@ export default function CompanyDetailBusiness() {
           </a>{" "}
         </nav>
       </div>
-      <div className="p-6">
+      <div className="p-10">
         {isFormVisible && <UpdateCompanyForm onClose={handleFormClose} />}
         <>
           <div className="flex justify-between items-center mb-6">
@@ -148,14 +150,17 @@ export default function CompanyDetailBusiness() {
                   <h2 className="text-xl font-semibold mb-4">
                     Việc làm đang mở
                   </h2>
-                  <button className="font-semibold text-red-400 border-2 border-red-500 rounded-md px-4 py-1 hover:bg-red-500 hover:text-white">
+                  <button
+                    onClick={handleAddJob}
+                    className="font-semibold text-red-400 border-2 border-red-500 rounded-md px-4 py-1 hover:bg-red-500 hover:text-white"
+                  >
                     Thêm việc làm mới
                   </button>
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 mt-8">
-                  {jobLoading[0] === "pending" && <p>Loading jobs...</p>}
-                  {jobLoading[0] === "failed" && <p>Error: {jobError}</p>}
+                  {jobLoading === PENDING && <p>Loading jobs...</p>}
+                  {jobLoading === FAILED && <p>Error: {jobError}</p>}
                   {jobs?.content?.length ? (
                     jobs.content.map((job) => (
                       <div key={job.id}>

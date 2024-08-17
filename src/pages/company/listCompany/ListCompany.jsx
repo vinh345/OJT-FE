@@ -4,7 +4,7 @@ import CompanyCardItem from "./CompanyCardItem";
 import Footer from "../../../layouts/footers";
 import { getListCompanies } from "../../../service/companyService";
 
-export default function ListCompany({ userType }) {
+export default function ListCompany() {
   const dispatch = useDispatch();
   const {
     data: companies,
@@ -79,11 +79,7 @@ export default function ListCompany({ userType }) {
           {loading[0] === "pending" && <p>Loading companies...</p>}
           {loading[0] === "failed" && <p>Error: {error}</p>}
           {companies?.content?.map((company) => (
-            <CompanyCardItem
-              key={company.id}
-              company={company}
-              userType={userType}
-            />
+            <CompanyCardItem key={company.id} company={company} />
           ))}
         </div>
       </div>

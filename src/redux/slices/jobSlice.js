@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { FAILED, IDLE, PENDING, SUCCESS } from "../../constants/status";
-import { getJobDetail, getListJob } from "../../service/jobService";
+import { addJob, getJobDetail, getListJob } from "../../service/jobService";
 
 const jobSlice = createSlice({
   name: "jobs",
@@ -34,6 +34,10 @@ const jobSlice = createSlice({
       .addCase(getJobDetail.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      // Thêm một công việc mới
+      .addCase(addJob.fulfilled, (state, action) => {
+        state.data.push(action.payload); // Tùy chọn thêm công việc mới vào danh sách
       });
   },
 });

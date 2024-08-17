@@ -1,7 +1,6 @@
 import axios from "axios";
 
-
-const baseURL = "http://localhost:8080/api.myservice.com/v1"
+const baseURL = "http://localhost:8080/api.myservice.com/v1";
 
 const BASE_URL = axios.create({
   baseURL,
@@ -10,18 +9,11 @@ const BASE_URL = axios.create({
   },
 });
 
-
 export const formAxios = axios.create({
   baseURL,
   headers: {
-    'Content-Type': 'multipart/form-data',
+    "Content-Type": "multipart/form-data",
   },
 });
 
-
-
-
-
 export default BASE_URL;
-
-

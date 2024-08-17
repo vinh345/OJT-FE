@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getJobDetail, getJobsBySameType } from "../../service/jobService";
 import {
   AccessTime,
@@ -14,6 +14,7 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import JobCardItem from "./JobCardItem";
 export default function JobDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.jobs);
   const { data: sameTypeJobsData } = useSelector((state) => state.sameTypeJobs);
@@ -25,7 +26,10 @@ export default function JobDetail() {
     dispatch(getJobDetail(id));
     dispatch(getJobsBySameType(id));
   }, [dispatch, id]);
-
+  // Hàm điều hướng sang trang chi tiết công việc
+  const handleSeeJobDetail = (jobId) => {
+    navigate(`/company/jobDetail/${jobId}`);
+  };
   if (loading) return <p>Loading job details...</p>;
   if (error) return <p>Error: {error}</p>;
 
@@ -104,7 +108,7 @@ export default function JobDetail() {
             {/* Job Overview Section */}
             <div className="bg-white p-4 rounded-md shadow-md mb-6">
               <h2 className="text-xl font-semibold mb-4">Job Overview</h2>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-3 gap-4">
                 <div className="flex items-center">
                   <Event className="text-red-500 mr-2" />
                   <div>
@@ -149,7 +153,11 @@ export default function JobDetail() {
           <div className="grid grid-cols-3 gap-4 mt-8">
             {sameTypeJobsData?.length ? (
               sameTypeJobsData.map((job) => (
-                <div key={job.id}>
+                <div
+                  className="cursor-pointer"
+                  key={job.id}
+                  onClick={() => handleSeeJobDetail(job.id)}
+                >
                   <JobCardItem job={job} />
                 </div>
               ))

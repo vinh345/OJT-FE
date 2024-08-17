@@ -7,7 +7,7 @@ import Home from "../../pages/Home";
 import AdminLayout from "../../pages/admin/AdminLayout";
 import Dashboard from "../../pages/admin/Dashboard";
 import Users from "../../pages/admin/Users";
-import Company from "../../pages/admin/Company"; 
+import Company from "../../pages/admin/Company";
 import ListCompany from "../../pages/company/listCompany/ListCompany";
 import ListJob from "../../pages/job/ListJob";
 import JobDetail from "../../pages/job/JobDetail";
@@ -16,10 +16,13 @@ import LayoutIndex from "../../layouts";
 import CompanyDetail from "../../pages/company/listCompany/CompanyDetailUser";
 
 import CompanyDetailBusiness from "../../pages/company/listCompany/CompanyDetailBusiness";
+import AddJobBusiness from "../../pages/company/listCompany/AddJobBusiness";
 
 import PrivateRoute from "../../features/protectedRoutes/PrivateRoute";
 import ChangePassword from "../../pages/auth/changePassword";
 
+
+import Jobs from "../../pages/admin/Jobs";
 
 
 const publicRoutes = [
@@ -30,7 +33,7 @@ const publicRoutes = [
     children: [
       {
         path: "changePassword",
-        element: <PrivateRoute element={<ChangePassword/>} />,
+        element: <PrivateRoute element={<ChangePassword />} />,
       },
       {
         path: "/",
@@ -45,6 +48,7 @@ const publicRoutes = [
           { path: "candidate", element: <Users /> },
           { path: "company", element: <Company /> },
           { path: "login", element: <FormLoginAdmin /> },
+          { path: "jobs", element: <Jobs /> }
         ],
       },
       { path: "/auth/recoverPassword", element: <RecoverPassword /> },
@@ -52,10 +56,9 @@ const publicRoutes = [
         path: "/user",
         children: [
           { path: "register", element: <RegisterUserForm /> },
-          { path: "listCompany", element: <ListCompany userType="user" /> },
-
+          // { path: "listCompany", element: <ListCompany userType="user" /> },
+          // { path: "company/detail/:id", element: <CompanyDetail /> },
           { path: "login", element: <LoginPage boolean={false} /> },
-          { path: "company/detail/:id", element: <CompanyDetail /> },
         ],
       },
       {
@@ -63,14 +66,6 @@ const publicRoutes = [
         children: [
           { path: "register", element: <CompanyRegisterForm /> },
           { path: "login", element: <LoginPage boolean={true} /> },
-          {
-            path: "listCompany",
-            element: <ListCompany userType="business" />,
-          },
-          { path: "job", element: <ListJob /> },
-          { path: "jobDetail/:id", element: <JobDetail /> },
-
-          { path: "detail/:id", element: <CompanyDetailBusiness /> },
         ],
       },
 

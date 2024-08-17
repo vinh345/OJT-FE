@@ -63,7 +63,11 @@ export default function ListJob() {
         <div className="grid grid-cols-3 gap-4 ">
           {jobs?.content?.length ? (
             jobs.content.map((job) => (
-              <div key={job.id} onClick={() => handleSeeJobDetail(job.id)}>
+              <div
+                className="cursor-pointer"
+                key={job.id}
+                onClick={() => handleSeeJobDetail(job.id)}
+              >
                 <JobCardItem job={job} />
               </div>
             ))
