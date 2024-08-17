@@ -43,35 +43,8 @@ const privateRoutes = [
       {
         path: "/user",
         children: [
-          {path: "infor",
-            element: <PrivateRoute element={<UserInfor/>} />
-          },
-          {path: "cv",
-            children:[
-              {
-                path:"",
-                element: <PrivateRoute element={<CVManagement/>} />
-              },
-              {
-                path:"default",
-                exact:true,
-                element: <PrivateRoute element={<DefaultCV/>} />
+          { path: "infor", element: <PrivateRoute element={<UserInfor />} /> },
 
-              },
-              {
-                path:":id",
-                element: <PrivateRoute element={<CVPage/>} />
-
-              },
-              
-            ]
-          }
-        ]
-      }
-          {
-            path: "infor",
-            element: <PrivateRoute element={<UserInfor />} />,
-          },
           {
             path: "listCompany",
             element: <PrivateRoute element={<ListCompany />} />,
@@ -85,8 +58,27 @@ const privateRoutes = [
             path: "jobDetail/:id",
             element: <PrivateRoute element={<JobDetail />} />,
           },
+          {
+            path: "cv",
+            children: [
+              {
+                path: "",
+                element: <PrivateRoute element={<CVManagement />} />,
+              },
+              {
+                path: "default",
+                exact: true,
+                element: <PrivateRoute element={<DefaultCV />} />,
+              },
+              {
+                path: ":id",
+                element: <PrivateRoute element={<CVPage />} />,
+              },
+            ],
+          },
         ],
       },
+
       {
         path: "/company",
         children: [
@@ -100,6 +92,10 @@ const privateRoutes = [
           },
           {
             path: "detail",
+            element: <PrivateRoute element={<CompanyDetailBusiness />} />,
+          },
+          {
+            path: "candidate/detail/:id",
             element: <PrivateRoute element={<CompanyDetailBusiness />} />,
           },
         ],

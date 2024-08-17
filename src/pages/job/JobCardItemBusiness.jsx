@@ -6,11 +6,13 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import { Badge, notification } from "antd";
 import DeleteModalJob from "../../components/job/DeleteJobCompany";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { deleteJob } from "../../service/jobService";
 
 const JobCardItemBusiness = ({ job, onJobDelete }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   if (!job) {
     return null;
@@ -50,6 +52,10 @@ const JobCardItemBusiness = ({ job, onJobDelete }) => {
         description: error.message || "Đã xảy ra lỗi khi xóa công việc.",
       });
     }
+  };
+
+  const handleNavigateToDetail = () => {
+    navigate(`/company/jobDetail/${job.id}`);
   };
 
   return (
@@ -105,7 +111,10 @@ const JobCardItemBusiness = ({ job, onJobDelete }) => {
             </div>
           </div>
 
-          <BorderColorIcon className="text-gray-500 hover:text-red-500" />
+          <BorderColorIcon
+            className="text-gray-500 hover:text-red-500"
+            onClick={handleNavigateToDetail}
+          />
         </div>
       </Card>
 

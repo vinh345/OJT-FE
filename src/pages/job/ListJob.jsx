@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import JobCardItem from "./JobCardItem";
 import { getListJob } from "../../service/jobService";
-import { IDLE } from "../../constants/status";
 import { Pagination } from "antd";
+import JobCardItemPermitAll from "./JobCardItemPermitAll";
 
 export default function ListJob() {
   const dispatch = useDispatch();
@@ -77,7 +76,7 @@ export default function ListJob() {
                   key={job.id}
                   onClick={() => handleSeeJobDetail(job.id)}
                 >
-                  <JobCardItem job={job} />
+                  <JobCardItemPermitAll job={job} />
                 </div>
               ))
             ) : (

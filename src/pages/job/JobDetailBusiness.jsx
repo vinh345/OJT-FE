@@ -30,6 +30,7 @@ const JobDetailBusiness = () => {
   const { data: jobCandidates, loading: candidatesLoading } = useSelector(
     (state) => state.jobCandidates
   );
+  console.log(jobCandidates);
 
   useEffect(() => {
     dispatch(getJobDetailBusiness(id));
@@ -208,7 +209,7 @@ const JobDetailBusiness = () => {
           <div className="grid grid-cols-3 gap-4 mt-8">
             {jobCandidates?.map((candidate, index) => (
               <CardItemCandidates
-                key={index}
+                id={index}
                 name={candidate.name}
                 role={candidate.role}
                 createdAt={candidate.createdAt}

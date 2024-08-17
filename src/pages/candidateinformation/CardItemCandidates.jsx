@@ -2,9 +2,11 @@ import React from "react";
 import { Card, Tag, Tooltip } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { LocationOn } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 import "antd/dist/reset.css";
 
 const CardItemCandidates = ({
+  id,
   name,
   role,
   createdAt,
@@ -14,28 +16,34 @@ const CardItemCandidates = ({
   gender,
   phone,
 }) => {
+  const navigate = useNavigate();
+
+  const handleNavigateCandidates = () => {
+    navigate(`/company/candidate/detail/${id}`);
+  };
+
   return (
     <Card className="p-4 shadow-md rounded-lg border relative">
       <div className="flex items-center">
-        {/* Avatar */}
         <img
           src={avatar}
           alt={name}
           className="w-16 h-16 rounded-full object-cover mr-4"
         />
 
-        {/* Candidate Information */}
         <div className="flex-1">
           <div className="flex justify-between items-center">
             <div>
               <h3 className="text-lg font-bold">{name}</h3>
             </div>
             <Tooltip title="View Details">
-              <ArrowRightOutlined className="text-gray-500 hover:text-gray-800 cursor-pointer" />
+              <ArrowRightOutlined
+                onClick={handleNavigateCandidates}
+                className="text-gray-500 hover:text-gray-800 cursor-pointer"
+              />
             </Tooltip>
           </div>
 
-          {/* Email */}
           <div className="mt-2">
             <p className="text-sm font-semibold text-gray-500">Email:</p>
             <Tag color="green" className="mt-1">

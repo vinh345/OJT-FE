@@ -95,22 +95,25 @@ export const editEducation = createAsyncThunk(
   }
 );
 
-export const addExperience = createAsyncThunk("candidate/addExperience", async ({ position, company, startAt, endAt, info }, thunkAPI) => {
-  try {
-    const response = await BASE_URL[POST](
-      "/candidate/experience",
-      { position, company, startAt, endAt, info },
-      {
-        headers: {
-          Authorization: "Bearer " + cookie.get("accessToken"),
-        },
-      }
-    );
-    return response;
-  } catch (e) {
-    return thunkAPI.rejectWithValue(e.response?.data || e.message);
+export const addExperience = createAsyncThunk(
+  "candidate/addExperience",
+  async ({ position, company, startAt, endAt, info }, thunkAPI) => {
+    try {
+      const response = await BASE_URL[POST](
+        "/candidate/experience",
+        { position, company, startAt, endAt, info },
+        {
+          headers: {
+            Authorization: "Bearer " + cookie.get("accessToken"),
+          },
+        }
+      );
+      return response;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.response?.data || e.message);
+    }
   }
-})
+);
 
 export const deleteExperience = createAsyncThunk(
   "candidate/deleteeexperience",
@@ -148,22 +151,25 @@ export const editExperience = createAsyncThunk(
   }
 );
 
-export const addProject = createAsyncThunk("candidate/addProject", async ({ name, link, startAt, endAt, info }, thunkAPI) => {
-  try {
-    const response = await BASE_URL[POST](
-      "/candidate/project",
-      { name, link, startAt, endAt, info },
-      {
-        headers: {
-          Authorization: "Bearer " + cookie.get("accessToken"),
-        },
-      }
-    );
-    return response;
-  } catch (e) {
-    return thunkAPI.rejectWithValue(e.response?.data || e.message);
+export const addProject = createAsyncThunk(
+  "candidate/addProject",
+  async ({ name, link, startAt, endAt, info }, thunkAPI) => {
+    try {
+      const response = await BASE_URL[POST](
+        "/candidate/project",
+        { name, link, startAt, endAt, info },
+        {
+          headers: {
+            Authorization: "Bearer " + cookie.get("accessToken"),
+          },
+        }
+      );
+      return response;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.response?.data || e.message);
+    }
   }
-})
+);
 
 export const deleteProject = createAsyncThunk(
   "candidate/deleteproject",
@@ -257,21 +263,21 @@ export const editCertificate = createAsyncThunk(
   }
 );
 
-export const getLvJob = createAsyncThunk("candidate/getLvJob", async (thunkAPI) => {
-  try {
-    const response = await BASE_URL[GET](
-      "/candidate/getlvjob",
-      {
+export const getLvJob = createAsyncThunk(
+  "candidate/getLvJob",
+  async (thunkAPI) => {
+    try {
+      const response = await BASE_URL[GET]("/candidate/getlvjob", {
         headers: {
           Authorization: "Bearer " + cookie.get("accessToken"),
         },
-      }
-    );
-    return response;
-  } catch (e) {
-    return thunkAPI.rejectWithValue(e.response?.data || e.message);
+      });
+      return response;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.response?.data || e.message);
+    }
   }
-})
+);
 export const addSkill = createAsyncThunk(
   "candidate/addskill",
   async ({ name, levelJobId }, thunkAPI) => {
@@ -333,18 +339,14 @@ export const uploadCV = createAsyncThunk(
   async (file, thunkAPI) => {
     try {
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append("file", file);
 
-      const response = await BASE_URL[POST](
-        "candidate/cv/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: "Bearer " + cookie.get("accessToken"),
-          },
-        }
-      );
+      const response = await BASE_URL[POST]("candidate/cv/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: "Bearer " + cookie.get("accessToken"),
+        },
+      });
       return response;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -372,14 +374,11 @@ export const fetchAllCVs = createAsyncThunk(
   "candidate/fetchAllCVs",
   async (thunkAPI) => {
     try {
-      const response = await BASE_URL[GET](
-        "candidate/cv/getAll",
-        {
-          headers: {
-            Authorization: "Bearer " + cookie.get("accessToken"),
-          },
-        }
-      );
+      const response = await BASE_URL[GET]("candidate/cv/getAll", {
+        headers: {
+          Authorization: "Bearer " + cookie.get("accessToken"),
+        },
+      });
       return response;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -401,8 +400,8 @@ export const editCVName = createAsyncThunk(
         }
       );
       console.log(name);
-      
-      return response.data; 
+
+      return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.response?.data || e.message);
     }
@@ -411,14 +410,11 @@ export const editCVName = createAsyncThunk(
 
 export const fetchCVById = async (id) => {
   try {
-    const response = await BASE_URL[GET](
-      `candidate/cv/${id}`,
-      {
-        headers: {
-          Authorization: "Bearer " + cookie.get("accessToken"),
-        },
-      }
-    );
+    const response = await BASE_URL[GET](`candidate/cv/${id}`, {
+      headers: {
+        Authorization: "Bearer " + cookie.get("accessToken"),
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching candidate CV", error);
@@ -428,14 +424,11 @@ export const fetchCVById = async (id) => {
 
 export const fetchDefaultCV = async () => {
   try {
-    const response = await BASE_URL[GET](
-      `candidate/defaultCV`,
-      {
-        headers: {
-          Authorization: "Bearer " + cookie.get("accessToken"),
-        },
-      }
-    );
+    const response = await BASE_URL[GET](`candidate/defaultCV`, {
+      headers: {
+        Authorization: "Bearer " + cookie.get("accessToken"),
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching candidate CV", error);
@@ -445,38 +438,35 @@ export const fetchDefaultCV = async () => {
 
 export const updateCVStatus = createAsyncThunk(
   "cv/updateCVStatus",
-async (id) => {
-  try {
-    const response = await BASE_URL[PUT](
-      `candidate/cv/${id}`,
-      {},
-      {
-        headers: {
-          Authorization: "Bearer " + cookie.get("accessToken"),
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error changing CV's priority", error);
-    throw error;
-  }
-}
-);
-
-export const getCurrentLetter = createAsyncThunk(
-  "candidate/fetchLetter",
-  async (thunkAPI) => {
+  async (id) => {
     try {
-      const response = await BASE_URL[GET](
-        "candidate/letter",
+      const response = await BASE_URL[PUT](
+        `candidate/cv/${id}`,
+        {},
         {
           headers: {
             Authorization: "Bearer " + cookie.get("accessToken"),
           },
         }
       );
-      
+      return response.data;
+    } catch (error) {
+      console.error("Error changing CV's priority", error);
+      throw error;
+    }
+  }
+);
+
+export const getCurrentLetter = createAsyncThunk(
+  "candidate/fetchLetter",
+  async (thunkAPI) => {
+    try {
+      const response = await BASE_URL[GET]("candidate/letter", {
+        headers: {
+          Authorization: "Bearer " + cookie.get("accessToken"),
+        },
+      });
+
       return response.data.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -497,17 +487,16 @@ export const editLetter = createAsyncThunk(
           },
         }
       );
-      return response.data; 
+      return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.response?.data || e.message);
     }
   }
 );
 
-
 export const addLetter = createAsyncThunk(
   "candidate/addLetter",
-  async ({content}, thunkAPI) => {
+  async ({ content }, thunkAPI) => {
     try {
       const response = await BASE_URL[POST](
         `candidate/letter?content=${content}`,
@@ -519,6 +508,46 @@ export const addLetter = createAsyncThunk(
         }
       );
       return response;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.response?.data || e.message);
+    }
+  }
+);
+
+export const followCompany = createAsyncThunk(
+  "candidate/followCompany",
+  async ({ companyId }, thunkAPI) => {
+    try {
+      const response = await BASE_URL[POST](
+        `candidate/followCompany?companyId=${companyId}`,
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + cookie.get("accessToken"),
+          },
+        }
+      );
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.response?.data || e.message);
+    }
+  }
+);
+
+export const unfollowCompany = createAsyncThunk(
+  "candidate/unfollowCompany",
+  async ({ companyId }, thunkAPI) => {
+    try {
+      const response = await BASE_URL[POST](
+        `candidate/unfollowCompany?companyId=${companyId}`,
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + cookie.get("accessToken"),
+          },
+        }
+      );
+      return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.response?.data || e.message);
     }

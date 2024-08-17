@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { IDLE, PENDING, SUCCESS, FAILED } from "../../constants/status";
 import {
   getJobDetailBusiness,
+  getListJob,
   updateJobDetailBusiness,
 } from "../../service/jobService";
 
@@ -16,17 +17,17 @@ const jobSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // Trạng thái pending khi lấy chi tiết công việc
-      .addCase(getJobDetailBusiness.pending, (state) => {
+      .addCase(getListJob.pending, (state) => {
         state.loading = PENDING;
         state.error = null;
       })
       // Trạng thái fulfilled khi lấy thành công chi tiết công việc
-      .addCase(getJobDetailBusiness.fulfilled, (state, action) => {
+      .addCase(getListJob.fulfilled, (state, action) => {
         state.loading = SUCCESS;
         state.data = action.payload;
       })
       // Trạng thái rejected khi có lỗi trong quá trình lấy chi tiết công việc
-      .addCase(getJobDetailBusiness.rejected, (state, action) => {
+      .addCase(getListJob.rejected, (state, action) => {
         state.loading = FAILED;
         state.error = action.payload;
       })

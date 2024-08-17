@@ -31,6 +31,8 @@ export default function CompanyDetailBusiness() {
     error: companyError,
   } = useSelector((state) => state.getCompanyDetailBusiness);
 
+  console.log(company);
+
   const {
     data: jobData,
     loading: jobLoading,
@@ -207,7 +209,10 @@ export default function CompanyDetailBusiness() {
               <MapIcon className="text-red-500" />
               <span className="ml-3 font-semibold text-xl">Xem trên map</span>
               <img
-                src={company.mapUrl || "https://via.placeholder.com/200"}
+                src={
+                  // company.mapUrl ||
+                  "https://toquoc.mediacdn.vn/280518851207290880/2022/10/31/tfisg1c-166720423465128148766.png"
+                }
                 alt="Map"
                 className="mt-4"
               />
