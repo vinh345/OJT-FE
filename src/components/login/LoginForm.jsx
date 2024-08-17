@@ -82,7 +82,7 @@ const LoginForm = ({ isCompany }) => {
             htmlFor="password"
             className="block text-sm font-medium text-gray-700"
           >
-            Password
+            Mật khẩu
           </label>
           <div className="relative">
             <input
