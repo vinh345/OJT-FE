@@ -109,10 +109,32 @@ export const getJobDetailBusiness = createAsyncThunk(
   "jobs/getJobDetailBusiness",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await BASE_URL[GET](`company/job/${id}`);
+      const response = await BASE_URL[GET](`company/job/${id}`, {
+        headers: {
+          Authorization: "Bearer " + cookie.get("accessToken"),
+        },
+      });
       return response.data;
     } catch (error) {
       console.error("Error fetching job details", error);
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+//Cập nhật Job
+export const updateJobDetailBusiness = createAsyncThunk(
+  "jobs/updateJobDetailBusiness",
+  async ({ id, jobData }, { rejectWithValue }) => {
+    try {
+      const response = await BASE_URL[PUT](`company/job/${id}`, jobData, {
+        headers: {
+          Authorization: "Bearer " + cookie.get("accessToken"),
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error updating job details", error);
       return rejectWithValue(error.response?.data || error.message);
     }
   }

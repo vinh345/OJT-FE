@@ -6,6 +6,7 @@ import { addJob } from "../../../service/jobService";
 import { getListLocation } from "../../../service/Location/locationService";
 import { fetchLevelJobs } from "../../../service/LevelJob/levelJobService";
 import { fetchTypeJobs } from "../../../service/typeJob/typeJobService";
+import { fetchAddressCompanys } from "../../../service/addressCompany/addressCompanyService";
 
 const { Option } = Select;
 
@@ -14,15 +15,16 @@ export default function AddJobBusiness() {
   const navigate = useNavigate();
 
   // Fetch data from Redux store
-  const { data: locations } = useSelector((state) => state.locations);
+  const { data: locations } = useSelector((state) => state.addressCompanys);
   const { data: levelJobs } = useSelector((state) => state.levelJobs);
   const { data: typeJobs } = useSelector((state) => state.typeJobs);
+  console.log(locations);
 
   useEffect(() => {
-    dispatch(getListLocation());
+    dispatch(fetchAddressCompanys({}));
     dispatch(fetchLevelJobs({}));
     dispatch(fetchTypeJobs({}));
-  }, [dispatch]);
+  }, []);
 
   const onFinish = (values) => {
     const jobData = {
@@ -93,9 +95,9 @@ export default function AddJobBusiness() {
               rules={[{ required: true, message: "Location is required" }]}
             >
               <Select placeholder="Chọn địa điểm">
-                {locations?.content?.map((loc) => (
+                {locations?.map((loc) => (
                   <Option key={loc.id} value={loc.id}>
-                    {loc.nameCity}
+                    {loc.cityName}
                   </Option>
                 ))}
               </Select>

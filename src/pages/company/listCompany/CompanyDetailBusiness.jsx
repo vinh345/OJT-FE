@@ -60,7 +60,7 @@ export default function CompanyDetailBusiness() {
   };
 
   const handleEditClick = () => {
-    setSelectedCompany(company); // Lưu dữ liệu công ty hiện tại vào state
+    setSelectedCompany(company);
     setFormVisible(true);
   };
 
