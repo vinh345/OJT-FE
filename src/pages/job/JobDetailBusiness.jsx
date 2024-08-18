@@ -10,13 +10,14 @@ import {
   School,
   Work,
 } from "@mui/icons-material";
-import { Button, Spin } from "antd";
+import { Button } from "antd";
 import "tailwindcss/tailwind.css";
 import JobEditModal from "../../components/job/JobEditModal";
 import { Email, Facebook, LinkedIn, Twitter } from "@mui/icons-material";
 import LinkIcon from "@mui/icons-material/Link";
 import CardItemCandidates from "../candidateinformation/CardItemCandidates";
 import { getCandidatesByJob } from "../../service/jobCandidate/jobCandidateService";
+import { formatDate } from "../../utils/formatData";
 
 const JobDetailBusiness = () => {
   const { id } = useParams();
@@ -26,6 +27,8 @@ const JobDetailBusiness = () => {
     (state) => state.getJobDetailBusiness
   );
   const job = jobData?.data;
+
+  console.log(job);
 
   const { data: jobCandidates, loading: candidatesLoading } = useSelector(
     (state) => state.jobCandidates
@@ -63,7 +66,10 @@ const JobDetailBusiness = () => {
             />
             <div>
               <h1 className="text-3xl font-bold">{job?.title}</h1>
-              <h2 className="text-xl font-semibold">{job?.company?.name}</h2>
+              <h2 className="text-xl">
+                <span className="font-semibold">Tên công ty:</span>{" "}
+                {job?.company?.name}
+              </h2>
               <div className="flex items-center mb-4">
                 <LocationOn className="mr-2" />
                 <span>{job?.addressCompany?.address}</span>
@@ -113,7 +119,7 @@ const JobDetailBusiness = () => {
                 <LocationOn className="text-red-500 mr-2" />
                 <div>
                   <h3 className="text-lg font-semibold">
-                    {job?.addressCompany?.address}
+                    {job?.addressCompany?.location?.nameCity}
                   </h3>
                   <p className="text-sm text-gray-500">Job Location</p>
                 </div>
@@ -127,7 +133,11 @@ const JobDetailBusiness = () => {
                   <Event className="text-red-500 mr-2" />
                   <div>
                     <h3 className="text-lg font-semibold">Job Posted</h3>
-                    <p className="text-sm text-gray-500">{job?.createdAt}</p>
+                    <p className="text-sm text-gray-500">
+                      {job?.createdAt
+                        ? formatDate(job.createdAt)
+                        : "Date not available"}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center">
@@ -141,14 +151,21 @@ const JobDetailBusiness = () => {
                   <Work className="text-red-500 mr-2" />
                   <div>
                     <h3 className="text-lg font-semibold">Job Level</h3>
-                    <p className="text-sm text-gray-500">Entry Level</p>
+                    {/* Display job levels here */}
+                    <ul className="list-disc pl-4">
+                      {job?.levelJobs?.map((levelJob) => (
+                        <li key={levelJob.id} className="text-sm text-gray-500">
+                          {levelJob.name}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
                 <div className="flex items-center">
                   <MonetizationOn className="text-red-500 mr-2" />
                   <div>
                     <h3 className="text-lg font-semibold">Experience</h3>
-                    <p className="text-sm text-gray-500">$50k-80k/month</p>
+                    <p className="text-sm text-gray-500">{job?.salary}</p>
                   </div>
                 </div>
                 <div className="flex items-center">
