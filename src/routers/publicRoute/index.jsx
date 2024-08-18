@@ -18,6 +18,7 @@ import JobDetail from "../../pages/job/JobDetail";
 
 import Jobs from "../../pages/admin/Jobs";
 import ListCompany from "../../pages/company/listCompany/ListCompany";
+import OutstandingCandidate from "../../pages/candidateinformation/form/home/OutstandingCandidate";
 
 const publicRoutes = [
   {

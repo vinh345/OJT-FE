@@ -3,6 +3,9 @@
     margin: 0 auto;
     padding: 20px;
     margin-left: -80px;
+    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px; */
+    background-color: rgb(250, 250, 250);
+
 }
 
 .job-management-title {
@@ -11,26 +14,31 @@
     margin-bottom: 20px;
     font-size: 28px;
     font-weight: 600;
+    color: rgba(20, 9, 9, 0.63);
     
 }
 
 .job-management-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    margin-bottom: 20px; 
+    color: rgba(20, 9, 9, 0.63);
+    
 }
 
 .job-management-table th, 
 .job-management-table td {
-    padding: 12px 15px;
+    padding: 12px 5px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     text-align: left;
     font-size: 15px;
-    text-align: center;
+    border-bottom: 1px solid rgba(119, 116, 116, 0.178);
 }
 
 .job-management-table th {
-    background-color: #c2f0f057;
-    color: #e63f0c;
+    background-color: #e7f0f8a6;
+    color: #030100;
     font-weight: bold;
     font-size: 16px; 
     padding-bottom: 50px;
@@ -38,11 +46,11 @@
 }
 
 .job-management-table tr:nth-child(even) {
-    background-color: #c2f0f057;
+    /* background-color: #c2f0f057; */
 }
 
 .job-management-table tr:hover {
-    background-color: #c1cc5f49;
+    background-color: #5fccb649;
 }
 
 .job-management-table a {

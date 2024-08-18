@@ -16,6 +16,12 @@ import JobDetailBusiness from "../../pages/job/JobDetailBusiness";
 import CompanyDetailBusiness from "../../pages/company/listCompany/CompanyDetailBusiness";
 import AddJobBusiness from "../../pages/company/listCompany/AddJobBusiness";
 import CompanyDetail from "../../pages/company/listCompany/CompanyDetailUser";
+import FormLoginAdmin from "../../components/FormLoginAdmin";
+import AdminLayout from "../../pages/admin/AdminLayout";
+import Dashboard from "../../pages/admin/Dashboard";
+import Users from "../../pages/admin/Users";
+import CompanyManagement from "../../pages/admin/Company";
+import Jobs from "../../pages/admin/Jobs";
 
 const privateRoutes = [
   {
@@ -100,6 +106,27 @@ const privateRoutes = [
           },
         ],
       },
+         
+        
+      
+      {
+        path: "/admin/login",
+        element: <FormLoginAdmin />, // Login route for admin
+        children : [
+          
+        ]
+      },
+    ],
+  
+ 
+  
+    path: "/admin",
+    element: <PrivateRoute element={<AdminLayout />} />, // Protects the admin layout
+    children: [
+      { path: "dashboard", element: <Dashboard /> },
+      { path: "candidate", element: <Users /> },
+      { path: "company", element: <CompanyManagement /> },
+      { path: "jobs", element: <Jobs /> },
     ],
   },
 ];

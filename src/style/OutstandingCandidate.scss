@@ -1,0 +1,177 @@
+.can-container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 350px;
+  padding-right: 350px;
+
+  .can-container-1 {
+    // height: 500px;
+    // background-color: rgb(233, 121, 121);
+
+    .title-can-1 {
+      display: flex;
+      justify-content: space-between;
+
+      .title-can {
+        margin-top: 30px;
+        margin-bottom: 30px;
+        font-size: 30px;
+        margin-left: 50px;
+      }
+    }
+
+    .out-card-1 {
+      .out-1 {
+        // background-color: red;
+        // height: 200px;
+        display: flex;
+        flex-wrap: wrap; // Allows child elements to wrap onto multiple lines
+        gap: 20px; // Optional: Adds spacing between items
+        margin-bottom: 30px;
+
+        .card1 {
+          width: 330px;
+          height: 190px;
+          //   background-color: red;
+          margin-left: 50px;
+          border: 1px solid rgba(184, 180, 180, 0.315);
+          border-radius:  5px;
+          margin-bottom: 30px;
+          box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+          background-color: rgba(247, 245, 245, 0.877);
+
+          .can-img1 {
+            display: flex;
+            margin-left: 18px;
+            margin-top: 18px;
+
+            .tt-can {
+              display: flex;
+              flex-direction: column;
+
+              .btn-can {
+                display: flex;
+                margin-left: 10px;
+
+                .front {
+                  background-color: rgb(6, 102, 49);
+                  width: 90px;
+                  height: 30px;
+                  border-radius: 5px;
+                  color: white;
+                  font-size: 13px;
+                }
+                .fre {
+                  margin-left: 10px;
+                  background-color: rgba(163, 198, 238, 0.459);
+                  font-size: 13px;
+                  color: rgb(11, 151, 245);
+                  border-radius: 15px;
+                  height: 30px;
+                }
+              }
+            }
+
+            .img-can {
+              width: 80px;
+              height: 50px;
+            }
+          }
+
+          .can-body {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+            margin-left: 18px;
+            gap: 15px;
+
+            .body-1 {
+              font-size: 13px;
+            }
+          }
+        }
+
+        // .card2 {
+        //   width: 330px;
+        //   height: 180px;
+        //   border: 1px solid black;
+        //   margin-left: 70px;
+        // }
+
+        // .card3 {
+        //   width: 330px;
+        //   height: 180px;
+        //   border: 1px solid black;
+        //   margin-left: 70px;
+        // }
+      }
+
+      //   .out-2 {
+      //     // height: 200px;
+      //     // background-color: green;
+      //     display: flex;
+
+      //     .card1 {
+      //       width: 330px;
+      //       height: 180px;
+      //       border: 1px solid black;
+      //       margin-left: 50px;
+      //       margin-top: 20px;
+      //     }
+
+      //     .card2 {
+      //       width: 330px;
+      //       height: 180px;
+      //       border: 1px solid black;
+      //       margin-left: 70px;
+      //       margin-top: 20px;
+      //     }
+
+      //     .card3 {
+      //       width: 330px;
+      //       height: 180px;
+      //       border: 1px solid black;
+      //       margin-left: 70px;
+      //       margin-top: 20px;
+      //       margin-top: 30px;
+      //     }
+      //   }
+
+      //   .out-3 {
+      //     height: 200px;
+      //     display: flex;
+      //     margin-bottom: 50px;
+      //     margin-top: 10px;
+
+      //     .card1 {
+      //       width: 330px;
+      //       height: 180px;
+      //       border: 1px solid black;
+      //       margin-left: 50px;
+      //       margin-top: 20px;
+      //     }
+
+      //     .card2 {
+      //       width: 330px;
+      //       height: 180px;
+      //       border: 1px solid black;
+      //       margin-left: 70px;
+      //       margin-top: 20px;
+      //     }
+
+      //     .card3 {
+      //       width: 330px;
+      //       height: 180px;
+      //       border: 1px solid black;
+      //       margin-left: 70px;
+      //       margin-top: 20px;
+      //     }
+      //   }
+    }
+  }
+
+  .can-container-2 {
+    height: 500px;
+    background-color: rgba(57, 16, 241, 0.342);
+  }
+}

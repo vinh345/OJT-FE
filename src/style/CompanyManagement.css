@@ -4,12 +4,15 @@
     width: 107%;
     margin: 0 auto;
     padding: 20px;
-    margin-left: -80px;
+    margin-left: -80px; 
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;   */
+    background-color: rgb(250, 250, 250);
+
   }
   
   .company-management-title {
     text-align: center;
-    color: #000000;
+    color: rgba(20, 9, 9, 0.63);
     margin-bottom: 70px;
     margin-top: 30px;
     font-size: 28px;
@@ -20,6 +23,7 @@
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
+    color: rgba(20, 9, 9, 0.63);
   }
   
   .company-management-table th,
@@ -27,20 +31,22 @@
     padding: 12px 15px;
     text-align: left;
     font-size: 15px;
-    text-align: center;
+    text-align: left;
+    border-bottom: 1px solid rgba(119, 116, 116, 0.178);
   }
   
   .company-management-table th {
-    background-color: #f8e9e7a6;
-    color: #e63f0c;
+    background-color: #e7f0f8a6;
+    color: #0e0502;
     font-weight: bold;
     font-size: 16px;
     padding-bottom: 50px;
     padding-top: 50px;
+    
   }
   
   .company-management-table tr:nth-child(even) {
-    background-color: #f8e9e7a6;
+    /* background-color: #f8e9e7a6; */
   }
   
   .company-management-table tr:hover {
@@ -110,5 +116,13 @@
     box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
     background-color: #fff;
     outline: none;
+  } 
+
+  .btn-com { 
+    background-color: rgb(2, 99, 39);
+    color: rgb(233, 233, 233);
+    width: 70px; 
+    height: 30px;
+    border-radius: 15px;
   }
   

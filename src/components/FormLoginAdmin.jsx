@@ -43,22 +43,23 @@ export default function FormLoginAdmin() {
           height={"70px"}
           className="img-logo"
         />
-       
+
         <form onSubmit={handleSubmit} className="form-adm">
           <div className="adm-container-3">
-          <h2 className="title-adm">Admin CV Management</h2>
+            <h2 className="title-adm">Admin CV Management</h2>
             <div>
-            <label
-  htmlFor="email"
-  style={{
-    color: "#333", // Text color
-    fontSize: "14px", // Font size
-  }}
->
-  Email
-</label> <br /> <br />
+              <label
+                htmlFor="email"
+                style={{
+                  color: "#333", // Text color
+                  fontSize: "14px", // Font size
+                }}
+              >
+                Email
+              </label>{" "}
+              <br /> <br />
               <input
-              className="input-adm"
+                className="input-adm"
                 type="email"
                 name="email"
                 id="email"
@@ -69,12 +70,18 @@ export default function FormLoginAdmin() {
               />
             </div>
             <div>
-              <label htmlFor="password" style={{
-    color: "#333", // Text color
-    fontSize: "14px", // Font size
-  }}>Password</label> <br /> <br />
+              <label
+                htmlFor="password"
+                style={{
+                  color: "#333", // Text color
+                  fontSize: "14px", // Font size
+                }}
+              >
+                Password
+              </label>{" "}
+              <br /> <br />
               <input
-               className="input-adm"
+                className="input-adm"
                 type="password"
                 name="password"
                 id="password"
@@ -86,17 +93,19 @@ export default function FormLoginAdmin() {
             </div>
           </div>
           {error && <p className="error">{error}</p>}
-          <button type="submit" className="btn-adm">Đăng nhập</button> <br />
+          <button type="submit" className="btn-adm">
+            Đăng nhập
+          </button>{" "}
+          <br />
           <div className="forgot-adm">
-          <a href="/">Quên mật khẩu?</a> <br />
-            </div>
+            <a href="/auth/recoverPassword">Quên mật khẩu?</a> <br />
+          </div>
         </form>
-      
       </div>
       <div className="adm-container-2">
         <img
           src={Adminrafiki2}
-          alt="Admin Illustration"
+          alt="Admin Illustration" 
           className="img-logo2"
         />
       </div>
