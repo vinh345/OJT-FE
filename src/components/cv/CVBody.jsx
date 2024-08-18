@@ -7,12 +7,17 @@ import "@react-pdf-viewer/core/lib/styles/index.css";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import "@cyntler/react-doc-viewer/dist/index.css";
 import { formatDate } from "../../utils/formatData";
+import { Cookies } from "react-cookie";
 
 export default function CVBody({ profile }) {
   const [isPDF, setIsPDF] = useState(false);
   const [isDoc, setIsDoc] = useState(false);
   const [docs, setDocs] = useState([]);
-  const fileName = `cv-${profile.name.replace(/[^a-zA-Z0-9]/g, "_")}.pdf`;
+  const cookie = new Cookies();
+  const name = cookie.get("name");
+  const fileName = profile.name
+    ? `cv-${profile.name.replace(/[^a-zA-Z0-9]/g, "_")}.pdf`
+    : `cv-${name.replace(/[^a-zA-Z0-9]/g, "_")}.pdf`;
 
   const getFileTypeFromUrl = (url) => {
     const filename = url.split("/").pop().split("?")[0];
@@ -62,7 +67,7 @@ export default function CVBody({ profile }) {
               />
             </div>
           )}
-          <div className="flex align-middle justify-center">
+          <div className="flex align-middle justify-center mt-4">
             <a
               className="bg-red-500 text-white py-2 px-4 rounded hover:cursor-pointer"
               href={profile.url}
@@ -269,7 +274,7 @@ export default function CVBody({ profile }) {
               )}
             </div>
           </div>
-          <div className="flex align-middle justify-center">
+          <div className="flex align-middle justify-center mt-4">
             <PDFDownloadLink
               document={<CVDocument profile={profile} />}
               fileName={fileName}
