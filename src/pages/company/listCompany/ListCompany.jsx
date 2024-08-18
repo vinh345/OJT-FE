@@ -3,8 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import CompanyCardItem from "./CompanyCardItem";
 import Footer from "../../../layouts/footers";
 import { getListCompanies } from "../../../service/companyService";
+import { Pagination } from "antd";
 
-export default function ListCompany({ userType }) {
+export default function ListCompany() {
   const dispatch = useDispatch();
   const {
     data: companies,
@@ -12,18 +13,30 @@ export default function ListCompany({ userType }) {
     error,
   } = useSelector((state) => state.companies);
   console.log(companies);
+  const [total, setTotal] = useState();
+  const [page, setPage] = useState();
 
   // State để lưu giá trị tìm kiếm
   const [searchName, setSearchName] = useState("");
   const [searchLocation, setSearchLocation] = useState("");
 
+  const handleChangePage = (e) => {
+    setPage(e);
+  };
   useEffect(() => {
     if (loading[0] === "idle") {
       dispatch(
-        getListCompanies({ name: searchName, location: searchLocation })
-      );
+        getListCompanies({
+          name: searchName,
+          location: searchLocation,
+          page: page,
+        })
+      ).then((res) => {
+        console.log(res);
+        setTotal(res.payload.totalElements);
+      });
     }
-  }, [loading, searchName, searchLocation]);
+  }, [loading, searchName, searchLocation, page]);
 
   // Hàm xử lý tìm kiếm
   const handleSearch = () => {
@@ -32,7 +45,7 @@ export default function ListCompany({ userType }) {
 
   return (
     <>
-      <div className="bg-gray-100 p-4">
+      {/* <div className="bg-gray-100 p-4">
         <nav className="text-sm text-gray-500">
           <a href="/" className="hover:text-gray-900 font-bold">
             Trang chủ
@@ -45,8 +58,8 @@ export default function ListCompany({ userType }) {
             Danh sách công ty
           </a>{" "}
         </nav>
-      </div>
-      <div className="mx-auto my-8 p-8">
+      </div> */}
+      <div className="mx-auto my-8 px-36 h-[600px]">
         <div className="flex items-center mb-4 space-x-2 ">
           <input
             type="text"
@@ -79,13 +92,20 @@ export default function ListCompany({ userType }) {
           {loading[0] === "pending" && <p>Loading companies...</p>}
           {loading[0] === "failed" && <p>Error: {error}</p>}
           {companies?.content?.map((company) => (
-            <CompanyCardItem
-              key={company.id}
-              company={company}
-              userType={userType}
-            />
+            <CompanyCardItem key={company.id} company={company} />
           ))}
         </div>
+      </div>
+      <div className="flex justify-center mt-4 mb-14">
+        {" "}
+        {/* Thêm div bọc để căn giữa */}
+        <Pagination
+          className="self-center"
+          onChange={handleChangePage}
+          simple
+          total={total}
+          pageSize={9}
+        />
       </div>
     </>
   );

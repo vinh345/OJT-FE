@@ -20,6 +20,7 @@ export default function UserHome() {
     dispatch(getOutStandingCompany()).then((res) => {
       setCompanyData(res.payload.data);
     });
+    window.scrollTo(0, 0);
   }, []);
   return (
     <>
@@ -29,7 +30,7 @@ export default function UserHome() {
           <h1 className="  text-4xl font-bold mb-14 mt-28">
             Công việc nổi bật
           </h1>
-          <Link to="/list-job" className="text-red-500">Xem thêm <EastIcon/></Link>
+          <Link to="/job" className="text-red-500">Xem thêm <EastIcon/></Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {jobData?.slice(0, 9).map((job, index) => (
@@ -50,7 +51,7 @@ export default function UserHome() {
           <h1 className="  text-4xl font-bold mb-14 mt-28">
             Công ty nổi bật
           </h1>
-          <Link to="/" className="text-red-500">Xem thêm <EastIcon/></Link>
+          <Link to="/user/listCompany" className="text-red-500">Xem thêm <EastIcon/></Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {companyData?.slice(0, 9).map((comp, index) => (

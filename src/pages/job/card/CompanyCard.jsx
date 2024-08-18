@@ -16,7 +16,7 @@ export default function CompanyCard({
   const navigate = useNavigate();
   return (
     <Card
-      onClick={() => navigate("/")}
+      onClick={() => navigate(`/user/company/detail/${id}`)}
       hoverable
       className="w-full flex flex-col justify-between pl-12 pt-4 pb-4"
       bodyStyle={{
@@ -54,7 +54,7 @@ export default function CompanyCard({
           <LocalPhoneIcon />: {phone}
         </p>
       </div>
-      <Button onClick={() => navigate("/")} danger className="mt-3">
+      <Button onClick={() => navigate(`/user/company/detail/${id}`)} danger className="mt-3">
         Xem chi tiết{" "}
       </Button>
     </Card>

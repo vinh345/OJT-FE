@@ -13,55 +13,13 @@ import {
   AccountBox,
 } from "@mui/icons-material";
 
-
 const CandidateProfilePage = () => {
   const { id } = useParams();
   const [profile, setProfile] = useState(null);
   const [copied, setCopied] = useState(false);
-  //   useEffect(() => {
-  //     const loadProfile = async () => {
-  //       const data = await fetchProfile(id);
-  //       console.log(data);
-  //       setProfile(data);
-  //     };
-  //     loadProfile();
-  //   }, [id]);
-
-  //   if (!profile) {
-  //     return <div>Loading...</div>;
-  //   }
 
   useEffect(() => {
     const loadProfile = async () => {
-      // const testProfile = {
-      //   name: "Hung",
-      //   position: "Software Engineer",
-      //   level: "Senior",
-      //   about: "Hello my name is Lorem.",
-      //   address: "HN",
-      // experience: [
-      //   {
-      //     position: "Senior Software Engineer",
-      //     company: "Tech Solutions Inc.",
-      //     startAt: "2019-03-01",
-      //     endAt: "Present",
-      //     info: "Lead a team of 5 engineers in developing scalable web applications.",
-      //   },
-      //   {
-      //     position: "Software Engineer",
-      //     company: "Web Innovations LLC",
-      //     startAt: "2016-08-01",
-      //     endAt: "2019-02-28",
-      //     info: "Worked on front-end and back-end development for various client projects.",
-      //   },
-      // ],
-      //   careerOrientation: ["Become a team lead", "Specialize in AI"],
-      //   skills: ["JavaScript", "React", "Node.js"],
-      //   linkLinkedin: "linkedin.com",
-      //   linkGit: "github.com",
-      // };
-      // const data = testProfile;
-
       const data = await fetchProfile(id);
       console.log(data);
       setProfile(data);
@@ -85,24 +43,28 @@ const CandidateProfilePage = () => {
   };
 
   return (
-    <div className="container bg-white mx-auto p-8">
-      <div className="flex p-8 items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">{profile.name}</h1>
-          {(profile.position || profile.level) && (
-            <div className="mt-2">
-              {profile.position && (
-                <span className="bg-green-500 text-white px-2 py-1 rounded-full text-sm mr-2">
-                  {profile.position}
-                </span>
-              )}
-              {profile.level && (
-                <span className="bg-blue-500 text-white px-2 py-1 rounded-full text-sm">
-                  {profile.level}
-                </span>
-              )}
-            </div>
-          )}
+    <div className="flex justify-center">
+    <div className="container bg-white max-w-screen-lg mx-auto p-8 shadow-md my-4">
+      <div className="flex flex-col lg:flex-row items-center justify-between">
+        <div className="flex p-8 items-center justify-start gap-2">
+          <img src={profile.avatar} alt={profile.name} className="w-28"/>
+          <div>
+            <h1 className="text-2xl font-bold">{profile.name}</h1>
+            {(profile.position || profile.level) && (
+              <div className="mt-2">
+                {profile.position && (
+                  <span className="bg-green-500 text-white px-2 py-1 rounded-full text-sm mr-2">
+                    {profile.position}
+                  </span>
+                )}
+                {profile.level && (
+                  <span className="bg-blue-500 text-white px-2 py-1 rounded-full text-sm">
+                    {profile.level}
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
         </div>
         <div className="flex gap-3">
           <button className="bg-pink-200 p-2 rounded">
@@ -113,7 +75,7 @@ const CandidateProfilePage = () => {
           </button>
         </div>
       </div>
-      <div className=" p-8 rounded-lg shadow-md flex">
+      <div className=" p-8 rounded-lg flex">
         {/* Left Section */}
         <div className="w-2/3 pr-8">
           {profile.about && (
@@ -157,6 +119,12 @@ const CandidateProfilePage = () => {
                   </li>
                 ))}
               </ul>
+            </div>
+          )}
+          {profile.letter && (
+            <div className="mt-6">
+              <h2 className="text-xl font-semibold">Định hướng phát triển</h2>
+              <p>{profile.letter}</p>
             </div>
           )}
         </div>
@@ -241,7 +209,7 @@ const CandidateProfilePage = () => {
             </div>
             <div className="flex align-middle justify-center">
               <Link to={`/admin/candidateCV/${id}`}>
-                <button className="bg-red-600 p-2 rounded-sm">
+                <button className="bg-red-600 p-4 text-white rounded-lg">
                   Truy cập CV
                 </button>
               </Link>
@@ -249,6 +217,7 @@ const CandidateProfilePage = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

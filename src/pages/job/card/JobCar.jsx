@@ -15,7 +15,7 @@ export default function JobCard({
   const navigate = useNavigate();
   return (
     <Card
-      onClick={() => navigate("/")}
+      onClick={() => navigate(`jobDetail/${id}`)}
       hoverable
       className="w-full flex flex-col justify-between pl-12 pt-4 pb-4"
       bodyStyle={{
@@ -47,7 +47,7 @@ export default function JobCard({
           </p>
         </div>
       </div>
-      <Button onClick={() => navigate("/")} danger className="mt-3">
+      <Button onClick={() => navigate(`jobDetail/${id}`)} danger className="mt-3">
         Xem chi tiết
       </Button>
     </Card>

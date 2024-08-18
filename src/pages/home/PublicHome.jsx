@@ -30,6 +30,7 @@ export default function PublicHome() {
     dispatch(getOutStandingCandidate()).then((res) => {
       setCandidateData(res.payload.data);
     });
+    window.scrollTo(0, 0);
   }, []);
   return (
     <>
@@ -38,7 +39,7 @@ export default function PublicHome() {
             <h1 className="  text-4xl font-bold mb-14 mt-28">
               Công việc nổi bật
             </h1>
-            <Link to="/list-job" className="text-red-500">
+            <Link to="/job" className="text-red-500">
               Xem thêm <EastIcon />
             </Link>
           </div>

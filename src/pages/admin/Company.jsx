@@ -6,7 +6,11 @@ import { Pagination } from "antd"; // Import Ant Design Pagination component
 
 export default function CompanyManagement() {
   const [companies, setCompanies] = useState([]);
+
   const [filteredCompanies, setFilteredCompanies] = useState([]); // State for filtered companies
+
+  console.log(filteredCompanies);
+
   const [search, setSearch] = useState(""); // State for search input
   const [sortOption, setSortOption] = useState(""); // State for sorting option
   const [currentPage, setCurrentPage] = useState(1); // State for current page
@@ -27,6 +31,7 @@ export default function CompanyManagement() {
             },
           }
         );
+        // console.log(response);
 
         setCompanies(response.data.content);
         setFilteredCompanies(response.data.content); // Initialize filtered companies
@@ -44,8 +49,11 @@ export default function CompanyManagement() {
     setSearch(keyword);
 
     setFilteredCompanies(
-      companies.filter((company) =>
-        company.name.toLowerCase().includes(keyword)
+      companies.filter(
+        (company) =>
+          company.name.toLowerCase().includes(keyword) ||
+          company.emailCompany.toLowerCase().includes(keyword) ||
+          company.phone.includes(keyword)
       )
     );
   };
@@ -59,9 +67,9 @@ export default function CompanyManagement() {
       sortedCompanies.sort((a, b) => a.name.localeCompare(b.name));
     } else if (option === "name-desc") {
       sortedCompanies.sort((a, b) => b.name.localeCompare(a.name));
-    } else if (option === "established-date") {
+    } else if (option === "createdAt") {
       sortedCompanies.sort(
-        (a, b) => new Date(a.establishedDate) - new Date(b.establishedDate)
+        (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
       );
     }
     setFilteredCompanies(sortedCompanies);
@@ -95,7 +103,6 @@ export default function CompanyManagement() {
     }
   };
 
-
   const handleOutstandingChange = async (companyId, isOutstanding) => {
     try {
       const token = localStorage.getItem("accessToken"); // Get token from localStorage
@@ -108,22 +115,51 @@ export default function CompanyManagement() {
           },
         }
       );
-  
+
       // Update the state to reflect the change
-      setCompanies(companies.map(company => 
-        company.id === companyId ? { ...company, outstanding: isOutstanding } : company
-      ));
-      setFilteredCompanies(filteredCompanies.map(company => 
-        company.id === companyId ? { ...company, outstanding: isOutstanding } : company
-      ));
-  
+      setCompanies(
+        companies.map((company) =>
+          company.id === companyId
+            ? { ...company, outstanding: isOutstanding }
+            : company
+        )
+      );
+      setFilteredCompanies(
+        filteredCompanies.map((company) =>
+          company.id === companyId
+            ? { ...company, outstanding: isOutstanding }
+            : company
+        )
+      );
+
       message.success("Cập nhật trạng thái nổi bật thành công!"); // Show success message
     } catch (error) {
       console.error("Có lỗi xảy ra khi cập nhật trạng thái nổi bật:", error);
       message.error("Cập nhật trạng thái nổi bật thất bại!"); // Show error message
     }
   };
-  
+
+  const handleStatusacount = async (companieId) => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      const response = await axios.patch(
+        `http://localhost:8080/api.myservice.com/v1/admin/company/browse/${companieId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        message.success("Duyệt tài khoản thành công!"); // Success message
+      }
+    } catch (error) {
+      console.error("Có lỗi xảy ra khi duyệt tài khoản:", error);
+      message.error("Duyệt tài khoản thất bại!"); // Error message
+    }
+  };
 
   return (
     <div className="company-management-container">
@@ -143,7 +179,7 @@ export default function CompanyManagement() {
         <option value="">Sắp xếp theo</option>
         <option value="name-asc">Tên: A-Z</option>
         <option value="name-desc">Tên: Z-A</option>
-        <option value="established-date">Ngày thành lập</option>
+        <option value="createdAt">Ngày tạo</option>
       </select>
       <table className="company-management-table">
         <thead>
@@ -152,53 +188,79 @@ export default function CompanyManagement() {
             <th>Tên</th>
             {/* <th>logo</th> */}
             <th>Website</th>
-            <th>Ngày thành lập</th>
-            <th>linkFacebook</th>
+            <th>Ngày tạo</th>
+            {/* <th>linkFacebook</th> */}
             {/* <th>linkLinkedin</th> */}
             <th>emailCompany</th>
-            <th>Địa chỉ</th>
+            {/* <th>Địa chỉ</th> */}
             <th>Số điện thoại</th>
             <th>typeCompany</th>
             <th>Nổi bật</th>
-            <th colSpan={2}>Hành động</th>
+            <th>Hành động</th>
+            <th>Chờ duyệt</th>
           </tr>
         </thead>
         <tbody>
-  {filteredCompanies.map((company) => (
-    <tr key={company.id}>
-      <td>{company.id}</td>
-      <td>{company.name}</td>
-      <td>
-        <a href={company.website} target="_blank" rel="noopener noreferrer">
-          Website
-        </a>
-      </td>
-      <td>{new Date(company.establishedDate).toLocaleDateString()}</td>
-      <td>{company.linkFacebook}</td>
-      <td>{company.emailCompany}</td>
-      <td>address</td>
-      <td>{company.phone}</td>
-      <td>{company.typeCompany ?   company.typeCompany.name : "N/A"}</td>
-      <td>
-        <Checkbox
-          checked={company.outstanding}
-          onChange={(e) => handleOutstandingChange(company.id, e.target.checked)}
-        />
-      </td>
-      <td className="btn-delete">
-        <Popconfirm
-          title="Bạn có chắc chắn muốn xóa công ty này?"
-          onConfirm={() => handleDelete(company.id)}
-          okText="Yes"
-          cancelText="No"
-        >
-          <Button className="ant-btn-details-delete">xóa</Button>
-        </Popconfirm>
-      </td>
-    </tr>
-  ))}
-</tbody>
+          {filteredCompanies.map((company) => (
+            <tr key={company.id}>
+              <td>{company.id}</td>
+              <td>{company.name}</td>
+              <td>
+                <a
+                  href={company.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {company.website}
+                </a>
+              </td>
+              <td>{new Date(company.createdAt).toLocaleDateString()}</td>
+              {/* <td>{company.linkFacebook}</td> */}
+              <td>{company.emailCompany}</td>
+              {/* <td>address</td> */}
+              <td>{company.phone}</td>
+              <td>{company.typeCompany ? company.typeCompany.name : "N/A"}</td>
+              <td>
+                <Checkbox
+                  checked={company.outstanding}
+                  onChange={(e) =>
+                    handleOutstandingChange(company.id, e.target.checked)
+                  }
+                />
+              </td>
+              <td className="btn-delete">
+                <Popconfirm
+                  title="Bạn có chắc chắn muốn xóa công ty này?"
+                  onConfirm={() => handleDelete(company.id)}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <Button className="ant-btn-details-delete">xóa</Button>
+                </Popconfirm>
+              </td>
+              <td>
+                {company.account.status !== 3 ? (
+                  <Button
+                    // className="btn-com"
+                    disabled
+                  >
+                    Đã Duyệt
+                  </Button>
+                ) : (
+                  <Button
+                    className="btn-com"
+                    onClick={() => handleStatusacount(company.id)}
+                  >
+                    Duyệt
+                  </Button>
+                )}
 
+                {/* {company.
+  account.status} */}
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
       <Pagination
         current={currentPage}

@@ -14,6 +14,7 @@ export default function CompanyHome() {
     dispatch(getOutStandingCandidate()).then((res) => {
       setCandidateData(res.payload.data);
     });
+    window.scrollTo(0, 0);
   }, []);
   return (
     <>

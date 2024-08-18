@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../style/CandidateManagement.css"; // Import CSS file
 import { Button, message, Checkbox, Pagination } from "antd"; // Import Ant Design components
+import { Link } from "react-router-dom";
 
 export default function Users() {
   const [candidates, setCandidates] = useState([]);
@@ -19,28 +20,28 @@ export default function Users() {
       try {
         const token = localStorage.getItem("accessToken");
         const response = await axios.get(
-          `http://localhost:8080/api.myservice.com/v1/admin/candidates?page=${currentPage - 1}&size=${pageSize}`,
+          `http://localhost:8080/api.myservice.com/v1/admin/candidates?page=${
+            currentPage - 1
+          }&size=${pageSize}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-  
+
         setCandidates(response.data.content);
         setFilteredCandidates(response.data.content);
         setTotalCandidates(response.data.totalElements);
-        console.log(response.data.content)
       } catch (error) {
         console.error("Có lỗi xảy ra khi lấy danh sách ứng viên:", error);
       } finally {
         setLoading(false);
       }
     };
-  
+
     fetchCandidates();
   }, [currentPage, pageSize]);
-  
 
   const handleStatusChange = async (candidateId) => {
     try {
@@ -78,14 +79,14 @@ export default function Users() {
       const token = localStorage.getItem("accessToken");
       await axios.patch(
         `http://localhost:8080/api.myservice.com/v1/admin/candidates/${candidateId}`,
-        { outstanding: isOutstanding }, // Send the updated outstanding status
+        { outstanding: isOutstanding },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-  
+
       setCandidates((prevCandidates) =>
         prevCandidates.map((candidate) =>
           candidate.id === candidateId
@@ -100,16 +101,14 @@ export default function Users() {
             : candidate
         )
       );
-  
+
       message.success("Cập nhật trạng thái nổi bật thành công!");
     } catch (error) {
       console.error("Có lỗi xảy ra khi cập nhật trạng thái nổi bật:", error);
       message.error("Cập nhật trạng thái nổi bật thất bại!");
     }
   };
-  
 
-  
   const handleChangeText = (e) => {
     const keyword = e.target.value.toLowerCase();
     setSearch(keyword);
@@ -228,13 +227,20 @@ export default function Users() {
                   <td>{candidate.position}</td>
                   <td>
                     <Checkbox
-                      checked={candidate.outstanding==1}
+                      checked={candidate.outstanding == 1}
                       onChange={(e) =>
-                        handleOutstandingStatusChange(candidate.id,e.target.checked)
-                        }
+                        handleOutstandingStatusChange(
+                          candidate.id,
+                          e.target.checked
+                        )
+                      }
                     />
                   </td>
-                  <td>
+                  <td className="flex gap-2">
+                    <Link to={`/admin/candidateinfo/${candidate.id}`}>
+                      <Button className="bg-green-500">Xem</Button>
+                    </Link>
+
                     <Button
                       className={
                         candidate.status ? "ant-btn-lock" : "ant-btn-unlock"

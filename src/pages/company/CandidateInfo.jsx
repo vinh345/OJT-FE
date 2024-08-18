@@ -17,7 +17,7 @@ const ProfilePage = () => {
   const [candidateInfo, setCandidateInfo] = useState();
   useEffect(() => {
     dispatch(getCandidateInfo(id)).then((res) => {
-      console.log(res.payload.data);
+      console.log(res);
       setCandidateInfo(res.payload.data);
       window.scrollTo(0, 0);
     });
