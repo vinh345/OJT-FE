@@ -17,7 +17,8 @@ const Header = () => {
   const handleLogOut = () => {
     cookie.remove("type");
     cookie.remove("accessToken");
-    cookie.set("isLogin", false);
+    cookie.remove("isLogin");
+    cookie.remove("role");
     navigate("/");
   };
 

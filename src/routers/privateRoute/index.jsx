@@ -5,6 +5,8 @@ import ChangePassword from "../../pages/auth/changePassword";
 import LayoutIndex from "../../layouts";
 import UserInfor from "../../pages/candidateinformation";
 import CandidateCV from "../../pages/admin/CandidateCV";
+import UserHome from "../../pages/home/UserHome";
+
 
 const privateRoutes = [
   {
@@ -32,6 +34,10 @@ const privateRoutes = [
       {
         path: "/user",
         children: [
+          {
+            index: true,
+            element: <PrivateRoute element={<UserHome/>} />,
+          },
           {path: "infor",
             element: <PrivateRoute element={<UserInfor/>} />
           }
