@@ -30,11 +30,11 @@ export default function AddJobBusiness() {
     const jobData = {
       title: values.title,
       description: values.description,
-      requirements: values.requirements || "", // Mặc định chuỗi trống nếu không được cung cấp
+      requirements: values.requirements || "", 
       salary: values.salary,
-      expireAt: values.expireAt.format("YYYY-MM-DD"), //Đảm bảo định dạng ngày phù hợp với yêu cầu phụ trợ
+      expireAt: values.expireAt.format("YYYY-MM-DD"), 
       locationId: values.location,
-      levelJobIds: values.levelJobIds || [], // Mặc định là mảng rỗng nếu ko đc cung cấp
+      levelJobIds: values.levelJobIds || [], 
       typeJobIds: values.typeJobIds || [],
     };
 
