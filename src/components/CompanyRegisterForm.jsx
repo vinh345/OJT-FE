@@ -73,7 +73,7 @@ export default function CompanyRegisterForm() {
         nhân lực chất lượng cao
       </h2>
       <div className="flex justify-between bg-white p-8">
-        <div className="w-1/2 p-4 relative">
+        <div className="w-full p-4 relative">
           <h3 className="text-xl font-semibold text-gray-800 mb-4 relative before:absolute before:left-[-20px] before:top-1/2 before:transform before:-translate-y-1/2 before:w-2 before:h-10 before:bg-red-700">
             Thông tin công ty
           </h3>
@@ -91,7 +91,10 @@ export default function CompanyRegisterForm() {
           >
             {({ isSubmitting }) => (
               <Form className="flex flex-col">
-                <label htmlFor="name" className="mb-6">
+                <label
+                  htmlFor="name"
+                  className="mb-6 text-lg font-medium text-gray-700"
+                >
                   Tên công ty
                 </label>
                 <Field
@@ -107,7 +110,10 @@ export default function CompanyRegisterForm() {
                   className="text-red-500 mb-3"
                 />
 
-                <label htmlFor="emailCompany" className="mb-6">
+                <label
+                  htmlFor="emailCompany"
+                  className="mb-6 text-lg font-medium text-gray-700"
+                >
                   Email công ty
                 </label>
                 <Field
@@ -123,7 +129,10 @@ export default function CompanyRegisterForm() {
                   className="text-red-500 mb-3"
                 />
 
-                <label htmlFor="phone" className="mb-6">
+                <label
+                  htmlFor="phone"
+                  className="mb-6 text-lg font-medium text-gray-700"
+                >
                   Số điện thoại
                 </label>
                 <Field
@@ -139,7 +148,10 @@ export default function CompanyRegisterForm() {
                   className="text-red-500 mb-3"
                 />
 
-                <label htmlFor="locationId" className="mb-6">
+                <label
+                  htmlFor="locationId"
+                  className="mb-6 text-lg font-medium text-gray-700"
+                >
                   Địa điểm làm việc
                 </label>
                 <Field
@@ -163,7 +175,10 @@ export default function CompanyRegisterForm() {
                   className="text-red-500 mb-3"
                 />
 
-                <label htmlFor="password" className="mb-6">
+                <label
+                  htmlFor="password"
+                  className="mb-6 text-lg font-medium text-gray-700"
+                >
                   Mật khẩu
                 </label>
                 <Field
@@ -179,7 +194,10 @@ export default function CompanyRegisterForm() {
                   className="text-red-500 mb-3"
                 />
 
-                <label htmlFor="confirmPassword" className="mb-6">
+                <label
+                  htmlFor="confirmPassword"
+                  className="mb-6 text-lg font-medium text-gray-700"
+                >
                   Xác nhận mật khẩu
                 </label>
                 <Field
