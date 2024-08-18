@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Cookies, useCookies } from "react-cookie";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Avatar, Button, Modal, Box } from "@mui/material";
 import logo from "../../assets/logo.png";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
@@ -45,16 +45,44 @@ const Header = () => {
           <div className="nav__menu hidden md:flex text-gray-800">
             <ul className="nav__list flex align-middle space-x-6">
               <li className="nav__item">
-                <Link to={`/home`}>Trang chủ</Link>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? " font-bold" : "text-gray-700"
+                  }
+                  to={`/`}
+                >
+                  Trang chủ
+                </NavLink>
               </li>
               <li className="nav__item">
-                <Link to={`/jobs`}>Việc làm</Link>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? " font-bold" : "text-gray-700"
+                  }
+                  to={`/jobs`}
+                >
+                  Việc làm
+                </NavLink>
               </li>
               <li className="nav__item">
-                <Link to={`/cv`}>CV của bạn</Link>
+                <NavLink
+                  to={`/user/cv`}
+                  className={({ isActive }) =>
+                    isActive ? " font-bold" : "text-gray-700"
+                  }
+                >
+                  CV của bạn
+                </NavLink>
               </li>
               <li className="nav__item">
-                <Link to={`/support`}>Customer Supports</Link>
+                <NavLink
+                  to={`/support`}
+                  className={({ isActive }) =>
+                    isActive ? " font-bold" : "text-gray-700"
+                  }
+                >
+                  Customer Supports
+                </NavLink>
               </li>
             </ul>
           </div>
@@ -75,7 +103,7 @@ const Header = () => {
         </nav>
 
         {/* Main Content */}
-        <div className="flex justify-between items-center mt-4 px-4 md:px-32">
+        <div className="flex justify-between items-center mt-4 px-4 py-4 md:px-32">
           <img src={logo} alt="Rikkei Logo" className="w-48" />
 
           <div className="flex items-center border border-gray-300 rounded-lg px-4 py-2 w-full max-w-lg">
@@ -112,7 +140,11 @@ const Header = () => {
                 >
                   <ul className="text-gray-800">
                     <li className="mb-2 p-1 bg-gray-200 hover:bg-gray-600 hover:cursor-pointer">
-                      <Link to={"/user/userdetail"} onClick={handleModalToggle} className="">
+                      <Link
+                        to={"/user/userdetail"}
+                        onClick={handleModalToggle}
+                        className=""
+                      >
                         Thông tin cá nhân
                       </Link>
                     </li>
@@ -124,9 +156,12 @@ const Header = () => {
                         Đổi mật khẩu
                       </Link>
                     </li>
-                    
-                    <li className="mt-2 p-1 bg-gray-200 hover:bg-gray-600 hover:cursor-pointer   " onClick={logOut}>
-                        Đăng xuất
+
+                    <li
+                      className="mt-2 p-1 bg-gray-200 hover:bg-gray-600 hover:cursor-pointer   "
+                      onClick={logOut}
+                    >
+                      Đăng xuất
                     </li>
                   </ul>
                 </Box>
@@ -134,7 +169,7 @@ const Header = () => {
             </div>
           ) : (
             <Button onClick={handleLogIn} variant="contained">
-             Đăng nhập
+              Đăng nhập
             </Button>
           )}
         </div>

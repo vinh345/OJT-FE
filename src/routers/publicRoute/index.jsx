@@ -12,8 +12,6 @@ import VerifyAccount from "../../pages/auth/verify";
 import LayoutIndex from "../../layouts";
 
 import ListJob from "../../pages/job/ListJob";
-import PrivateRoute from "../../features/protectedRoutes/PrivateRoute";
-import ChangePassword from "../../pages/auth/changePassword";
 import JobDetail from "../../pages/job/JobDetail";
 
 import Jobs from "../../pages/admin/Jobs";
@@ -26,10 +24,8 @@ const publicRoutes = [
     element: <LayoutIndex />,
     exact: true,
     children: [
-      {
-        path: "changePassword",
-        element: <PrivateRoute element={<ChangePassword />} />,
-      },
+      { path: "/auth/recoverPassword", element: <RecoverPassword /> },
+
       {
         path: "/",
         element: <Home />,
@@ -49,7 +45,6 @@ const publicRoutes = [
           { path: "jobs", element: <Jobs /> },
         ],
       },
-      { path: "/auth/recoverPassword", element: <RecoverPassword /> },
       {
         path: "/user",
         children: [
