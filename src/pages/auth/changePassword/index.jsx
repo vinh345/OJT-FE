@@ -123,7 +123,7 @@ export default function ChangePassword() {
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  className="w-1/2 flex justify-center p-1 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="w-1/2 flex justify-center px-2 py-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Thay đổi mật khẩu
                 </button>

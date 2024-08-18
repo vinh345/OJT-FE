@@ -1,14 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import BASE_URL from "../api";
-import { accessToken } from "../constants/accessToken";
 import { GET } from "../constants/httpMethod";
 
+import { token } from "../constants/token";
+
 export const fetchProfile = async (id) => {
+
   try {
-    const response = await BASE_URL[GET](`admin/viewCandidateInfo/${id}`,{
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+    const response = await BASE_URL[GET](`admin/viewCandidateInfo/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return response.data;
   } catch (error) {
@@ -18,12 +20,13 @@ export const fetchProfile = async (id) => {
 };
 
 export const fetchCandidateCV = async (id) => {
+
   try {
     const response = await BASE_URL[GET](
       `admin/viewCandidateCV/${id}`,
       {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${token}`,
         },
       }
     );

@@ -8,8 +8,8 @@ export default function PrivateRoute({ element }) {
   const isLogin = cookie.get('isLogin');
 
   useEffect(() => {
-    if (!true) {
-      navigate("/auth/login");
+    if (!isLogin) {
+      navigate("/user/login");
     }
   }, [isLogin]);
   return element;
