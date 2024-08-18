@@ -18,6 +18,7 @@ import PrivateRoute from "../../features/protectedRoutes/PrivateRoute";
 import ChangePassword from "../../pages/auth/changePassword";
 
 import Jobs from "../../pages/admin/Jobs";
+import OutstandingCandidate from "../../pages/candidateinformation/form/home/OutstandingCandidate";
 
 const publicRoutes = [
   {
@@ -32,18 +33,6 @@ const publicRoutes = [
       {
         path: "/",
         element: <Home />,
-      },
-      { path: "/admin", element: <FormLoginAdmin /> },
-      {
-        path: "/admin",
-        element: <AdminLayout />,
-        children: [
-          { path: "dashboard", element: <Dashboard /> },
-          { path: "candidate", element: <Users /> },
-          { path: "company", element: <Company /> },
-          { path: "login", element: <FormLoginAdmin /> },
-          { path: "jobs", element: <Jobs /> }
-        ],
       },
       { path: "/auth/recoverPassword", element: <RecoverPassword /> },
       {
@@ -63,6 +52,7 @@ const publicRoutes = [
           { path: "job", element: <ListJob /> },
           { path: "jobDetail/:id", element: <JobDetail /> },
           { path: "detail/:id", element: <CompanyDetail /> }, // Tuyến đường chi tiết công ty
+          {path :"outstanding", element :<OutstandingCandidate />}
         ],
       },
 

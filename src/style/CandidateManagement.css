@@ -4,12 +4,15 @@
     width:  107%;
     margin: 0 auto;
     padding: 20px;
-    margin-left: -80px;
+    margin-left: -80px; 
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+    background-color:rgb(250, 250, 250) ;
+
   }
   
   .candidate-management-title {
     text-align: center;
-    color: #000000;
+    color: rgba(20, 9, 9, 0.63);
     margin-bottom: 70px;
     margin-top: 30px;
     font-size: 28px;
@@ -20,6 +23,7 @@
     width: 100%;
     border-collapse: collapse; 
     margin-bottom: 20px;
+    /* box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px; */
   }
   
   .candidate-management-table th, 
@@ -28,21 +32,25 @@
     text-align: left;
     font-size: 15px;
     /* border: 1px solid #dddddd79;  */
-    text-align: center;
+    text-align: left;
+    color: rgba(20, 9, 9, 0.664);
+    border-bottom: 1px solid rgba(119, 116, 116, 0.178);
   }
   
   .candidate-management-table th {
     background-color: #e7f0f8a6;
-    color: #e63f0c;
+    color: #0c0807;
     font-weight: bold;
     font-size: 16px; 
     padding-bottom: 50px;
+    
     padding-top: 50px;
 
   }
   
   .candidate-management-table tr:nth-child(even) {
-    background-color: #e7f0f8a6;
+    /* background-color: #e7f0f8a6; */ 
+    border-bottom: 1px solid rgba(119, 116, 116, 0.144);
   }
   
   .candidate-management-table tr:hover {
@@ -68,6 +76,7 @@
 .candidate-management-table td.status-active {
   color: green;
   font-weight: bold;
+  
 }
 
 .candidate-management-table td.status-locked {
@@ -102,8 +111,9 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   margin-right: 10px;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
   outline: none;
+  
 }
 
 .search-input:focus {

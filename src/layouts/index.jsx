@@ -8,7 +8,7 @@ export default function LayoutIndex() {
   return (
     <>
       <div className="ra-admin-layout">
-        <BackTop visibilityHeight={1000}/>
+        <BackTop visibilityHeight={1000}/> 
         <Menu />
         <div className="right">
           <Header />

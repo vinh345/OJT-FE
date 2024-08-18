@@ -30,7 +30,6 @@ export default function Users() {
         setCandidates(response.data.content);
         setFilteredCandidates(response.data.content);
         setTotalCandidates(response.data.totalElements);
-        console.log(response.data.content)
       } catch (error) {
         console.error("Có lỗi xảy ra khi lấy danh sách ứng viên:", error);
       } finally {
@@ -78,7 +77,7 @@ export default function Users() {
       const token = localStorage.getItem("accessToken");
       await axios.patch(
         `http://localhost:8080/api.myservice.com/v1/admin/candidates/${candidateId}`,
-        { outstanding: isOutstanding }, // Send the updated outstanding status
+        { outstanding: isOutstanding }, 
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -118,7 +117,10 @@ export default function Users() {
       candidates.filter((candidate) =>
         candidate.name.toLowerCase().includes(keyword)
       )
-    );
+    ); 
+
+
+    
   };
 
   const handleSortChange = (e) => {
@@ -201,9 +203,10 @@ export default function Users() {
                   <td>{candidate.phone}</td>
                   <td>{candidate.gender ? "Nam" : "Nữ"}</td>
                   <td
-                    className={
-                      candidate.status ? "status-active" : "status-locked"
+                    className={ 
+                      candidate.status ? "status-active" : "status-locked"                   
                     }
+                    
                   >
                     {candidate.status ? "Hoạt động" : "Bị khóa"}
                   </td>
