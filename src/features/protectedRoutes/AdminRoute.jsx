@@ -6,15 +6,10 @@ export default function AdminRoute({ element }) {
   const navigate = useNavigate();
   const cookie = new Cookies();
   const isLogin = localStorage.getItem('isLogin');
-
   useEffect(() => {
-    if (!isLogin) {
-      navigate("/user/login");
-    } else{
-        if(localStorage.getItem("role")!=="ROLE_ADMIN"){
+        if(localStorage.getItem("role")!=="ROLE_ADMIN"  || cookie.get('role')!=="ROLE_ADMIN"){
             navigate("/403")
         }
-    }
   }, [isLogin]);
   return element;
 }

@@ -20,7 +20,7 @@ export default function FormEditInfo({
     position: info?.position,
     address: info?.address,
     phone: info?.phone,
-    birthday: info?.birthday,
+    birthDay: info?.birthDay,
     gender: info?.gender,
     linkLinkedin: info?.linkLinkedin,
     avatar: info?.avatar,
@@ -33,7 +33,7 @@ export default function FormEditInfo({
       position: info?.position,
       address: info?.address,
       phone: info?.phone,
-      birthday: dayjs(info?.birthday),
+      birthDay: dayjs(info?.birthDay),
       gender: info?.gender,
       linkLinkedin: info?.linkLinkedin,
       avatar: info?.avatar,
@@ -59,8 +59,8 @@ export default function FormEditInfo({
       formEditData.append("phone", formEdit.phone);
     }
 
-    if (formEdit.birthday) {
-      formEditData.append("birthday", formEdit.birthday);
+    if (formEdit.birthDay) {
+      formEditData.append("birthDay", formEdit.birthDay);
     }
 
     if (formEdit.gender) {
@@ -73,6 +73,8 @@ export default function FormEditInfo({
     if (formEdit.avatar) {
       formEditData.append("avatar", formEdit.avatar);
     }
+    console.log(formEdit)
+    console.log(formEditData)
     dispatch(updateCandidateInfo(formEditData)).then((res) => {
       console.log(res);
       if (res.payload.data.error) {
@@ -90,6 +92,7 @@ export default function FormEditInfo({
       }
     });
     resetForm();
+    setTimeout(()=>{ showModalEditInfo()},1500)
   };
 
   const resetForm = () => {
@@ -98,7 +101,7 @@ export default function FormEditInfo({
       position: null,
       address: null,
       phone: null,
-      birthday: null,
+      birthDay: null,
       gender: null,
       linkLinkedin: null,
       avatar: null,
@@ -114,7 +117,7 @@ export default function FormEditInfo({
 
   const handleFinish = () => {
     resetForm();
-    showModalEditInfo();
+    
   };
 
   const disabledDate = (current) => {
@@ -123,7 +126,8 @@ export default function FormEditInfo({
 
   const handleChange = (e) => {
     if (e.$isDayjsObject) {
-      setFormEdit({ ...formEdit, birthday: e.format("YYYY-MM-DD") });
+      console.log( e.format("YYYY-MM-DD"))
+      setFormEdit({ ...formEdit, birthDay: e.format("YYYY-MM-DD") });
     } else {
       setFormEdit({ ...formEdit, [e.target.name]: e.target.value });
     }
@@ -186,7 +190,7 @@ export default function FormEditInfo({
           position: info?.position,
           address: info?.address,
           phone: info?.phone,
-          birthday: info?.birthday && dayjs(info?.birthday),
+          birthDay: info?.birthDay && dayjs(info?.birthDay),
           gender: info?.gender ? "Nam" : "Nữ",
           linkLinkedin: info?.linkLinkedin,
         }}
@@ -219,9 +223,9 @@ export default function FormEditInfo({
             placeholder="Nhập số điện thoại"
           />
         </Form.Item>
-        <Form.Item label="Ngày sinh" name="birthday">
+        <Form.Item label="Ngày sinh" name="birthDay">
           <DatePicker
-            name="birthday"
+            name="birthDay"
             format="YYYY-MM-DD"
             onChange={handleChange}
             disabledDate={disabledDate}

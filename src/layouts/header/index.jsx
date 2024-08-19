@@ -24,8 +24,8 @@ const Header = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleLogOut = () => {
-    dispatch(logOut())
-    navigate("/");
+    dispatch(logOut()).then(navigate("/"))
+    
   };
 
   const handleLogIn = () => {

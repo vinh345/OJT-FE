@@ -27,7 +27,6 @@ export default function FormEditCerti({
         name: editCerti.name,
         organization: editCerti.organization,
         startAt: editCerti.startAt ? dayjs(editCerti.startAt) : null,
-        endAt: editCerti.endAt ? dayjs(editCerti.endAt) : null,
         info: editCerti.info,
       });
     }
@@ -153,7 +152,6 @@ export default function FormEditCerti({
             name: editCerti?.name,
             organization: editCerti?.organization,
             startAt: dayjs(editCerti?.startAt),
-            endAt: dayjs(editCerti?.endAt),
             info: editCerti?.info,
           }}
         >

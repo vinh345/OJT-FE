@@ -28,7 +28,6 @@ export default function FormEditEducation({
         nameEducation: editEdu.nameEducation,
         major: editEdu.major,
         startAt: editEdu.startAt ? dayjs(editEdu.startAt) : null,
-        endAt: editEdu.endAt ? dayjs(editEdu.endAt) : null,
         info: editEdu.info,
       });
     }
@@ -153,7 +152,6 @@ export default function FormEditEducation({
             nameEducation: editEdu?.nameEducation,
             major: editEdu?.major,
             startAt: dayjs(editEdu?.startAt),
-            endAt: dayjs(editEdu?.endAt),
             info: editEdu?.info,
           }}
         >

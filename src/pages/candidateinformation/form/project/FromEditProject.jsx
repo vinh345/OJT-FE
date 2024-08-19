@@ -27,7 +27,6 @@ export default function FormEditPrj({
         name: editPrj.name,
         link: editPrj.link,
         startAt: editPrj.startAt ? dayjs(editPrj.startAt) : null,
-        endAt: editPrj.endAt ? dayjs(editPrj.endAt) : null,
         info: editPrj.info,
       });
     }
@@ -151,7 +150,6 @@ export default function FormEditPrj({
             name: editPrj?.name,
             link: editPrj?.link,
             startAt: dayjs(editPrj?.startAt),
-            endAt: dayjs(editPrj?.endAt),
             info: editPrj?.info,
           }}
         >
