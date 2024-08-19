@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../../style/CandidateManagement.css"; // Import CSS file
-import { Button, message, Checkbox, Pagination } from "antd"; // Import Ant Design components
+import "../../style/CandidateManagement.css";
+import { Button, message, Checkbox, Pagination } from "antd";
 
 export default function Users() {
   const [candidates, setCandidates] = useState([]);
@@ -11,7 +11,7 @@ export default function Users() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalCandidates, setTotalCandidates] = useState(0);
-  const [loading, setLoading] = useState(false); // Loading state
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchCandidates = async () => {
@@ -19,27 +19,29 @@ export default function Users() {
       try {
         const token = localStorage.getItem("accessToken");
         const response = await axios.get(
-          `http://localhost:8080/api.myservice.com/v1/admin/candidates?page=${currentPage - 1}&size=${pageSize}`,
+          `http://localhost:8080/api.myservice.com/v1/admin/candidates?page=${
+            currentPage - 1
+          }&size=${pageSize}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-  
+
         setCandidates(response.data.content);
         setFilteredCandidates(response.data.content);
         setTotalCandidates(response.data.totalElements);
       } catch (error) {
         console.error("Có lỗi xảy ra khi lấy danh sách ứng viên:", error);
+        message.error("Không thể lấy danh sách ứng viên.");
       } finally {
         setLoading(false);
       }
     };
-  
+
     fetchCandidates();
   }, [currentPage, pageSize]);
-  
 
   const handleStatusChange = async (candidateId) => {
     try {
@@ -58,7 +60,7 @@ export default function Users() {
         setFilteredCandidates((prevCandidates) =>
           prevCandidates.map((candidate) =>
             candidate.id === candidateId
-              ? { ...candidate, status: response.data }
+              ? { ...candidate, status: response.data.status }
               : candidate
           )
         );
@@ -77,50 +79,40 @@ export default function Users() {
       const token = localStorage.getItem("accessToken");
       await axios.patch(
         `http://localhost:8080/api.myservice.com/v1/admin/candidates/${candidateId}`,
-        { outstanding: isOutstanding }, 
+        { outstanding: isOutstanding },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-  
-      setCandidates((prevCandidates) =>
+
+      setFilteredCandidates((prevCandidates) =>
         prevCandidates.map((candidate) =>
           candidate.id === candidateId
             ? { ...candidate, outstanding: isOutstanding }
             : candidate
         )
       );
-      setFilteredCandidates((prevFilteredCandidates) =>
-        prevFilteredCandidates.map((candidate) =>
-          candidate.id === candidateId
-            ? { ...candidate, outstanding: isOutstanding }
-            : candidate
-        )
-      );
-  
+
       message.success("Cập nhật trạng thái nổi bật thành công!");
     } catch (error) {
       console.error("Có lỗi xảy ra khi cập nhật trạng thái nổi bật:", error);
       message.error("Cập nhật trạng thái nổi bật thất bại!");
     }
   };
-  
 
-  
   const handleChangeText = (e) => {
     const keyword = e.target.value.toLowerCase();
     setSearch(keyword);
 
     setFilteredCandidates(
-      candidates.filter((candidate) =>
-        candidate.name.toLowerCase().includes(keyword)
+      candidates.filter(
+        (candidate) =>
+          candidate.name.toLowerCase().includes(keyword) ||
+          candidate.address.toLowerCase().includes(keyword)
       )
-    ); 
-
-
-    
+    );
   };
 
   const handleSortChange = (e) => {
@@ -134,12 +126,12 @@ export default function Users() {
       sortedCandidates.sort((a, b) => b.name.localeCompare(a.name));
     } else if (option === "birthday") {
       sortedCandidates.sort(
-        (a, b) => new Date(a.birthday) - new Date(b.birthday)
+        (a, b) => new Date(b.birthday) - new Date(a.birthday)
       );
     } else if (option === "status") {
-      sortedCandidates.sort((b, a) =>
-        a.status === b.status ? 0 : a.status ? -1 : 1
-      );
+      sortedCandidates.sort((a, b) => a.status - b.status);
+    } else if (option === "outstanding") {
+      sortedCandidates.sort((a, b) => b.outstanding - a.outstanding);
     }
     setFilteredCandidates(sortedCandidates);
   };
@@ -169,6 +161,7 @@ export default function Users() {
         <option value="name-desc">Tên: Z-A</option>
         <option value="birthday">Ngày sinh</option>
         <option value="status">Trạng thái hoạt động</option>
+        <option value="outstanding">Nổi bật</option>
       </select>
       {loading ? (
         <p>Loading...</p>
@@ -185,8 +178,6 @@ export default function Users() {
                 <th>Số điện thoại</th>
                 <th>Giới tính</th>
                 <th>Trạng thái</th>
-                {/* <th>LinkedIn</th>
-                <th>GitHub</th> */}
                 <th>Vị trí</th>
                 <th>Nổi bật</th>
                 <th>Hành động</th>
@@ -203,38 +194,22 @@ export default function Users() {
                   <td>{candidate.phone}</td>
                   <td>{candidate.gender ? "Nam" : "Nữ"}</td>
                   <td
-                    className={ 
-                      candidate.status ? "status-active" : "status-locked"                   
+                    className={
+                      candidate.status ? "status-active" : "status-locked"
                     }
-                    
                   >
                     {candidate.status ? "Hoạt động" : "Bị khóa"}
                   </td>
-                  {/* <td>
-                    <a
-                      href={candidate.linkLinkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      LinkedIn
-                    </a>
-                  </td>
-                  <td>
-                    <a
-                      href={candidate.linkGit}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      GitHub
-                    </a>
-                  </td> */}
                   <td>{candidate.position}</td>
                   <td>
                     <Checkbox
-                      checked={candidate.outstanding==1}
+                      checked={candidate.outstanding === 1}
                       onChange={(e) =>
-                        handleOutstandingStatusChange(candidate.id,e.target.checked)
-                        }
+                        handleOutstandingStatusChange(
+                          candidate.id,
+                          e.target.checked ? 1 : 0
+                        )
+                      }
                     />
                   </td>
                   <td>
