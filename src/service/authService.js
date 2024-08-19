@@ -150,8 +150,6 @@ export const logOut=() => {
   cookie.remove("avatar", { path: "/" });
   cookie.remove("name", { path: "/" });
   cookie.remove("role", { path: "/" });
-
 };
-
 
 
