@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Input, Select, DatePicker, Avatar } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import "antd/dist/reset.css";
@@ -7,12 +7,13 @@ import { useDispatch } from "react-redux";
 import { updateCandidateInfo } from "../../../service/candidateService";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 const { Option } = Select;
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 export default function FormEditInfo({
   isModalEditInfoOpen,
   showModalEditInfo,
   info,
 }) {
+ 
   const [form] = Form.useForm();
   const [formEdit, setFormEdit] = useState({
     name: info?.name,
@@ -26,7 +27,18 @@ export default function FormEditInfo({
   });
   const [showAvatar, setShowAvatar] = React.useState(null);
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    form.setFieldsValue({
+      name: info?.name,
+      position: info?.position,
+      address: info?.address,
+      phone: info?.phone,
+      birthday: dayjs(info?.birthday),
+      gender: info?.gender,
+      linkLinkedin: info?.linkLinkedin,
+      avatar: info?.avatar,
+    });
+  },[isModalEditInfoOpen])
   const handleOk = () => {
     form.submit();
     const formEditData = new FormData();
@@ -74,9 +86,10 @@ export default function FormEditInfo({
           title: "Success!",
           text: "Update information successfully",
           icon: "success",
-      }).then(()=> showModalEditInfo())
+      })
       }
     });
+    resetForm();
   };
 
   const resetForm = () => {
@@ -91,6 +104,7 @@ export default function FormEditInfo({
       avatar: null,
     });
     setShowAvatar(null);
+    form.resetFields();
   };
 
   const handleCancel = () => {
@@ -158,9 +172,8 @@ export default function FormEditInfo({
           className="mr-4"
         />
         <div className="flex justify-center space-x-4">
-          <EditOutlined className="text-2xl cursor-pointer" />
+          <AccountCircleIcon className="text-2xl cursor-pointer" />
           <Input onChange={handleChangeAvatar} type="file" />
-          <DeleteOutlined className="text-2xl text-red-600 cursor-pointer" />
         </div>
       </div>
 
@@ -173,7 +186,7 @@ export default function FormEditInfo({
           position: info?.position,
           address: info?.address,
           phone: info?.phone,
-          birthday: dayjs(info?.birthday),
+          birthday: info?.birthday && dayjs(info?.birthday),
           gender: info?.gender ? "Nam" : "Nữ",
           linkLinkedin: info?.linkLinkedin,
         }}

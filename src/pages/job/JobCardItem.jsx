@@ -8,7 +8,7 @@ const JobCardItem = ({ job, handleClick }) => {
   if (!job) {
     return null;
   }
-
+const companyNameNew = job?.addressCompany.company.name
   const {
     title,
     company: { logo: companyLogo, name: companyName } = {},
@@ -62,7 +62,7 @@ const JobCardItem = ({ job, handleClick }) => {
         />
         <div>
           <p className="font-semibold">
-            {companyName || "No company name specified"}
+            {companyNameNew || "No company name specified"}
           </p>
           <div className="flex items-center">
             <EnvironmentOutlined className="text-gray-500 mr-2" />

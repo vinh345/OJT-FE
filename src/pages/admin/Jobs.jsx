@@ -12,6 +12,8 @@ export default function Jobs() {
   const [pageSize, setPageSize] = useState(10); // State for items per page
   const [totalJobs, setTotalJobs] = useState(0); // State for total number of jobs
 
+ 
+  
   useEffect(() => {
     const fetchJobs = async () => {
       try {
@@ -24,6 +26,8 @@ export default function Jobs() {
             },
           }
         );
+      
+console.log(response.data.content);
 
         setJobs(response.data.content);
         setTotalJobs(response.data.totalElements); // Set total number of jobs
@@ -138,7 +142,7 @@ export default function Jobs() {
             <tr key={job.id}>
               <td>{job.id}</td>
               <td>{job.title}</td>
-              <td>{job.company.name}</td>
+              <td>{job.addressCompany.company.name}</td>
               <td>{job.description}</td>
               <td>{job.salary}</td>
               <td>{job.requirements}</td>

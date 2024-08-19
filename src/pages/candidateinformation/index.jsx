@@ -49,11 +49,12 @@ const Index = () => {
   };
 
   const dispatch = useDispatch();
-  const { data } = useSelector((state) => state.userInfor);
-
+  // const { data } = useSelector((state) => state.userInfor);
+  const [data, setData] = useState()
   useEffect(() => {
     dispatch(getCandidateInfo()).then((res) => {
       console.log(res.payload.data.data);
+      setData(res.payload.data.data);
     });
   }, [dispatch, state]);
 
@@ -72,7 +73,15 @@ const Index = () => {
   
       <div className="container mx-auto p-4 grid grid-cols-10 gap-4">
         <div className="col-span-4">
-          <SideBar />
+          <SideBar
+            showModalEditAboutMe={() => toggleModal('isModalEditAboutMeOpen')}
+            showModalAddEduOpen={() => toggleModal('isModalAddEduOpen')}
+            showModalAddExpOpen={() => toggleModal('isModalAddExpOpen')}
+            showModalAddPrjOpen={() => toggleModal('isModalAddPrjOpen')}
+            showModalAddCertiOpen={() => toggleModal('isModalAddCertiOpen')}
+            showModalAddSkillOpen={() => toggleModal('isModalAddSkillOpen')}
+            
+          />
         </div>
         <div className="col-span-6 flex flex-col gap-10">
           <ProfileSection

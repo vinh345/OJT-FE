@@ -69,7 +69,6 @@ export default function FormEditEducation({
         nameEducation: formEditEdu.nameEducation,
         major: formEditEdu.major,
         startAt: formEditEdu.startAt,
-        endAt: formEditEdu.endAt,
         info: formEditEdu.info,
       })
     ).then((res) => {

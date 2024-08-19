@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import logo from "../assets/logo.png"; // Đảm bảo đường dẫn tới ảnh là chính xác
 import Adminrafiki2 from "../assets/Admin-rafiki2.png"; // Đảm bảo đường dẫn tới ảnh là chính xác
-
-// import "../style/RegisterUserForm.module.scss"; // Import file CSS
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { candidateRegist } from "../service/authService";
 import { notification } from "antd";
 import Swal from "sweetalert2";
+import { RemoveRedEyeRounded, VisibilityOff } from "@mui/icons-material";
 
 export default function RegisterUserForm() {
   const [registForm, setRegistForm] = useState({
@@ -17,22 +16,42 @@ export default function RegisterUserForm() {
     confirmPassword: "",
   });
   const [error, setError] = useState({
-    name: "a",
-    email: "a",
-    password: "a",
-    confirmPassword: "a",
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const api = notification.useNotification();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setRegistForm({ ...registForm, [e.target.name]: e.target.value });
-    if (e.target.value === "") {
-      setError({ ...error, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setRegistForm({ ...registForm, [name]: value });
+
+    let errorMessage = "";
+
+    if (value === "") {
+      errorMessage = `Vui lòng nhập ${name === "confirmPassword" ? "xác nhận mật khẩu" : name}`;
     } else {
-      setError({ ...error, [e.target.name]: e.target.value });
+      if (name === "email") {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+          errorMessage = "Email không hợp lệ";
+        }
+      }
+
+      if (name === "password" || name === "confirmPassword") {
+        if (value.length < 6) {
+          errorMessage = "Mật khẩu phải có ít nhất 6 ký tự";
+        }
+      }
     }
+
+    setError({ ...error, [name]: errorMessage });
   };
 
   const handleRegist = (e) => {
@@ -43,37 +62,43 @@ export default function RegisterUserForm() {
       registForm.password &&
       registForm.confirmPassword
     ) {
-      if (registForm.password === registForm.confirmPassword) {
-        dispatch(
-          candidateRegist({
-            name: registForm.name,
-            email: registForm.email,
-            password: registForm.password,
-            confirmPassword: registForm.confirmPassword,
-          })
-        ).then((res) => {
-          console.log(res);
-          if (res.payload.error) {
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: res.payload.message,
-            });
-          } else {
-            Swal.fire({
-              title: "Success!",
-              text: "Regist successfully, please verify your account",
-              icon: "success",
-            }).then(() => {
-              navigate("/verify");
-            });
-          }
-        });
+      if (registForm.password.length >= 6) {
+        if (registForm.password === registForm.confirmPassword) {
+          dispatch(
+            candidateRegist({
+              name: registForm.name,
+              email: registForm.email,
+              password: registForm.password,
+              confirmPassword: registForm.confirmPassword,
+            })
+          ).then((res) => {
+            if (res.payload.error) {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: res.payload.message,
+              });
+            } else {
+              Swal.fire({
+                title: "Success!",
+                text: "Đăng ký thành công, vui lòng xác nhận tài khoản của bạn",
+                icon: "success",
+              }).then(() => {
+                navigate("/verify");
+              });
+            }
+          });
+        } else {
+          setError({
+            ...error,
+            password: "Mật khẩu không trùng khớp",
+            confirmPassword: "Mật khẩu không trùng khớp",
+          });
+        }
       } else {
         setError({
           ...error,
-          password: "Mật khẩu không trùng khớp",
-          confirmPassword: "Mật khẩu không trùng khớp",
+          password: "Mật khẩu phải có ít nhất 6 ký tự",
         });
       }
     } else {
@@ -86,10 +111,11 @@ export default function RegisterUserForm() {
       });
     }
   };
+
   return (
     <>
       <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">
- <div className="w-full md:w-1/2 lg:w-1/3 bg-white p-8  h-[700px]">
+        <div className="w-full md:w-1/2 lg:w-1/3 bg-white p-8 h-[700px]">
           <img src={logo} alt="RKEI Edu Logo" className="h-16 mx-auto mb-6" />
           <h2 className="text-center text-xl md:text-2xl font-bold mb-6">
             Cùng Rikkei Education xây dựng hồ
@@ -114,10 +140,8 @@ export default function RegisterUserForm() {
                 placeholder="Nhập họ tên"
                 className="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              {!error.name && (
-                <p className="text-red-500 text-sm mt-1">
-                  Vui lòng nhập họ và tên
-                </p>
+              {error.name && (
+                <p className="text-red-500 text-sm mt-1">{error.name}</p>
               )}
             </div>
             <div>
@@ -135,8 +159,8 @@ export default function RegisterUserForm() {
                 placeholder="abc@gmail.com"
                 className="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              {!error.email && (
-                <p className="text-red-500 text-sm mt-1">Vui lòng nhập email</p>
+              {error.email && (
+                <p className="text-red-500 text-sm mt-1">{error.email}</p>
               )}
             </div>
             <div>
@@ -146,18 +170,25 @@ export default function RegisterUserForm() {
               >
                 Mật khẩu
               </label>
-              <input
-                onChange={handleChange}
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Password"
-                className="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              {!error.password && (
-                <p className="text-red-500 text-sm mt-1">
-                  Vui lòng nhập mật khẩu
-                </p>
+              <div className="relative">
+                <input
+                  onChange={handleChange}
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  id="password"
+                  placeholder="Password"
+                  className="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                >
+                  {showPassword ? <VisibilityOff/> : <RemoveRedEyeRounded/>}
+                </button>
+              </div>
+              {error.password && (
+                <p className="text-red-500 text-sm mt-1">{error.password}</p>
               )}
             </div>
             <div>
@@ -167,17 +198,26 @@ export default function RegisterUserForm() {
               >
                 Xác nhận mật khẩu
               </label>
-              <input
-                onChange={handleChange}
-                type="password"
-                name="confirmPassword"
-                id="Confirmpassword"
-                placeholder="Password"
-                className="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              {!error.confirmPassword && (
+              <div className="relative">
+                <input
+                  onChange={handleChange}
+                  type={showConfirmPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  id="Confirmpassword"
+                  placeholder="Password"
+                  className="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                >
+                  {showConfirmPassword ? <VisibilityOff/> : <RemoveRedEyeRounded/>}
+                </button>
+              </div>
+              {error.confirmPassword && (
                 <p className="text-red-500 text-sm mt-1">
-                  Vui lòng xác nhận mật khẩu
+                  {error.confirmPassword}
                 </p>
               )}
             </div>
@@ -190,19 +230,19 @@ export default function RegisterUserForm() {
           </form>
           <p className="text-center text-sm mt-6">
             Bạn đã có tài khoản?
-            <a href="/login" className="text-blue-500 underline ml-1">
+            <Link to="/user/login" className="text-blue-500 underline ml-1">
               Đăng nhập ngay.
-            </a>
+            </Link>
           </p>
         </div>
-        <div className="hidden md:block p-8 w-full md:w-1/2 lg:w-1/3 bg-white  h-[700px] border-l-0 ">
+        <div className="hidden md:block p-8 w-full md:w-1/2 lg:w-1/3 bg-white h-[700px] border-l-0">
           <img
             src={Adminrafiki2}
             alt="Admin Illustration"
             className="w-full h-full object-cover"
           />
         </div>
-        </div>
+      </div>
     </>
   );
 }
