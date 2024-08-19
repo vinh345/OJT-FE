@@ -4,9 +4,12 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Avatar, Button, Modal, Box } from "@mui/material";
 import logo from "../../assets/logo.png";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../service/authService";
 
 const Header = () => {
   const cookie = new Cookies();
+  const dispatch = useDispatch();
   const isLogin = cookie.get("isLogin");
   const name = cookie.get("name");
   const avatar = cookie.get("avatar");
@@ -17,15 +20,12 @@ const Header = () => {
     "isLogin",
     "avatar",
     "name",
+    "role",
   ]);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const logOut = () => {
-    cookie.remove("accessToken", { path: "/" });
-    cookie.remove("type", { path: "/" });
-    cookie.remove("isLogin", { path: "/" });
-    cookie.remove("avatar", { path: "/" });
-    cookie.remove("name", { path: "/" });
+  const handleLogOut = () => {
+    dispatch(logOut());
     setModalOpen(false); // Close modal on logout
   };
 
@@ -159,7 +159,7 @@ const Header = () => {
 
                     <li
                       className="mt-2 p-1 bg-gray-200 hover:bg-gray-600 hover:cursor-pointer   "
-                      onClick={logOut}
+                      onClick={handleLogOut}
                     >
                       Đăng xuất
                     </li>

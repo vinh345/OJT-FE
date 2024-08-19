@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { changePassword } from "../../../service/authService";
+import { changePassword, logOut } from "../../../service/authService";
 import Investmentdatarafiki1 from "../../../assets/Investmentdatarafiki1.png";
 import { RemoveRedEyeRounded, VisibilityOff } from "@mui/icons-material";
 
@@ -45,6 +45,7 @@ export default function ChangePassword() {
       .unwrap()
       .then((response) => {
         setSuccessMessage(response.message);
+        dispatch(logOut);
       })
       .catch((err) => {
         console.log(err);
