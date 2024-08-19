@@ -7,7 +7,7 @@ import { getListLocation } from "../../../service/Location/locationService";
 import { fetchLevelJobs } from "../../../service/LevelJob/levelJobService";
 import { fetchTypeJobs } from "../../../service/typeJob/typeJobService";
 import { fetchAddressCompanys } from "../../../service/addressCompany/addressCompanyService";
-
+import dayjs from "dayjs"
 const { Option } = Select;
 
 export default function AddJobBusiness() {
@@ -48,7 +48,10 @@ export default function AddJobBusiness() {
         message.error("Failed to add job: " + error.message);
       });
   };
-
+  const disableStartDate = (current) => {
+  
+    return current && current <= dayjs().endOf("day");
+  };
   return (
     <div className="bg-gray-100 min-h-screen p-8">
       {/* Breadcrumb */}
@@ -133,7 +136,7 @@ export default function AddJobBusiness() {
                 name="expireAt"
                 rules={[{ required: true, message: "Expire date is required" }]}
               >
-                <DatePicker placeholder="Chọn ngày" style={{ width: "100%" }} />
+                <DatePicker disabledDate={disableStartDate} placeholder="Chọn ngày" style={{ width: "100%" }} />
               </Form.Item>
               <Form.Item
                 label="Cấp độ"

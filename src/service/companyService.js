@@ -88,6 +88,23 @@ export const getRelatedCompanies = createAsyncThunk(
   }
 );
 
+
+export const getCandidateInfo = createAsyncThunk("company/getCandidateInfo", async (id,thunkAPI) => {
+  try {
+    const response = await BASE_URL[GET](
+      `/company/candidate/info/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${cookie.get("accessToken")}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (e) {
+    return thunkAPI.rejectWithValue(e.response?.data || e.message);
+  }
+})
+
 // Hàm gọi API để lấy danh sách job của một công ty
 export const getAllJobsByCompanyUser = createAsyncThunk(
   "jobs/getAllJobsByCompanyUser",
@@ -175,3 +192,4 @@ export const updateCompany = createAsyncThunk(
     }
   }
 );
+

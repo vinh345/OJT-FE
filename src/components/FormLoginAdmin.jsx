@@ -25,7 +25,8 @@ export default function FormLoginAdmin() {
       console.log("Đăng nhập thành công:", response.data);
       // Lưu token vào localStorage hoặc state để sử dụng sau
       localStorage.setItem("accessToken", response.data.accessToken);
-
+ localStorage.setItem("isLogin",true)
+ localStorage.setItem("role", "ROLE_ADMIN")
       // Chuyển hướng đến trang quản lý ứng viên hoặc trang chính của admin
       window.location.href = "/admin/dashboard";
     } catch (error) {

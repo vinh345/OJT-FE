@@ -31,7 +31,8 @@ export const login = createAsyncThunk(
       cookie.set("isLogin", true, { path: "/", maxAge: 60 * 1000 });
       cookie.set("avatar", response.data.data.avatar, { path: "/", maxAge: 60 * 1000 })
       cookie.set("name", response.data.data.name, { path: "/", maxAge: 60 * 1000 })
-
+      cookie.set("role",response.data.data.roleName, { path: "/", maxAge: 60 * 1000 })
+      
       return response.data;
     } catch (error) {
       console.log(error);
@@ -151,7 +152,6 @@ export const logOut=() => {
   cookie.remove("role", { path: "/" });
 
 };
-
 
 
 

@@ -8,11 +8,13 @@ import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import "@cyntler/react-doc-viewer/dist/index.css";
 import { formatDate } from "../../utils/formatData";
 import { Cookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 export default function CVBody({ profile }) {
   const [isPDF, setIsPDF] = useState(false);
   const [isDoc, setIsDoc] = useState(false);
   const [docs, setDocs] = useState([]);
+  const navigate=useNavigate();
   const cookie = new Cookies();
   const name = cookie.get("name");
   const fileName = profile.name

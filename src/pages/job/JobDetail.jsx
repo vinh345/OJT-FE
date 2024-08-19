@@ -23,7 +23,7 @@ export default function JobDetail() {
   const { data: sameTypeJobsData } = useSelector((state) => state.sameTypeJobs);
   const job = data?.data;
   console.log(sameTypeJobsData);
-
+console.log(job)
   useEffect(() => {
     dispatch(getJobDetail(id));
     dispatch(getJobsBySameType(id));
@@ -50,7 +50,7 @@ export default function JobDetail() {
             <div>
               <h1 className="text-3xl font-bold">{job?.title}</h1>
               <h2 className="text-xl font-semibold">
-                Tên công ty: {job?.company.name}
+                Tên công ty: {job?.company?.name}
               </h2>
               <div className="flex items-center mb-4">
                 <LocationOn className="mr-2" />
@@ -134,7 +134,7 @@ export default function JobDetail() {
                     <h3 className="text-lg font-semibold">Job Expire in</h3>
                     <p className="text-sm text-gray-500">
                       {job?.expireAt
-                        ? formatDate(job.expireAt)
+                        ? job.expireAt
                         : "Date not available"}
                     </p>
                   </div>
@@ -143,14 +143,20 @@ export default function JobDetail() {
                   <Work className="text-red-500 mr-2" />
                   <div>
                     <h3 className="text-lg font-semibold">Job Level</h3>
-                    <p className="text-sm text-gray-500">Senior</p>
+                    <ul className="list-disc pl-4">
+                      {job?.levelJobs?.map((levelJob) => (
+                        <li key={levelJob.id} className="text-sm text-gray-500">
+                          {levelJob.name}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
                 <div className="flex items-center">
                   <MonetizationOn className="text-red-500 mr-2" />
                   <div>
                     <h3 className="text-lg font-semibold">Experience</h3>
-                    <p className="text-sm text-gray-500">$50k-80k/month</p>
+                    <p className="text-sm text-gray-500">{job?.salary}</p>
                   </div>
                 </div>
                 <div className="flex items-center">

@@ -45,7 +45,7 @@ export default function ChangePassword() {
       .unwrap()
       .then((response) => {
         setSuccessMessage(response.message);
-        dispatch(logOut);
+        dispatch(logOut)
       })
       .catch((err) => {
         console.log(err);

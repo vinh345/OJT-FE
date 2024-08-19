@@ -21,6 +21,13 @@ import Dashboard from "../../pages/admin/Dashboard";
 import Users from "../../pages/admin/Users";
 import CompanyManagement from "../../pages/admin/Company";
 import Jobs from "../../pages/admin/Jobs";
+import UserHome from "../../pages/home/UserHome";
+import ListCandidate from "../../pages/home/list/ListCandidate";
+import ProfilePage from "../../pages/company/CandidateInfo";
+import AdminRoute from "../../features/protectedRoutes/AdminRoute";
+import CompanyRoute from "../../features/protectedRoutes/CompanyRoute";
+import UserRoute from "../../features/protectedRoutes/UserRoute";
+
 
 const privateRoutes = [
   {
@@ -36,32 +43,36 @@ const privateRoutes = [
       {
         path: "/user",
         children: [
-          { path: "infor", element: <PrivateRoute element={<UserInfor />} /> },
+          {
+            index: true,
+            element: <UserRoute element={<UserHome/>} />,
+          },
+          { path: "info", element: <PrivateRoute element={<UserInfor />} /> },
 
           {
             path: "listCompany",
-            element: <PrivateRoute element={<ListCompany />} />,
+            element: <UserRoute element={<ListCompany />} />,
           },
           {
             path: "company/detail/:id",
-            element: <PrivateRoute element={<CompanyDetail />} />,
+            element: <UserRoute element={<CompanyDetail />} />,
           },
 
           {
             path: "jobDetail/:id",
-            element: <PrivateRoute element={<JobDetail />} />,
+            element: <UserRoute element={<JobDetail />} />,
           },
           {
             path: "cv",
             children: [
               {
                 path: "",
-                element: <PrivateRoute element={<CVManagement />} />,
+                element: <UserRoute element={<CVManagement />} />,
               },
               {
                 path: "default",
                 exact: true,
-                element: <PrivateRoute element={<DefaultCV />} />,
+                element: <UserRoute element={<DefaultCV />} />,
               },
               {
                 path: ":id",
@@ -77,44 +88,47 @@ const privateRoutes = [
         children: [
           {
             path: "addJob",
-            element: <PrivateRoute element={<AddJobBusiness />} />,
+            element: <CompanyRoute element={<AddJobBusiness />} />,
           },
           {
             path: "jobDetail/:id",
-            element: <PrivateRoute element={<JobDetailBusiness />} />,
+            element: <CompanyRoute element={<JobDetailBusiness />} />,
           },
           {
             path: "detail",
-            element: <PrivateRoute element={<CompanyDetailBusiness />} />,
+            element: <CompanyRoute element={<CompanyDetailBusiness />} />,
           },
           {
             path: "candidate/detail/:id",
-            element: <PrivateRoute element={<CompanyDetailBusiness />} />,
+            element: <CompanyRoute element={<ProfilePage />} />,
           },
+          {
+            path: "list-candidate",
+            element: <CompanyRoute element={<ListCandidate/>}/>,
+          }
         ],
       },
 
     ],
   },
   {
-
     path: "/admin",
-    element: <PrivateRoute element={<AdminLayout />} />, // Protects the admin layout
+    element: <AdminRoute element={<AdminLayout />} />, // Protects the admin layout
     children: [
-      { path: "dashboard", element: <Dashboard /> },
-      { path: "candidate", element: <Users /> },
-      { path: "company", element: <CompanyManagement /> },
-      { path: "jobs", element: <Jobs /> },
+      { path: "dashboard", element: <AdminRoute element={<Dashboard />} /> },
+      { path: "candidate", element: <AdminRoute element={<Users />} /> },
+      { path: "company", element: <AdminRoute element={<CompanyManagement />} /> },
+      { path: "jobs", element: <AdminRoute element={<Jobs />} /> },
       {
         path: "candidateInfo/:id",
-        element: <PrivateRoute element={<CandidateProfilePage />} />,
+        element: <AdminRoute element={<CandidateProfilePage />} />,
       },
       {
         path: "candidateCV/:id",
-        element: <PrivateRoute element={<CandidateCV />} />,
+        element: <AdminRoute element={<CandidateCV />} />,
       },
     ],
-  },
+  }
 ];
 
 export default privateRoutes;
