@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../../style/CandidateManagement.css"; // Import CSS file
-import { Button, message, Checkbox, Pagination } from "antd"; // Import Ant Design components
+import "../../style/CandidateManagement.css";
+import { Button, message, Checkbox, Pagination } from "antd";
 import { Link } from "react-router-dom";
 
 export default function Users() {
@@ -12,7 +12,7 @@ export default function Users() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalCandidates, setTotalCandidates] = useState(0);
-  const [loading, setLoading] = useState(false); // Loading state
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchCandidates = async () => {
@@ -35,6 +35,7 @@ export default function Users() {
         setTotalCandidates(response.data.totalElements);
       } catch (error) {
         console.error("Có lỗi xảy ra khi lấy danh sách ứng viên:", error);
+        message.error("Không thể lấy danh sách ứng viên.");
       } finally {
         setLoading(false);
       }
@@ -60,7 +61,7 @@ export default function Users() {
         setFilteredCandidates((prevCandidates) =>
           prevCandidates.map((candidate) =>
             candidate.id === candidateId
-              ? { ...candidate, status: response.data }
+              ? { ...candidate, status: response.data.status }
               : candidate
           )
         );
@@ -87,20 +88,17 @@ export default function Users() {
         }
       );
 
-      setCandidates((prevCandidates) =>
-        prevCandidates.map((candidate) =>
-          candidate.id === candidateId
-            ? { ...candidate, outstanding: isOutstanding }
-            : candidate
-        )
-      );
+
+      setFilteredCandidates((prevCandidates) =>
+
       setFilteredCandidates((prevFilteredCandidates) =>
         prevFilteredCandidates.map((candidate) =>
           candidate.id === candidateId
             ? { ...candidate, outstanding: isOutstanding }
             : candidate
-        )
+        ))
       );
+
 
       message.success("Cập nhật trạng thái nổi bật thành công!");
     } catch (error) {
@@ -114,8 +112,10 @@ export default function Users() {
     setSearch(keyword);
 
     setFilteredCandidates(
-      candidates.filter((candidate) =>
-        candidate.name.toLowerCase().includes(keyword)
+      candidates.filter(
+        (candidate) =>
+          candidate.name.toLowerCase().includes(keyword) ||
+          candidate.address.toLowerCase().includes(keyword)
       )
     );
   };
@@ -131,12 +131,12 @@ export default function Users() {
       sortedCandidates.sort((a, b) => b.name.localeCompare(a.name));
     } else if (option === "birthday") {
       sortedCandidates.sort(
-        (a, b) => new Date(a.birthday) - new Date(b.birthday)
+        (a, b) => new Date(b.birthday) - new Date(a.birthday)
       );
     } else if (option === "status") {
-      sortedCandidates.sort((b, a) =>
-        a.status === b.status ? 0 : a.status ? -1 : 1
-      );
+      sortedCandidates.sort((a, b) => a.status - b.status);
+    } else if (option === "outstanding") {
+      sortedCandidates.sort((a, b) => b.outstanding - a.outstanding);
     }
     setFilteredCandidates(sortedCandidates);
   };
@@ -166,6 +166,7 @@ export default function Users() {
         <option value="name-desc">Tên: Z-A</option>
         <option value="birthday">Ngày sinh</option>
         <option value="status">Trạng thái hoạt động</option>
+        <option value="outstanding">Nổi bật</option>
       </select>
       {loading ? (
         <p>Loading...</p>
@@ -182,8 +183,6 @@ export default function Users() {
                 <th>Số điện thoại</th>
                 <th>Giới tính</th>
                 <th>Trạng thái</th>
-                {/* <th>LinkedIn</th>
-                <th>GitHub</th> */}
                 <th>Vị trí</th>
                 <th>Nổi bật</th>
                 <th>Hành động</th>
@@ -206,32 +205,18 @@ export default function Users() {
                   >
                     {candidate.status ? "Hoạt động" : "Bị khóa"}
                   </td>
-                  {/* <td>
-                    <a
-                      href={candidate.linkLinkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      LinkedIn
-                    </a>
-                  </td>
-                  <td>
-                    <a
-                      href={candidate.linkGit}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      GitHub
-                    </a>
-                  </td> */}
                   <td>{candidate.position}</td>
                   <td>
                     <Checkbox
-                      checked={candidate.outstanding == 1}
+
+                      checked={candidate.outstanding === 1}
                       onChange={(e) =>
                         handleOutstandingStatusChange(
                           candidate.id,
-                          e.target.checked
+                          e.target.checked ? 1 : 0
+
+                     
+
                         )
                       }
                     />

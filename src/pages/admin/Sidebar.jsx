@@ -20,7 +20,7 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="profile-section">
         <img
-          src="https://images.kienthuc.net.vn/zoom/800/uploaded/trucchinh2/2021_07_27/profile-khung-trai-dep-ha-noi-dat-95-diem-mon-ngu-van.jpg"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoM-aQo_ABKBzAHrKjMpNKmIq_oVjlJ0KGGQ&s"
           alt="Profile"
           className="profile-pic"
         />
@@ -36,7 +36,7 @@ const Sidebar = () => {
           <NavLink to="/admin/dashboard" activeClassName="active">
             <FaChartBar className="icon" /> Dashboard
             {/* <div className="icon1">
-              <RightOutlined />
+              <RightOutlined /> 
             </div> */}
           </NavLink>
         </li>

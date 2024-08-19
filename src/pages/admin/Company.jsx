@@ -18,7 +18,7 @@ export default function CompanyManagement() {
   const [totalCompanies, setTotalCompanies] = useState(0); // State for total number of companies
 
   useEffect(() => {
-    const fetchCompanies = async () => {
+    const fetchCompanies = async () => {  
       try {
         const token = localStorage.getItem("accessToken"); // Get token from localStorage
         const response = await axios.get(
@@ -52,8 +52,9 @@ export default function CompanyManagement() {
       companies.filter(
         (company) =>
           company.name.toLowerCase().includes(keyword) ||
-          company.emailCompany.toLowerCase().includes(keyword) ||
-          company.phone.includes(keyword)
+          // company.emailCompany.toLowerCase().includes(keyword) ||
+          company.phone.includes(keyword) 
+        
       )
     );
   };
@@ -80,28 +81,28 @@ export default function CompanyManagement() {
     setPageSize(pageSize);
   };
 
-  const handleDelete = async (id) => {
-    try {
-      const token = localStorage.getItem("accessToken"); // Get token from localStorage
-      await axios.delete(
-        `http://localhost:8080/api.myservice.com/v1/admin/companies/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, // Attach token to header
-          },
-        }
-      );
-      // Update the UI after successful deletion
-      setFilteredCompanies(
-        filteredCompanies.filter((company) => company.id !== id)
-      );
-      setCompanies(companies.filter((company) => company.id !== id));
-      message.success("Xóa công ty thành công!"); // Show success message
-    } catch (error) {
-      console.error("Có lỗi xảy ra khi xóa công ty:", error);
-      message.error("Xóa công ty thất bại!"); // Show error message
-    }
-  };
+  // const handleDelete = async (id) => {
+  //   try {
+  //     const token = localStorage.getItem("accessToken"); // Get token from localStorage
+  //     await axios.delete(
+  //       `http://localhost:8080/api.myservice.com/v1/admin/companies/${id}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`, // Attach token to header
+  //         },
+  //       }
+  //     );
+  //     // Update the UI after successful deletion
+  //     setFilteredCompanies(
+  //       filteredCompanies.filter((company) => company.id !== id)
+  //     );
+  //     setCompanies(companies.filter((company) => company.id !== id));
+  //     message.success("Xóa công ty thành công!"); // Show success message
+  //   } catch (error) {
+  //     console.error("Có lỗi xảy ra khi xóa công ty:", error);
+  //     message.error("Xóa công ty thất bại!"); // Show error message
+  //   }
+  // };
 
   const handleOutstandingChange = async (companyId, isOutstanding) => {
     try {
@@ -191,12 +192,12 @@ export default function CompanyManagement() {
             <th>Ngày tạo</th>
             {/* <th>linkFacebook</th> */}
             {/* <th>linkLinkedin</th> */}
-            <th>emailCompany</th>
+            <th>Email công ty</th>
             {/* <th>Địa chỉ</th> */}
             <th>Số điện thoại</th>
-            <th>typeCompany</th>
+            <th>Kiểu công ty</th>
             <th>Nổi bật</th>
-            <th>Hành động</th>
+            {/* <th>Hành động</th> */} 
             <th>Chờ duyệt</th>
           </tr>
         </thead>
@@ -228,7 +229,7 @@ export default function CompanyManagement() {
                   }
                 />
               </td>
-              <td className="btn-delete">
+              {/* <td className="btn-delete">
                 <Popconfirm
                   title="Bạn có chắc chắn muốn xóa công ty này?"
                   onConfirm={() => handleDelete(company.id)}
@@ -237,7 +238,7 @@ export default function CompanyManagement() {
                 >
                   <Button className="ant-btn-details-delete">xóa</Button>
                 </Popconfirm>
-              </td>
+              </td> */}
               <td>
                 {company.account.status !== 3 ? (
                   <Button
