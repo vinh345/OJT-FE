@@ -49,11 +49,12 @@ const Index = () => {
   };
 
   const dispatch = useDispatch();
-  const { data } = useSelector((state) => state.userInfor);
-
+  // const { data } = useSelector((state) => state.userInfor);
+  const [data, setData] = useState()
   useEffect(() => {
     dispatch(getCandidateInfo()).then((res) => {
       console.log(res.payload.data.data);
+      setData(res.payload.data.data);
     });
   }, [dispatch, state]);
 

@@ -5,13 +5,13 @@ import { useNavigate } from "react-router-dom";
 export default function AdminRoute({ element }) {
   const navigate = useNavigate();
   const cookie = new Cookies();
-  const isLogin = cookie.get('isLogin');
+  const isLogin = localStorage.getItem('isLogin');
 
   useEffect(() => {
     if (!isLogin) {
       navigate("/user/login");
     } else{
-        if(cookie.get("role")!=="ROLE_ADMIN"){
+        if(localStorage.getItem("role")!=="ROLE_ADMIN"){
             navigate("/403")
         }
     }

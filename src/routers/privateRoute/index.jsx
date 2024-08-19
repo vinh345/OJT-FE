@@ -76,7 +76,7 @@ const privateRoutes = [
               },
               {
                 path: ":id",
-                element: <UserRoute element={<CVPage />} />,
+                element: <PrivateRoute element={<CVPage />} />,
               },
             ],
           },

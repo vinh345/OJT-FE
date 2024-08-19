@@ -4,6 +4,8 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Avatar, Button, Modal, Box } from "@mui/material";
 import logo from "../../assets/logo.png";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../service/authService";
 
 const Header = () => {
   const cookie = new Cookies();
@@ -11,6 +13,7 @@ const Header = () => {
   const name = cookie.get("name");
   const avatar = cookie.get("avatar");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [cookies, removeCookie] = useCookies([
     "accessToken",
     "type",
@@ -20,14 +23,9 @@ const Header = () => {
   ]);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const logOut = () => {
-    cookie.remove("accessToken", { path: "/" });
-    cookie.remove("type", { path: "/" });
-    cookie.remove("isLogin", { path: "/" });
-    cookie.remove("avatar", { path: "/" });
-    cookie.remove("name", { path: "/" });
-    setModalOpen(false); // Close modal on logout
-    cookie.remove("role");
+  const handleLogOut = () => {
+    dispatch(logOut())
+    navigate("/");
   };
 
   const handleLogIn = () => {
@@ -60,7 +58,7 @@ const Header = () => {
                   className={({ isActive }) =>
                     isActive ? " font-bold" : "text-gray-700"
                   }
-                  to={`/jobs`}
+                  to={`/job`}
                 >
                   Việc làm
                 </NavLink>
@@ -140,15 +138,27 @@ const Header = () => {
                   p={2}
                 >
                   <ul className="text-gray-800">
-                    <li className="mb-2 p-1 bg-gray-200 hover:bg-gray-600 hover:cursor-pointer">
-                      <Link
-                        to={"/user/info"}
-                        onClick={handleModalToggle}
-                        className=""
-                      >
-                        Thông tin cá nhân
-                      </Link>
-                    </li>
+                    {cookie.get("role") === "ROLE_CANDIDATE" ? (
+                      <li className="mb-2 p-1 bg-gray-200 hover:bg-gray-600 hover:cursor-pointer">
+                        <Link
+                          to={"/user/info"}
+                          onClick={handleModalToggle}
+                          className=""
+                        >
+                          Thông tin cá nhân
+                        </Link>
+                      </li>
+                    ) : (
+                      <li className="mb-2 p-1 bg-gray-200 hover:bg-gray-600 hover:cursor-pointer">
+                        <Link
+                          to={"/company/detail"}
+                          onClick={handleModalToggle}
+                          className=""
+                        >
+                          Thông tin công ty
+                        </Link>
+                      </li>
+                    )}
                     <li className="mb-2 p-1  bg-gray-200 hover:bg-gray-600 hover:cursor-pointer">
                       <Link
                         to={"/auth/changePassword"}
@@ -160,7 +170,7 @@ const Header = () => {
 
                     <li
                       className="mt-2 p-1 bg-gray-200 hover:bg-gray-600 hover:cursor-pointer   "
-                      onClick={logOut}
+                      onClick={handleLogOut}
                     >
                       Đăng xuất
                     </li>
@@ -169,9 +179,17 @@ const Header = () => {
               )}
             </div>
           ) : (
-            <Button onClick={handleLogIn} variant="contained">
+            <div className="flex gap-7">
+              <Button onClick={handleLogIn} variant="contained">
               Đăng nhập
             </Button>
+            <Button onClick={()=> navigate("/user/register")} variant="contained">
+              Đăng ký
+            </Button>
+            <Button onClick={()=>navigate("/company/register")} variant="contained">
+              Đăng tuyển
+            </Button>
+            </div>  
           )}
         </div>
       </div>

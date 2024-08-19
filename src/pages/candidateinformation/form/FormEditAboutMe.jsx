@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Input } from "antd";
 import { useDispatch } from "react-redux";
 import { updateCandidateInfo } from "../../../service/candidateService";
@@ -13,7 +13,11 @@ export default function FormEditAboutMe({
   const [form] = Form.useForm();
   const [aboutme, setAboutme] = useState(data);
   const dispatch = useDispatch();
-
+ useEffect(()=>{
+  form.setFieldsValue({
+    aboutMe: aboutme,
+  });
+ },[isModalEditAboutMeOpen])
   const handleOk = () => {
     form.submit();
     const editAboutMe = new FormData();
@@ -27,6 +31,7 @@ export default function FormEditAboutMe({
 
   const handleFinish = () => {
     showModalEditAboutMe();
+    form.resetFields();
   };
   const handleChangeAboutMe = (e) => {
     setAboutme(e.target.value);

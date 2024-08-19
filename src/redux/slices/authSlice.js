@@ -7,7 +7,8 @@ import {
   recoverPassword,
 } from "../../service/authService";
 import { Cookies } from "react-cookie";
-
+import { useNavigate } from "react-router-dom";
+//  const navigate = useNavigate();
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -22,6 +23,7 @@ const authSlice = createSlice({
       Cookies.remove("token");
       Cookies.remove("userInfo");
       new Cookies().remove("role");
+
     },
   },
   extraReducers: (builder) => {

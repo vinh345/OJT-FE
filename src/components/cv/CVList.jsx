@@ -84,10 +84,6 @@ export default function CVList() {
     );
   }
 
-  if (!cvList || cvList.length === 0) {
-    return <p className="text-center mt-4">No CVs available.</p>;
-  }
-
   return (
     <div className="bg-gray-100 font-sans leading-normal tracking-normal min-h-screen">
       <main className="container mx-auto py-8">
@@ -154,7 +150,8 @@ export default function CVList() {
                       )}
                     </div>
                     <p className="text-sm text-gray-600">
-                      Ngày tải lên: {new Date(cv.createdAt).toLocaleDateString()}
+                      Ngày tải lên:{" "}
+                      {new Date(cv.createdAt).toLocaleDateString()}
                     </p>
                   </div>
                   <div className="flex space-x-2">
