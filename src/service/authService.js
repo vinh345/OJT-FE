@@ -142,8 +142,6 @@ export const resendOtp = createAsyncThunk("auth/resendOtp", async (email, thunkA
   }
 });
 
-
-
 export const logOut=() => {
   const cookie = new Cookies();
   cookie.remove("accessToken", { path: "/" });
@@ -152,7 +150,6 @@ export const logOut=() => {
   cookie.remove("avatar", { path: "/" });
   cookie.remove("name", { path: "/" });
   cookie.remove("role", { path: "/" });
-
 };
 
 

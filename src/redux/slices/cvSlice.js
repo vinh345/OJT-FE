@@ -65,6 +65,7 @@ const cvSlice = createSlice({
       .addCase(fetchAllCVs.fulfilled, (state, action) => {
         state.isLoading = false;
         state.cvList = action.payload.data;
+        state.hasActiveCV = state.cvList.some((cv) => cv.status === true);
       })
       .addCase(fetchAllCVs.rejected, (state, action) => {
         state.isLoading = false;
