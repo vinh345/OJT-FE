@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../style/CandidateManagement.css";
 import { Button, message, Checkbox, Pagination } from "antd";
+import { Link } from "react-router-dom";
 
 export default function Users() {
   const [candidates, setCandidates] = useState([]);
@@ -87,13 +88,17 @@ export default function Users() {
         }
       );
 
+
       setFilteredCandidates((prevCandidates) =>
-        prevCandidates.map((candidate) =>
+
+      setFilteredCandidates((prevFilteredCandidates) =>
+        prevFilteredCandidates.map((candidate) =>
           candidate.id === candidateId
             ? { ...candidate, outstanding: isOutstanding }
             : candidate
-        )
+        ))
       );
+
 
       message.success("Cập nhật trạng thái nổi bật thành công!");
     } catch (error) {
@@ -203,16 +208,24 @@ export default function Users() {
                   <td>{candidate.position}</td>
                   <td>
                     <Checkbox
+
                       checked={candidate.outstanding === 1}
                       onChange={(e) =>
                         handleOutstandingStatusChange(
                           candidate.id,
                           e.target.checked ? 1 : 0
+
+                     
+
                         )
                       }
                     />
                   </td>
-                  <td>
+                  <td className="flex gap-2">
+                    <Link to={`/admin/candidateinfo/${candidate.id}`}>
+                      <Button className="bg-green-500">Xem</Button>
+                    </Link>
+
                     <Button
                       className={
                         candidate.status ? "ant-btn-lock" : "ant-btn-unlock"

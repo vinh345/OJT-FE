@@ -37,7 +37,7 @@ export default function VerifyAccount() {
               text: "Verify successfully",
               icon: "success",
             }).then(() => {
-              navigate("/");
+              navigate("/user/login");
             });
           }
         }

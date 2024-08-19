@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { notification } from "antd";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { getListLocation } from "../service/Location/locationService";
@@ -10,6 +11,8 @@ import { registerCompany } from "../service/authService";
 import { FAILED, PENDING } from "../constants/status";
 
 export default function CompanyRegisterForm() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
@@ -73,8 +76,8 @@ export default function CompanyRegisterForm() {
         nhân lực chất lượng cao
       </h2>
       <div className="flex justify-between bg-white p-8">
-        <div className="w-1/2 p-4 relative">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4 relative before:absolute before:left-[-20px] before:top-1/2 before:transform before:-translate-y-1/2 before:w-2 before:h-10 before:bg-red-700">
+        <div className="w-full p-4 relative">
+<h3 className="text-xl font-semibold text-gray-800 mb-4 relative before:absolute before:left-[-20px] before:top-1/2 before:transform before:-translate-y-1/2 before:w-2 before:h-10 before:bg-red-700">
             Thông tin công ty
           </h3>
           <Formik
@@ -91,7 +94,10 @@ export default function CompanyRegisterForm() {
           >
             {({ isSubmitting }) => (
               <Form className="flex flex-col">
-                <label htmlFor="name" className="mb-6">
+                <label
+                  htmlFor="name"
+                  className="mb-6 text-lg font-medium text-gray-700"
+                >
                   Tên công ty
                 </label>
                 <Field
@@ -107,7 +113,10 @@ export default function CompanyRegisterForm() {
                   className="text-red-500 mb-3"
                 />
 
-                <label htmlFor="emailCompany" className="mb-6">
+                <label
+                  htmlFor="emailCompany"
+                  className="mb-6 text-lg font-medium text-gray-700"
+                >
                   Email công ty
                 </label>
                 <Field
@@ -123,7 +132,10 @@ export default function CompanyRegisterForm() {
                   className="text-red-500 mb-3"
                 />
 
-                <label htmlFor="phone" className="mb-6">
+                <label
+                  htmlFor="phone"
+                  className="mb-6 text-lg font-medium text-gray-700"
+                >
                   Số điện thoại
                 </label>
                 <Field
@@ -139,7 +151,10 @@ export default function CompanyRegisterForm() {
                   className="text-red-500 mb-3"
                 />
 
-                <label htmlFor="locationId" className="mb-6">
+                <label
+                  htmlFor="locationId"
+                  className="mb-6 text-lg font-medium text-gray-700"
+                >
                   Địa điểm làm việc
                 </label>
                 <Field
@@ -147,6 +162,7 @@ export default function CompanyRegisterForm() {
                   id="locationId"
                   name="locationId"
                   className="p-2 mb-3 w-4/5 border border-gray-300 rounded"
+style={{ maxHeight: "200px", overflowY: "auto" }}
                 >
                   <option value="">Chọn tỉnh/thành phố</option>
                   {loading === PENDING && <option>Loading...</option>}
@@ -163,32 +179,58 @@ export default function CompanyRegisterForm() {
                   className="text-red-500 mb-3"
                 />
 
-                <label htmlFor="password" className="mb-6">
+                <label
+                  htmlFor="password"
+                  className="mb-6 text-lg font-medium text-gray-700"
+                >
                   Mật khẩu
                 </label>
-                <Field
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder="********"
-                  className="p-2 mb-3 w-4/5 border border-gray-300 rounded"
-                />
+                <div className="relative w-4/5 mb-3">
+                  <Field
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    name="password"
+                    placeholder="********"
+                    className="p-2 w-full border border-gray-300 rounded"
+                  />
+                  <span
+                    className="absolute right-2 top-2 cursor-pointer"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <EyeTwoTone /> : <EyeInvisibleOutlined />}
+                  </span>
+                </div>
                 <ErrorMessage
                   name="password"
                   component="div"
                   className="text-red-500 mb-3"
                 />
 
-                <label htmlFor="confirmPassword" className="mb-6">
+                <label
+                  htmlFor="confirmPassword"
+                  className="mb-6 text-lg font-medium text-gray-700"
+                >
                   Xác nhận mật khẩu
                 </label>
-                <Field
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  placeholder="********"
-                  className="p-2 mb-3 w-4/5 border border-gray-300 rounded"
-                />
+                <div className="relative w-4/5 mb-3">
+                  <Field
+                    type={showConfirmPassword ? "text" : "password"}
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder="********"
+                    className="p-2 w-full border border-gray-300 rounded"
+                  />
+                  <span
+                    className="absolute right-2 top-2 cursor-pointer"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  >
+                    {showConfirmPassword ? (
+                      <EyeTwoTone />
+                    ) : (
+                      <EyeInvisibleOutlined />
+                    )}
+                  </span>
+                </div>
                 <ErrorMessage
                   name="confirmPassword"
                   component="div"
@@ -197,7 +239,7 @@ export default function CompanyRegisterForm() {
 
                 <button
                   type="submit"
-                  className="w-1/3 py-2 bg-red-700 text-white rounded font-semibold text-sm mt-4"
+className="w-1/3 py-2 bg-red-700 text-white rounded font-semibold text-sm mt-4"
                   disabled={isSubmitting}
                 >
                   Đăng kí

@@ -40,7 +40,7 @@ export default function RecoverPassword() {
   };
 
   return (
-    <div className="relative"> 
+    <div className="relative mx-40"> 
       {loading && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <CircularProgress size={60} />

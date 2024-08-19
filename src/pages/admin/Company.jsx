@@ -18,7 +18,7 @@ export default function CompanyManagement() {
   const [totalCompanies, setTotalCompanies] = useState(0); // State for total number of companies
 
   useEffect(() => {
-    const fetchCompanies = async () => {
+    const fetchCompanies = async () => {  
       try {
         const token = localStorage.getItem("accessToken"); // Get token from localStorage
         const response = await axios.get(
@@ -52,8 +52,9 @@ export default function CompanyManagement() {
       companies.filter(
         (company) =>
           company.name.toLowerCase().includes(keyword) ||
-          company.emailCompany.toLowerCase().includes(keyword) ||
-          company.phone.includes(keyword)
+          // company.emailCompany.toLowerCase().includes(keyword) ||
+          company.phone.includes(keyword) 
+        
       )
     );
   };
@@ -191,10 +192,10 @@ export default function CompanyManagement() {
             <th>Ngày tạo</th>
             {/* <th>linkFacebook</th> */}
             {/* <th>linkLinkedin</th> */}
-            <th>emailCompany</th>
+            <th>Email công ty</th>
             {/* <th>Địa chỉ</th> */}
             <th>Số điện thoại</th>
-            <th>typeCompany</th>
+            <th>Kiểu công ty</th>
             <th>Nổi bật</th>
             {/* <th>Hành động</th> */} 
             <th>Chờ duyệt</th>

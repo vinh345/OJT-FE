@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { changePassword } from "../../../service/authService";
+import { changePassword, logOut } from "../../../service/authService";
 import Investmentdatarafiki1 from "../../../assets/Investmentdatarafiki1.png";
+import { RemoveRedEyeRounded, VisibilityOff } from "@mui/icons-material";
 
 export default function ChangePassword() {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -10,6 +11,19 @@ export default function ChangePassword() {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const dispatch = useDispatch();
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const toggleCurrentPasswordVisibility = () => {
+    setShowCurrentPassword(!showCurrentPassword);
+  };
+  const toggleNewPasswordVisibility = () => {
+    setShowNewPassword(!showNewPassword);
+  };
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,6 +45,7 @@ export default function ChangePassword() {
       .unwrap()
       .then((response) => {
         setSuccessMessage(response.message);
+        dispatch(logOut)
       })
       .catch((err) => {
         console.log(err);
@@ -65,15 +80,26 @@ export default function ChangePassword() {
                 >
                   Mật khẩu hiện tại
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 relative">
                   <input
                     id="currentPassword"
-                    type="password"
+                    type={showCurrentPassword ? "text" : "password"}
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
                     required
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-600"
+                    onClick={toggleCurrentPasswordVisibility}
+                  >
+                    {showCurrentPassword ? (
+                      <VisibilityOff />
+                    ) : (
+                      <RemoveRedEyeRounded />
+                    )}
+                  </button>
                 </div>
               </div>
 
@@ -84,15 +110,26 @@ export default function ChangePassword() {
                 >
                   Mật khẩu mới{" "}
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 relative">
                   <input
                     id="newPassword"
-                    type="password"
+                    type={showNewPassword ? "text" : "password"}
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     required
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-600"
+                    onClick={toggleNewPasswordVisibility}
+                  >
+                    {showNewPassword ? (
+                      <VisibilityOff />
+                    ) : (
+                      <RemoveRedEyeRounded />
+                    )}
+                  </button>
                 </div>
               </div>
 
@@ -103,15 +140,26 @@ export default function ChangePassword() {
                 >
                   Xác nhận mật khẩu{" "}
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 relative">
                   <input
                     id="confirmPassword"
-                    type="password"
+                    type={showConfirmPassword ? "text" : "password"}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-600"
+                    onClick={toggleConfirmPasswordVisibility}
+                  >
+                    {showConfirmPassword ? (
+                      <VisibilityOff />
+                    ) : (
+                      <RemoveRedEyeRounded />
+                    )}
+                  </button>
                 </div>
               </div>
 
@@ -123,7 +171,7 @@ export default function ChangePassword() {
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  className="w-1/2 flex justify-center p-1 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="w-1/2 flex justify-center px-2 py-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Thay đổi mật khẩu
                 </button>

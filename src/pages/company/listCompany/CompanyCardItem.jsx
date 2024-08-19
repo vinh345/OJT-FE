@@ -12,9 +12,8 @@ const CompanyCardItem = ({ company }) => {
   }
   // Hàm điều hướng đến trang chi tiết công ty
   const handleOpenPosition = () => {
-    navigate(`/company/detail/${company.id}`); // Đường dẫn mới cho trang chi tiết công ty
+    navigate(`/user/company/detail/${company.id}`);
   };
-
   return (
     <Card className="border rounded-lg shadow-sm p-4">
       <div className="flex items-center">
