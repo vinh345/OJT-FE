@@ -13,6 +13,8 @@ export default function AdminHeader() {
     
       // Clear the token from localStorage
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("role");
+      localStorage.setItem("isLogin" , false)
 
       // Redirect to the login page 
       navigate("/");

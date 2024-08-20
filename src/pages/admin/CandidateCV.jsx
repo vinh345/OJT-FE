@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchCandidateCV } from "../../service/adminService";
 import CVBody from "../../components/cv/CVBody";
+import NotFoundPage from "../404/NotFoundPage";
 
 const CandidateCV = () => {
   const { id } = useParams();
   const [profile, setProfile] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadProfile = async () => {
       const data = await fetchCandidateCV(id);
-
       setProfile(data);
     };
     loadProfile();
   }, [id]);
 
   if (!profile) {
-    return <div>Loading...</div>;
+    return <NotFoundPage/>;
   }
 
   return <CVBody profile={profile} />;

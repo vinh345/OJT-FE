@@ -72,7 +72,7 @@ export default function UpdateCompanyForm({ onClose, companyData }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const requiredFields = ["name", "website", "phone", "address"];
+    const requiredFields = ["name", "website", "phone"];
     for (let field of requiredFields) {
       if (!formData[field]) {
         alert(`${field} không được để trống`);

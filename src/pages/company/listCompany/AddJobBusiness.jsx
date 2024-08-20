@@ -136,7 +136,7 @@ export default function AddJobBusiness() {
                 name="expireAt"
                 rules={[{ required: true, message: "Expire date is required" }]}
               >
-                <DatePicker disabledDate={disableStartDate} placeholder="Chọn ngày" style={{ width: "100%" }} />
+                <DatePicker  placeholder="Chọn ngày" style={{ width: "100%" }} />
               </Form.Item>
               <Form.Item
                 label="Cấp độ"

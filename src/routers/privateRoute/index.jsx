@@ -103,6 +103,10 @@ const privateRoutes = [
             element: <CompanyRoute element={<ProfilePage />} />,
           },
           {
+            path: "candidate/cv/:id",
+            element: <CompanyRoute element={<CandidateCV />} />,
+          },
+          {
             path: "list-candidate",
             element: <CompanyRoute element={<ListCandidate/>}/>,
           }

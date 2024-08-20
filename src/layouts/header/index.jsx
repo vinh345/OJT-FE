@@ -20,12 +20,14 @@ const Header = () => {
     "isLogin",
     "avatar",
     "name",
+    "role",
   ]);
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleLogOut = () => {
-    dispatch(logOut()).then(navigate("/"))
-    
+    dispatch(logOut());
+    setModalOpen(false); // Close modal on logout.then(navigate("/"))
+    navigate("/")
   };
 
   const handleLogIn = () => {

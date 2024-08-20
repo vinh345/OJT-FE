@@ -183,7 +183,7 @@ Doanh nghiệp của tôi
                         onJobDelete={handleJobDelete}
                       />
                     </div>
-                  ))
+                  ))  
                 ) : (
                   <p>No jobs found.</p>
                 )}
