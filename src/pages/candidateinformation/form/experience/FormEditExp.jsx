@@ -27,7 +27,6 @@ export default function FormEditExp({
         company: editExp.company,
         position: editExp.position,
         startAt: editExp.startAt ? dayjs(editExp.startAt) : null,
-        endAt: editExp.endAt ? dayjs(editExp.endAt) : null,
         info: editExp.info,
       });
     }
@@ -152,7 +151,6 @@ export default function FormEditExp({
             company: editExp?.company,
             position: editExp?.position,
             startAt: dayjs(editExp?.startAt),
-            endAt: dayjs(editExp?.endAt),
             info: editExp?.info,
           }}
         >

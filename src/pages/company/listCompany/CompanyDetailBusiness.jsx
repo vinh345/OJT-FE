@@ -17,6 +17,7 @@ import JobCardItemBusiness from "../../job/JobCardItemBusiness";
 import { getCompanyDetailBusiness } from "../../../service/companyService";
 import { getAllJobsByCompany } from "../../../service/jobService";
 import { FAILED, PENDING } from "../../../constants/status";
+import CompanyMap from "../CompanyMap";
 
 export default function CompanyDetailBusiness() {
   const navigate = useNavigate();
@@ -101,7 +102,7 @@ export default function CompanyDetailBusiness() {
             href="/doanh-nghiep-cua-toi"
             className="text-gray-900 ml-2 font-bold"
           >
-            Doanh nghiệp của tôi
+Doanh nghiệp của tôi
           </a>
         </nav>
       </div>
@@ -176,13 +177,13 @@ export default function CompanyDetailBusiness() {
                 {jobLoading === FAILED && <p>Error: {jobError}</p>}
                 {jobs.length ? (
                   jobs.map((job) => (
-                    <div key={job.id}>
+<div key={job.id}>
                       <JobCardItemBusiness
                         job={job}
                         onJobDelete={handleJobDelete}
                       />
                     </div>
-                  ))
+                  ))  
                 ) : (
                   <p>No jobs found.</p>
                 )}
@@ -207,15 +208,19 @@ export default function CompanyDetailBusiness() {
 
             <div className="bg-white p-4 rounded-md shadow-md mb-6">
               <MapIcon className="text-red-500" />
-              <span className="ml-3 font-semibold text-xl">Xem trên map</span>
-              <img
-                src={
-                  // company.mapUrl ||
-                  "https://toquoc.mediacdn.vn/280518851207290880/2022/10/31/tfisg1c-166720423465128148766.png"
-                }
-                alt="Map"
+              <span className="ml-3 font-semibold text-xl">
+                Xem trên bản đồ
+              </span>
+              <div className="bg-white p-4 rounded-md shadow-md mb-6">
+              <iframe
                 className="mt-4"
+                src={company.mapUrl}
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
               />
+            </div>
             </div>
 
             <div className="bg-white p-4 rounded-md shadow-md mb-6">
@@ -249,7 +254,7 @@ export default function CompanyDetailBusiness() {
                   <Twitter className="text-red-500" />
                 </button>
                 <button
-                  className="bg-pink-100 text-red-500 hover:bg-pink-300 p-2 rounded flex items-center"
+className="bg-pink-100 text-red-500 hover:bg-pink-300 p-2 rounded flex items-center"
                   onClick={() =>
                     handleRedirect("https://mail.google.com/mail/u/0/#inbox")
                   }

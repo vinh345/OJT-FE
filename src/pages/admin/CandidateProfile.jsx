@@ -23,6 +23,8 @@ const CandidateProfilePage = () => {
   useEffect(() => {
     const loadProfile = async () => {
       const data = await fetchProfile(id);
+      console.log(data);
+
       setProfile(data);
     };
     loadProfile();
@@ -89,7 +91,7 @@ const CandidateProfilePage = () => {
             )}
 
             {/* Uncomment if needed */}
-            {profile.experience && (
+            {profile.experience.length > 0 && (
               <div className="mt-6">
                 <h2 className="text-lg font-semibold">Kinh nghiệm làm việc</h2>
                 <div className="list-disc ml-5 mt-2">
@@ -102,9 +104,11 @@ const CandidateProfilePage = () => {
                         <div className="text-yellow-500">{exp.company}</div>
                         <div className="text-red-500">{exp.position}</div>
                       </div>
-                      <div className="text-sm italic">
-                        {formatDate(exp.startAt)} - {formatDate(exp.endAt)}
-                      </div>
+                      {exp.startAt && exp.endAt && (
+                        <div className="text-sm italic">
+                          {formatDate(exp.startAt)} - {formatDate(exp.endAt)}
+                        </div>
+                      )}
                       <div className="mt-2 text-gray-500">{exp.info}</div>
                     </div>
                   ))}
@@ -145,13 +149,13 @@ const CandidateProfilePage = () => {
             )}
 
             {/* Uncomment if needed */}
-            {profile.skills && (
+            {profile.skills.length > 0 && (
               <div className="border-2 border-gray-200 p-4 rounded-lg mb-6">
                 <div className="flex gap-2">
                   <AutoStories className="text-red-600 p-1 " />
                   <h3 className="font-semibold">Kĩ năng</h3>
                 </div>
-                <ul className="mt-2 flex">
+                <ul className="mt-2 flex gap-2">
                   {profile.skills.map((skill, index) => (
                     <li
                       key={index}

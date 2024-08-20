@@ -164,7 +164,7 @@ const JobDetailBusiness = () => {
 <div className="flex items-center">
                   <MonetizationOn className="text-red-500 mr-2" />
                   <div>
-                    <h3 className="text-lg font-semibold">Experience</h3>
+                    <h3 className="text-lg font-semibold">Salary</h3>
                     <p className="text-sm text-gray-500">{job?.salary}</p>
                   </div>
                 </div>

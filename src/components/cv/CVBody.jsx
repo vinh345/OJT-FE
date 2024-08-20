@@ -14,7 +14,7 @@ export default function CVBody({ profile }) {
   const [isPDF, setIsPDF] = useState(false);
   const [isDoc, setIsDoc] = useState(false);
   const [docs, setDocs] = useState([]);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const cookie = new Cookies();
   const name = cookie.get("name");
   const fileName = profile.name
@@ -101,21 +101,24 @@ export default function CVBody({ profile }) {
               </div>
               <div className="p-2 mb-2">
                 <span className="font-semibold text-gray-600">Gender: </span>
-                {profile.gender}
+                {profile.gender ? "Male" : "Female"}
               </div>
               {profile.address && (
                 <div className="p-2 mb-2 flex items-center">
-                  <Home className="mr-2 text-gray-600" />
-                  <p className="text-gray-600">{profile.address}</p>
+                  <Home className="text-gray-600 h-5 w-5 mr-2" />
+                  <p className="text-gray-600 leading-none">
+                    {profile.address}
+                  </p>
                 </div>
               )}
               {profile.phone && (
                 <div className="p-2 mb-2 flex items-center">
-                  <Phone className="mr-2 text-gray-600" />
-                  <p className="text-gray-600">{profile.phone}</p>
+                  <Phone className="text-gray-600 h-5 w-5 mr-2" />
+                  <p className="text-gray-600 leading-none">{profile.phone}</p>
                 </div>
               )}
-              {profile.skills && (
+
+              {profile.skills.length > 0 && (
                 <div className="p-2">
                   <h3 className="text-xl font-semibold text-red-600 mb-2">
                     Skills
@@ -166,10 +169,10 @@ export default function CVBody({ profile }) {
                   <p className="mt-2 text-gray-700">{profile.about}</p>
                 </div>
               )}
-              {profile.experience && (
+              {profile.experience.length > 0 && (
                 <div className="mt-6">
                   <h2 className="text-2xl font-semibold text-green-500">
-                    KINH NGHIỆM LÀM VIỆC
+                    Experience
                   </h2>
                   <div className="list-disc ml-5 mt-2 ">
                     {profile.experience.map((exp, index) => (
@@ -191,7 +194,7 @@ export default function CVBody({ profile }) {
                 </div>
               )}
 
-              {profile.projects && (
+              {profile.projects.length > 0 && (
                 <div className="mt-4">
                   <h2 className="text-2xl font-semibold text-orange-500">
                     Projects
@@ -224,7 +227,7 @@ export default function CVBody({ profile }) {
                 </div>
               )}
 
-              {profile.educations && (
+              {profile.educations.length > 0 && (
                 <div className="mt-4">
                   <h2 className="text-2xl font-semibold text-green-500">
                     Education

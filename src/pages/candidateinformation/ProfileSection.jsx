@@ -3,6 +3,7 @@ import { Card, Avatar } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 
 export default function ProfileSection({ showModalEditInfo,info }) {
+  console.log(info)
   return (
     <>
       <Card

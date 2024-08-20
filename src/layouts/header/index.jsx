@@ -26,8 +26,8 @@ const Header = () => {
 
   const handleLogOut = () => {
     dispatch(logOut());
-    setModalOpen(false); // Close modal on logout
-    navigate("/");
+    setModalOpen(false); // Close modal on logout.then(navigate("/"))
+    navigate("/")
   };
 
   const handleLogIn = () => {

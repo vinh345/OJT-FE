@@ -71,7 +71,16 @@ const JobEditModal = ({ visible, onClose, job, onUpdate }) => {
 
   const handleDateChange = (event) => {
     const value = event.target.value;
-    setFormData({ ...formData, expireAt: value ? new Date(value) : null });
+
+    // Check if the input has a value, and create a new Date object
+    const date = value ? new Date(value) : null;
+
+    // Validate the date before setting it in state
+    if (date && !isNaN(date.getTime())) {
+      setFormData({ ...formData, expireAt: date });
+    } else {
+      setFormData({ ...formData, expireAt: null });
+    }
   };
 
   return (
@@ -156,23 +165,31 @@ const JobEditModal = ({ visible, onClose, job, onUpdate }) => {
           />
         </div>
         <div>
-          <label className="block font-bold mb-1">Yêu cầu của công việc</label>
-          <TextArea
-            rows={4}
-            placeholder="Hint text"
-            value={formData.requirements}
-            onChange={(e) =>
-              setFormData({ ...formData, requirements: e.target.value })
+          <label className="block font-bold mb-1">Thời gian hết hạn</label>
+          <input
+            type="date"
+            value={
+              formData.expireAt
+                ? formData.expireAt
+                : ""
             }
+            onChange={handleDateChange}
+            className="w-full border rounded p-2"
           />
+          {formData.expireAt && !isNaN(formData.expireAt.getTime()) && (
+            <div className="mt-2">
+              <strong>Ngày hết hạn:</strong> {formatDate(formData.expireAt)}
+            </div>
+          )}
         </div>
+
         <div>
           <label className="block font-bold mb-1">Thời gian hết hạn</label>
           <input
             type="date"
             value={
               formData.expireAt
-                ? formData.expireAt.toISOString().split("T")[0]
+                ? formData.expireAt
                 : ""
             }
             onChange={handleDateChange}

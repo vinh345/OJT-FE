@@ -17,7 +17,7 @@ import JobCardItemPermitAll from "../../job/JobCardItemPermitAll";
 import CompanyCardItem from "./CompanyCardItem";
 
 export default function CompanyDetail() {
-  debugger
+  debugger;
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();

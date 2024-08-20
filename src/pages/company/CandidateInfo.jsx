@@ -3,14 +3,14 @@ import { Card, Button, Tag, Row, Col, Divider, List, Avatar } from "antd";
 import { PhoneOutlined, MailOutlined } from "@mui/icons-material";
 import MapIcon from "@mui/icons-material/Map";
 import "tailwindcss/tailwind.css";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getCandidateInfo } from "../../service/companyService";
 import Skill from "../candidateinformation/Skill";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import FacebookIcon from '@mui/icons-material/Facebook';
-import EmailIcon from '@mui/icons-material/Email';
+import FacebookIcon from "@mui/icons-material/Facebook";
+import EmailIcon from "@mui/icons-material/Email";
 const ProfilePage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -89,12 +89,12 @@ const ProfilePage = () => {
                   <MapIcon className="mr-2" /> {candidateInfo?.address}
                 </p>
                 <h2 className="text-lg font-semibold">Thông tin liên hệ</h2>
-                  <p>
-                    <PhoneOutlined className="mr-2" /> {candidateInfo?.phone}
-                  </p>
-                  <p>
-                    <MailOutlined className="mr-2" /> {candidateInfo?.email}
-                  </p>
+                <p>
+                  <PhoneOutlined className="mr-2" /> {candidateInfo?.phone}
+                </p>
+                <p>
+                  <MailOutlined className="mr-2" /> {candidateInfo?.email}
+                </p>
               </Card>
               <Card>
                 <h2 className="text-lg font-semibold">Kỹ năng</h2>
@@ -130,13 +130,15 @@ const ProfilePage = () => {
               </Card>
             </div>
 
-            <Button
-              type="primary"
-              block
-              className="mt-4 bg-red-500 border-none"
-            >
-              Truy Cập CV
-            </Button>
+            <Link to={`/company/candidate/cv/${id}`}>
+              <Button
+                type="primary"
+                block
+                className="mt-4 bg-red-500 border-none"
+              >
+                Truy Cập CV
+              </Button>
+            </Link>
           </Col>
         </Row>
       </Card>

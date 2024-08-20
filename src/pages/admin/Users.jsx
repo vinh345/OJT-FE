@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../style/CandidateManagement.css";
-import { Button, message, Checkbox, Pagination } from "antd";
+import { Button, message, Checkbox, Pagination, Spin } from "antd";
 import { Link } from "react-router-dom";
 
 export default function Users() {
@@ -56,12 +56,13 @@ export default function Users() {
           },
         }
       );
-
+  
       if (response.status === 200) {
+        // Cập nhật trạng thái của ứng viên trong filteredCandidates
         setFilteredCandidates((prevCandidates) =>
           prevCandidates.map((candidate) =>
             candidate.id === candidateId
-              ? { ...candidate, status: response.data.status }
+              ? { ...candidate, status: candidate.status === 1 ? 0 : 1 }
               : candidate
           )
         );
@@ -74,13 +75,13 @@ export default function Users() {
       message.error("Có lỗi xảy ra khi thay đổi trạng thái!");
     }
   };
-
+  
   const handleOutstandingStatusChange = async (candidateId, isOutstanding) => {
     try {
       const token = localStorage.getItem("accessToken");
       await axios.patch(
         `http://localhost:8080/api.myservice.com/v1/admin/candidates/${candidateId}`,
-        { outstanding: isOutstanding },
+{ outstanding: isOutstanding },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -88,17 +89,13 @@ export default function Users() {
         }
       );
 
-
-      setFilteredCandidates((prevCandidates) =>
-
       setFilteredCandidates((prevFilteredCandidates) =>
         prevFilteredCandidates.map((candidate) =>
           candidate.id === candidateId
             ? { ...candidate, outstanding: isOutstanding }
             : candidate
-        ))
+        )
       );
-
 
       message.success("Cập nhật trạng thái nổi bật thành công!");
     } catch (error) {
@@ -169,7 +166,9 @@ export default function Users() {
         <option value="outstanding">Nổi bật</option>
       </select>
       {loading ? (
-        <p>Loading...</p>
+        <div className="loading-container">
+          <Spin size="large" />
+        </div>
       ) : (
         <>
           <table className="candidate-management-table">
@@ -178,7 +177,7 @@ export default function Users() {
                 <th>ID</th>
                 <th>Tên</th>
                 <th>Email</th>
-                <th>Ngày sinh</th>
+<th>Ngày sinh</th>
                 <th>Địa chỉ</th>
                 <th>Số điện thoại</th>
                 <th>Giới tính</th>
@@ -208,15 +207,11 @@ export default function Users() {
                   <td>{candidate.position}</td>
                   <td>
                     <Checkbox
-
                       checked={candidate.outstanding === 1}
                       onChange={(e) =>
                         handleOutstandingStatusChange(
                           candidate.id,
                           e.target.checked ? 1 : 0
-
-                     
-
                         )
                       }
                     />
@@ -225,7 +220,6 @@ export default function Users() {
                     <Link to={`/admin/candidateinfo/${candidate.id}`}>
                       <Button className="bg-green-500">Xem</Button>
                     </Link>
-
                     <Button
                       className={
                         candidate.status ? "ant-btn-lock" : "ant-btn-unlock"
@@ -245,8 +239,7 @@ export default function Users() {
             total={totalCandidates}
             onChange={handlePageChange}
             showSizeChanger
-            showQuickJumper
-            showTotal={(total) => `Total ${total} items`}
+            className="candidate-pagination"
           />
         </>
       )}
